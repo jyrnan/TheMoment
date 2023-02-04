@@ -9,13 +9,14 @@ import SwiftUI
 
 struct HomeView: View {
     @State var selectedTab: String = "Branch"
+    @State var sheet: Sheet?
 
     let gradient = LinearGradient(colors: [.orange, .green],
                                   startPoint: .topLeading,
                                   endPoint: .bottomTrailing)
     var body: some View {
         TabView(selection: $selectedTab) {
-            BranchScreen()
+            BranchScreen(sheet: $sheet)
                 .tabItem {
                     Label("Branch", systemImage: "arrow.triangle.branch")
                 }
@@ -51,6 +52,7 @@ struct HomeView: View {
                 }
                 .tag("Setting")
         }
+        .sheet(item: $sheet, content: {$0})
     }
 }
 

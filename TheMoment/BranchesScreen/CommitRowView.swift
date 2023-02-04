@@ -12,7 +12,8 @@ struct CommitRowView: View {
     let lineWidth: CGFloat = Dim.lineWidth
     let dotRadius: CGFloat = Dim.dotRadius
     
-    var post: Post
+    var commit: Commit
+
     var body: some View {
         ZStack {
             Circle()
@@ -26,12 +27,15 @@ struct CommitRowView: View {
                     .foregroundColor(.accentColor)
                     .frame(width: 2)
                     .padding(.leading, leftSpace)
-                Text("\(post.name)")
+                Text("\(commit.name)")
                     .frame(minHeight: CGFloat(arc4random_uniform(20) + 80))
                     .frame(maxWidth: .infinity, alignment: .center)
                     .contentShape(Rectangle())
+                    .onTapGesture {
+                        print("\(commit.name)")
+                    }
                 
-                Text(post.image)
+                Text(commit.image)
                     .font(.title)
                     .padding()
             }
@@ -43,6 +47,6 @@ struct CommitRowView: View {
 
 struct PostRowView_Previews: PreviewProvider {
     static var previews: some View {
-        CommitRowView(post: Post.examples.first!)
+        CommitRowView(commit: Commit.examples.first!)
     }
 }

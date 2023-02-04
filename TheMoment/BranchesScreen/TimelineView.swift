@@ -9,8 +9,11 @@ import SwiftUI
 
 struct TimelineView: View {
     @Binding var path: [UUID]
+    @Binding var sheet: HomeView.Sheet?
 
-    @State var posts: [Post] = Post.examples
+    @State var commits: [Commit] = Commit.examples
+    
+    
 
     let gradient = LinearGradient(colors: [.orange, .green],
                                   startPoint: .topLeading,
@@ -22,23 +25,23 @@ struct TimelineView: View {
                 BannerView(proxy: proxy)
                     .listRowInsets(.init())
 
-                ForEach(posts, id: \.id) { post in
-                    CommitRowView(post: post)
+                ForEach(commits, id: \.id) { commit in
+                    CommitRowView(commit: commit)
                         .listRowInsets(.init())
                         .listRowSeparator(.hidden)
                         .onTapGesture {
-                            path.append(post.id)
+                            path.append(commit.id)
                         }
                         .swipeActions {
                             Button {
                                 withAnimation{
-                                    posts = posts.reversed()}
+                                    sheet = .commitDetail(commit)}
                             } label: {
-                                Label("Reply", systemImage: "arrowshape.turn.up.left")
+                                Label("Edit", systemImage: "arrowshape.turn.up.left")
                             }.tint(.blue)
                             Button {
                                 withAnimation{
-                                    posts = posts.reversed()}
+                                    sheet = .editCommit(commit)}
                             } label: {
                                 Label("Reply", systemImage: "arrowshape.turn.up.left")
                             }.tint(.blue)
@@ -54,6 +57,6 @@ struct TimelineView: View {
 
 struct TimelineView_Previews: PreviewProvider {
     static var previews: some View {
-        TimelineView(path: .constant([]))
+        TimelineView(path: .constant([]), sheet: .constant(nil))
     }
 }
