@@ -16,6 +16,13 @@
 		D2F5178F298D07250091B527 /* TheMomentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F5178E298D07250091B527 /* TheMomentTests.swift */; };
 		D2F51799298D07250091B527 /* TheMomentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F51798298D07250091B527 /* TheMomentUITests.swift */; };
 		D2F5179B298D07250091B527 /* TheMomentUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F5179A298D07250091B527 /* TheMomentUITestsLaunchTests.swift */; };
+		D2F517A8298D07620091B527 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517A7298D07620091B527 /* TimelineView.swift */; };
+		D2F517AA298D076E0091B527 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517A9298D076E0091B527 /* Post.swift */; };
+		D2F517AC298D08040091B527 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517AB298D08040091B527 /* HomeView.swift */; };
+		D2F517B0298D0F260091B527 /* CommitRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517AF298D0F260091B527 /* CommitRowView.swift */; };
+		D2F517B2298D0F750091B527 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517B1298D0F750091B527 /* DetailView.swift */; };
+		D2F517B4298D12380091B527 /* BranchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517B3298D12380091B527 /* BranchScreen.swift */; };
+		D2F517B8298E2AC30091B527 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517B7298E2AC30091B527 /* BannerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +56,13 @@
 		D2F51794298D07250091B527 /* TheMomentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheMomentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2F51798298D07250091B527 /* TheMomentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheMomentUITests.swift; sourceTree = "<group>"; };
 		D2F5179A298D07250091B527 /* TheMomentUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheMomentUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D2F517A7298D07620091B527 /* TimelineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
+		D2F517A9298D076E0091B527 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		D2F517AB298D08040091B527 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		D2F517AF298D0F260091B527 /* CommitRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitRowView.swift; sourceTree = "<group>"; };
+		D2F517B1298D0F750091B527 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		D2F517B3298D12380091B527 /* BranchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchScreen.swift; sourceTree = "<group>"; };
+		D2F517B7298E2AC30091B527 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +115,11 @@
 			children = (
 				D2F51777298D07240091B527 /* TheMomentApp.swift */,
 				D2F51779298D07240091B527 /* ContentView.swift */,
+				D2F517AB298D08040091B527 /* HomeView.swift */,
+				D2F517AE298D0EDE0091B527 /* BranchesScreen */,
 				D2F5177B298D07250091B527 /* Assets.xcassets */,
 				D2F51780298D07250091B527 /* Persistence.swift */,
+				D2F517AD298D09B30091B527 /* Model */,
 				D2F51785298D07250091B527 /* Info.plist */,
 				D2F51782298D07250091B527 /* TheMoment.xcdatamodeld */,
 				D2F5177D298D07250091B527 /* Preview Content */,
@@ -133,6 +150,26 @@
 				D2F5179A298D07250091B527 /* TheMomentUITestsLaunchTests.swift */,
 			);
 			path = TheMomentUITests;
+			sourceTree = "<group>";
+		};
+		D2F517AD298D09B30091B527 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D2F517A9298D076E0091B527 /* Post.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D2F517AE298D0EDE0091B527 /* BranchesScreen */ = {
+			isa = PBXGroup;
+			children = (
+				D2F517B3298D12380091B527 /* BranchScreen.swift */,
+				D2F517A7298D07620091B527 /* TimelineView.swift */,
+				D2F517B7298E2AC30091B527 /* BannerView.swift */,
+				D2F517AF298D0F260091B527 /* CommitRowView.swift */,
+				D2F517B1298D0F750091B527 /* DetailView.swift */,
+			);
+			path = BranchesScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,9 +302,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2F517B2298D0F750091B527 /* DetailView.swift in Sources */,
 				D2F51781298D07250091B527 /* Persistence.swift in Sources */,
+				D2F517AC298D08040091B527 /* HomeView.swift in Sources */,
 				D2F5177A298D07240091B527 /* ContentView.swift in Sources */,
 				D2F51778298D07240091B527 /* TheMomentApp.swift in Sources */,
+				D2F517AA298D076E0091B527 /* Post.swift in Sources */,
+				D2F517B0298D0F260091B527 /* CommitRowView.swift in Sources */,
+				D2F517B8298E2AC30091B527 /* BannerView.swift in Sources */,
+				D2F517A8298D07620091B527 /* TimelineView.swift in Sources */,
+				D2F517B4298D12380091B527 /* BranchScreen.swift in Sources */,
 				D2F51784298D07250091B527 /* TheMoment.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
