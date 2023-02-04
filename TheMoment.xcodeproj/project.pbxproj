@@ -23,6 +23,7 @@
 		D2F517B2298D0F750091B527 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517B1298D0F750091B527 /* DetailView.swift */; };
 		D2F517B4298D12380091B527 /* BranchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517B3298D12380091B527 /* BranchScreen.swift */; };
 		D2F517B8298E2AC30091B527 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517B7298E2AC30091B527 /* BannerView.swift */; };
+		D2F517BA298E43180091B527 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517B9298E43180091B527 /* Constant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		D2F517B1298D0F750091B527 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		D2F517B3298D12380091B527 /* BranchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchScreen.swift; sourceTree = "<group>"; };
 		D2F517B7298E2AC30091B527 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
+		D2F517B9298E43180091B527 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				D2F51777298D07240091B527 /* TheMomentApp.swift */,
 				D2F51779298D07240091B527 /* ContentView.swift */,
 				D2F517AB298D08040091B527 /* HomeView.swift */,
+				D2F517BB298E43220091B527 /* Constant */,
 				D2F517AE298D0EDE0091B527 /* BranchesScreen */,
 				D2F5177B298D07250091B527 /* Assets.xcassets */,
 				D2F51780298D07250091B527 /* Persistence.swift */,
@@ -170,6 +173,14 @@
 				D2F517B1298D0F750091B527 /* DetailView.swift */,
 			);
 			path = BranchesScreen;
+			sourceTree = "<group>";
+		};
+		D2F517BB298E43220091B527 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				D2F517B9298E43180091B527 /* Constant.swift */,
+			);
+			path = Constant;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,6 +324,7 @@
 				D2F517A8298D07620091B527 /* TimelineView.swift in Sources */,
 				D2F517B4298D12380091B527 /* BranchScreen.swift in Sources */,
 				D2F51784298D07250091B527 /* TheMoment.xcdatamodeld in Sources */,
+				D2F517BA298E43180091B527 /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

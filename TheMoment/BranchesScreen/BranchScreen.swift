@@ -13,7 +13,7 @@ struct BranchScreen: View {
     var body: some View {
         NavigationStack(path: $path) {
             TimelineView(path: $path)
-                .ignoresSafeArea()
+                .ignoresSafeArea(edges: .top)
                 .navigationTitle("Branch")
                 .navigationDestination(for: UUID.self, destination: { id in DetailView(id: id, path: $path) })
                 .toolbar {

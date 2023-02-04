@@ -8,20 +8,24 @@
 import SwiftUI
 
 struct CommitRowView: View {
+    let leftSpace: CGFloat = Dim.leftSpace
+    let lineWidth: CGFloat = Dim.lineWidth
+    let dotRadius: CGFloat = Dim.dotRadius
+    
     var post: Post
     var body: some View {
         ZStack {
             Circle()
                 .frame(width: 8 , height: 8)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                .offset(x: 29, y: 12)
+                .padding(.leading, leftSpace + lineWidth / 2 - dotRadius)
+                .padding(.top, 16)
                 .foregroundColor(.accentColor)
             HStack {
                 Rectangle()
                     .foregroundColor(.accentColor)
                     .frame(width: 2)
-                   
-                    .padding(.leading, 32)
+                    .padding(.leading, leftSpace)
                 Text("\(post.name)")
                     .frame(minHeight: CGFloat(arc4random_uniform(20) + 80))
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -33,7 +37,7 @@ struct CommitRowView: View {
             }
         }
         .frame(maxHeight: 200)
-        .border(.gray)
+//        .border(.gray)
     }
 }
 
