@@ -18,8 +18,7 @@ struct HomeView: View {
         TabView(selection: $selectedTab) {
             BranchScreen(sheet: $sheet)
                 .tabItem {
-                    Label("", systemImage: "arrow.triangle.branch")
-//                    Image(systemName: "arrow.triangle.branch")
+                    Label("Branch", systemImage: "arrow.triangle.branch")
                 }
                 .tag("Branch")
 
@@ -29,7 +28,7 @@ struct HomeView: View {
                 Text("Search")
             }
             .tabItem {
-                Label("", systemImage: "magnifyingglass")
+                Label("Search", systemImage: "magnifyingglass")
             }
             .tag("Search")
 
@@ -43,15 +42,27 @@ struct HomeView: View {
 
             Text("Share")
                 .tabItem {
-                    Label("", systemImage: "square.and.arrow.up")
+                    Label("Media", systemImage: "square.on.square.dashed")
                 }
-                .tag("Share")
+                .tag("Media")
 
             Text("Setting")
                 .tabItem {
-                    Label("", systemImage: "gear")
+                    Label("Setting", systemImage: "gear")
                 }
                 .tag("Setting")
+        }
+        .overlay{
+            Image(systemName: "plus.circle.fill")
+                .resizable()
+                .aspectRatio(1, contentMode: .fill)
+                .symbolRenderingMode(.palette)
+                .foregroundStyle(Color(.label).opacity(0.5), .ultraThinMaterial)
+                .frame(width: 40, height: 44)
+                .frame(maxHeight: .infinity, alignment: .bottom)
+                .onTapGesture {
+                    sheet = .newCommit({_ in})
+                }
         }
         .sheet(item: $sheet, content: {$0})
     }

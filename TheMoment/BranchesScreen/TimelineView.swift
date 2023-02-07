@@ -11,7 +11,10 @@ struct TimelineView: View {
     @Binding var path: [UUID]
     @Binding var sheet: HomeView.Sheet?
 
-    @State var commits: [Commit] = Array(repeating: Commit.examples, count: 1).flatMap{$0.shuffled()}
+    @State var commits: [Commit] = Array(repeating: Commit.examples, count: 1).flatMap{
+        $0
+        .shuffled()
+    }
     
     
 
@@ -32,25 +35,26 @@ struct TimelineView: View {
                         .onTapGesture {
                             path.append(commit.id)
                         }
-                        .swipeActions {
-                            Button {
-                                withAnimation{
-                                    sheet = .commitDetail(commit)}
-                            } label: {
-                                Label("Edit", systemImage: "arrowshape.turn.up.left")
-                            }.tint(.blue)
-                            Button {
-                                withAnimation{
-                                    sheet = .editCommit(commit)}
-                            } label: {
-                                Label("Reply", systemImage: "arrowshape.turn.up.left")
-                            }.tint(.blue)
-                        }
+//                        .swipeActions {
+//                            Button {
+//                                withAnimation{
+//                                    sheet = .commitDetail(commit)}
+//                            } label: {
+//                                Label("Edit", systemImage: "arrowshape.turn.up.left")
+//                            }.tint(.green)
+//                            Button {
+//                                withAnimation{
+//                                    commits.removeAll(where: {$0.id == commit.id})
+//                                }
+//                            } label: {
+//                                Label("Delete", systemImage: "trash")
+//                            }.tint(.red)
+//                        }
                 }
-//                .onDelete(perform: {_ in }) // 可以使EditButton生效
+                .onDelete(perform: {_ in }) // 可以使EditButton生效
             }
             .listStyle(.plain)
-            
+            .scrollIndicators(.hidden)
         }
     }
 }

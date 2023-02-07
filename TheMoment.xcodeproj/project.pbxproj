@@ -25,6 +25,8 @@
 		D2F517B8298E2AC30091B527 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517B7298E2AC30091B527 /* BannerView.swift */; };
 		D2F517BA298E43180091B527 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517B9298E43180091B527 /* Constant.swift */; };
 		D2F517BD298E77930091B527 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517BC298E77930091B527 /* Sheet.swift */; };
+		D2F517BF2991F8A90091B527 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F517BE2991F8A90091B527 /* View+.swift */; };
+		D2F517C1299240020091B527 /* Avatar.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = D2F517C0299240020091B527 /* Avatar.jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		D2F517B7298E2AC30091B527 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		D2F517B9298E43180091B527 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		D2F517BC298E77930091B527 /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
+		D2F517BE2991F8A90091B527 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
+		D2F517C0299240020091B527 /* Avatar.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Avatar.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,8 +126,9 @@
 				D2F517AB298D08040091B527 /* HomeView.swift */,
 				D2F517BB298E43220091B527 /* Constant */,
 				D2F517AE298D0EDE0091B527 /* BranchesScreen */,
-				D2F5177B298D07250091B527 /* Assets.xcassets */,
+				D2F517C2299240390091B527 /* Resource */,
 				D2F51780298D07250091B527 /* Persistence.swift */,
+				D2F517BE2991F8A90091B527 /* View+.swift */,
 				D2F517AD298D09B30091B527 /* Model */,
 				D2F51785298D07250091B527 /* Info.plist */,
 				D2F51782298D07250091B527 /* TheMoment.xcdatamodeld */,
@@ -184,6 +189,15 @@
 				D2F517B9298E43180091B527 /* Constant.swift */,
 			);
 			path = Constant;
+			sourceTree = "<group>";
+		};
+		D2F517C2299240390091B527 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				D2F5177B298D07250091B527 /* Assets.xcassets */,
+				D2F517C0299240020091B527 /* Avatar.jpeg */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,6 +306,7 @@
 			files = (
 				D2F5177F298D07250091B527 /* Preview Assets.xcassets in Resources */,
 				D2F5177C298D07250091B527 /* Assets.xcassets in Resources */,
+				D2F517C1299240020091B527 /* Avatar.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,6 +335,7 @@
 				D2F51781298D07250091B527 /* Persistence.swift in Sources */,
 				D2F517AC298D08040091B527 /* HomeView.swift in Sources */,
 				D2F5177A298D07240091B527 /* ContentView.swift in Sources */,
+				D2F517BF2991F8A90091B527 /* View+.swift in Sources */,
 				D2F51778298D07240091B527 /* TheMomentApp.swift in Sources */,
 				D2F517AA298D076E0091B527 /* Commit.swift in Sources */,
 				D2F517B0298D0F260091B527 /* CommitRowView.swift in Sources */,

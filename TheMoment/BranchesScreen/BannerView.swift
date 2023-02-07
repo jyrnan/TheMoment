@@ -37,7 +37,9 @@ struct BannerView: View {
                 Circle()
                     .foregroundColor(.accentColor)
                     .overlay{
-                        Image(systemName: "house").font(.title).foregroundColor(.white)
+                        Image( "Avatar")
+                            .resizable()
+                            .clipShape(Circle().inset(by: 2))
                     }
                     .frame(width: logoRadius * 2, height: logoRadius * 2)
                     .padding(.leading, Dim.leftSpace + Dim.lineWidth / 2 - logoRadius)

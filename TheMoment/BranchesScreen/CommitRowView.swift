@@ -10,143 +10,214 @@ import SwiftUI
 struct CommitRowView: View {
     let leftSpace: CGFloat = Dim.leftSpace
     let lineWidth: CGFloat = Dim.lineWidth
-    let iconRadius: CGFloat = 6
+    let iconRadius: CGFloat = 12
+    let dotRadius: CGFloat = 4
     let rightSpace: CGFloat = 16
     
     let edgeSpacing: CGFloat = 16
     let textSpacing: CGFloat = 8
     let contentSpacing: CGFloat = 4
     
-    let boardColor: Color = .red
+    @State var shouldShowBorder: Bool = false
     
-    var shouldDisplayDate: Bool {Bool.random()}
+    var boardColor: Color { shouldShowBorder ? .red : .clear }
+    
+    @State var shouldShowDate: Bool = .random()
+    @State var dateViewHeight: CGFloat = DateViewHeight.defaultValue
 
     var commit: Commit
     
-    var icon: some View {Circle()}
-
     var body: some View {
         HStack(spacing: 0) {
             ZStack {
-                icon
-                    .foregroundColor(.accentColor)
-                    .frame(width: iconRadius * 2 , height: iconRadius * 2)
-                    .padding(.leading, leftSpace + lineWidth / 2 - iconRadius)
-                    .padding(.top, 16)
-                    .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .topLeading)
-                    .border(boardColor)
-                
-                Rectangle()
-                    .foregroundColor(.accentColor)
-                    .frame(width: 2)
-                    .padding(.leading, leftSpace)
-                    .padding(.trailing, rightSpace)
-                    .border(boardColor)
-                
+                lineView
+                if shouldShowDate { dotView }
+                iconView
             }
             .frame(width: leftSpace + lineWidth + rightSpace)
             .border(boardColor)
 
-            VStack(spacing: 0) {
-                Color.clear
-                    .frame(height: 16)
-                
-                HStack{
-                    if shouldDisplayDate {
-                        Text(commit.date.formatted(date: .abbreviated, time: .omitted))
-                            .font(.caption.bold())
-                            .foregroundColor(.init(uiColor: .systemBackground))
-                            .padding(contentSpacing)
-                            .background(Capsule().foregroundColor(.gray))
-                            .frame(minHeight: 24)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }.border(boardColor)
-                
-                HStack{
-                    Text("Location View")
-                        .font(.caption.bold())
-                        .foregroundColor(.gray)
-                        .padding(.top, textSpacing)
-                        .padding(.leading, textSpacing)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }.border(boardColor)
+            VStack(spacing: contentSpacing) {
+                VStack(spacing: textSpacing) {
+                    Color.clear
+                        .frame(height: textSpacing)
+                        .border(boardColor)
+                    
+                    if shouldShowDate { dateView.border(boardColor) }
+                    
+                    locationView.border(boardColor)
+                }
+                .readGeometry(\.size.height, key: IconTopSpacing.self)
+                .onPreferenceChange(IconTopSpacing.self) {
+                    iconTopSpacing = $0 + contentSpacing
+                }
+                .border(boardColor)
                 
                 HStack(spacing: 0) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        if commit.title != nil {
-                            Text("\(commit.title!)").padding(textSpacing)
-                                .font(.body.bold())
-                                .lineLimit(1)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .contentShape(Rectangle())
-                                .onTapGesture { print("\(commit.title!)") }
-                                .border(boardColor)
-                        }
+                    VStack(alignment: .leading, spacing: contentSpacing) {
+                        if commit.title != nil { titleView }
                         
-                        if commit.content != nil {
-                            Text("\(commit.content!)").padding(textSpacing)
-                                .lineLimit(5)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .contentShape(Rectangle())
-                                .border(boardColor)
-                        }
+                        if commit.content != nil { contentView }
                     }
-//                    .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    if commit.images.count != 0 && commit.content != nil {
-                        ZStack {
-                            Image("Image")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .layoutPriority(-1)
-                            Color.clear
-                                .frame(width: 64, height: 64)
-                        }
-                        .clipped()
-                        .aspectRatio(1, contentMode: .fit).cornerRadius(4)
-                        .padding(textSpacing)
-                        .frame(maxHeight: .infinity, alignment: .top)
+                    if commit.images.count != 0, commit.content != nil {
+                        imagesThumbView
                     }
                 }
                 
-                if commit.images.count != 0 && commit.content == nil {
-                    ZStack {
-                        Image("Image")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .layoutPriority(-1)
-                        Color.clear
-                            .frame(maxWidth: .infinity)
-                    }
-                    .clipped()
-                    .aspectRatio(16 / 9, contentMode: .fill).cornerRadius(8)
-                    .padding(textSpacing)
-                    .frame(maxHeight: .infinity, alignment: .top)
-                    
+                if commit.images.count != 0, commit.content == nil {
+                    imagesView
                 }
                 
-
-                HStack(spacing: 0){
-                    Text(commit.weather)
-                        .font(.caption2)
-                        .foregroundColor(.gray)
-                        .padding(.leading, textSpacing)
-                        .border(boardColor)
-                    
+                HStack(spacing: 0) {
+                    weatherView
                     Spacer()
-                    
-                    Text(commit.date.formatted(date: .abbreviated, time: .shortened))
-                        .font(.caption2)
-                        .foregroundColor(.gray)
-                        .padding(.trailing, textSpacing)
-                        .border(boardColor)
+                    commitTimeView
                 }
             }
+            .padding(.trailing, textSpacing)
             .border(boardColor)
         }
         .border(boardColor)
+    }
+    
+    // MARK: -  SubViews
+    
+    var dotTopSpacing: CGFloat { textSpacing + textSpacing + (dateViewHeight - dotRadius) / 2 }
+    var dotView: some View {
+        Circle()
+            .foregroundColor(.accentColor)
+            .frame(width: dotRadius * 2, height: dotRadius * 2)
+            .padding(.leading, leftSpace + lineWidth / 2 - dotRadius)
+            .padding(.top, dotTopSpacing)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .border(boardColor)
+    }
+    
+    @State private var iconTopSpacing: CGFloat = IconTopSpacing.defaultValue
+    func makeIcon(commit: Commit) -> some View {
+        if let emoji = commit.emoji { return Text(emoji).font(.callout) }
+        if !commit.images.isEmpty { return Text("\(Image(systemName: "photo.fill"))") }
+        if commit.title != nil || commit.content != nil { return Text("\(Image(systemName: "message.fill"))") }
+        return Text("\(Image(systemName: "mappin.and.ellipse"))")
+    }
+
+    var iconView: some View {
+        Circle()
+            .overlay {
+                makeIcon(commit: commit)
+                    .font(.caption)
+                    .foregroundColor(Color(.white))
+            }
+            .foregroundColor(.accentColor)
+            .frame(width: iconRadius * 2, height: iconRadius * 2)
+            .padding(.leading, leftSpace + lineWidth / 2 - iconRadius)
+            .padding(.top, iconTopSpacing)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .border(boardColor)
+    }
+    
+    var lineView: some View {
+        Rectangle()
+            .foregroundColor(.accentColor)
+            .frame(width: 2)
+            .padding(.leading, leftSpace)
+            .padding(.trailing, rightSpace)
+            .border(boardColor)
+    }
+    
+    var dateView: some View {
+        Text(commit.date.formatted(date: .abbreviated, time: .omitted))
+            .font(.caption.bold())
+            .foregroundColor(.init(uiColor: .systemBackground))
+            .padding(contentSpacing)
+            .background(Capsule().foregroundColor(.gray))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .readGeometry(\.size.height, key: DateViewHeight.self)
+            .onPreferenceChange(DateViewHeight.self) { dateViewHeight = $0 }
+//            .padding(.bottom, contentSpacing)
+    }
+    
+    var locationView: some View {
+        HStack {
+            Image(systemName: "location")
+                .font(.caption)
+                .foregroundColor(.gray)
+            Text("22.54°N, 36.38°E")
+                .font(.caption.bold())
+                .foregroundColor(.gray)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .onTapGesture {
+            shouldShowBorder.toggle()
+        }
+    }
+    
+    var titleView: some View {
+        Text("\(commit.title!)")
+            .font(.body.bold())
+            .lineLimit(1)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                print("\(commit.title!)")
+                shouldShowBorder.toggle()
+            }
+            .border(boardColor)
+    }
+    
+    var contentView: some View {
+        Text("\(commit.content!)")
+            .lineLimit(5)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+            .border(boardColor)
+    }
+    
+    var imagesThumbView: some View {
+        ZStack {
+            Image("Image")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .layoutPriority(-1)
+            Color.clear
+                .frame(width: 64, height: 64)
+        }
+        .clipped()
+        .aspectRatio(1, contentMode: .fit)
+        .cornerRadius(4)
+        .frame(maxHeight: .infinity, alignment: .top)
+    }
+    
+    var imagesView: some View {
+        ZStack {
+            Image(commit.images.first ?? "")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .layoutPriority(-1)
+            Color.clear
+                .frame(maxWidth: .infinity)
+        }
+        .clipped()
+        .aspectRatio(16 / 9, contentMode: .fill)
+        .cornerRadius(8)
+        .frame(maxHeight: .infinity, alignment: .top)
+    }
+    
+    var weatherView: some View {
+        Text("\(Image(systemName: "sun.max")) \(commit.weather ?? "") \(arc4random_uniform(25))°C")
+            
+            .font(.caption2)
+            .foregroundColor(.gray)
+            .border(boardColor)
+    }
+    
+    var commitTimeView: some View {
+        Text(commit.date.formatted(date: .abbreviated, time: .shortened))
+            .font(.caption2)
+            .foregroundColor(.gray)
+            .border(boardColor)
     }
 }
 
@@ -155,5 +226,31 @@ struct PostRowView_Previews: PreviewProvider {
         CommitRowView(commit: Commit.examples.first!)
         CommitRowView(commit: Commit.examples[1])
         CommitRowView(commit: Commit.examples[2])
+    }
+}
+
+extension CommitRowView {
+    struct IconTopSpacing: PreferenceKey {
+        static var defaultValue: CGFloat = 64
+        
+        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+            value = nextValue()
+        }
+    }
+    
+    struct DateViewHeight: PreferenceKey {
+        static var defaultValue: CGFloat = 24
+        
+        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+            value = nextValue()
+        }
+    }
+    
+    struct TitleViewHeight: PreferenceKey {
+        static var defaultValue: CGFloat = 24
+        
+        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+            value = nextValue()
+        }
     }
 }
