@@ -11,7 +11,7 @@ struct TimelineView: View {
     @Binding var path: [UUID]
     @Binding var sheet: HomeView.Sheet?
 
-    @State var commits: [Commit] = Commit.examples
+    @State var commits: [Commit] = Array(repeating: Commit.examples, count: 1).flatMap{$0.shuffled()}
     
     
 
@@ -47,10 +47,10 @@ struct TimelineView: View {
                             }.tint(.blue)
                         }
                 }
-
-//                    .background(gradient.opacity(0.25))
+//                .onDelete(perform: {_ in }) // 可以使EditButton生效
             }
             .listStyle(.plain)
+            
         }
     }
 }

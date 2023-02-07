@@ -33,7 +33,7 @@ extension HomeView {
             case .newCommit(_):
                 Text("New Commit")
             case .editCommit(let commit):
-                Text(commit.name)
+                Text(commit.title ?? "")
             case .commitDetail(let commit):
                 DetailView(id: commit.id, path:.constant([UUID()]))
                 

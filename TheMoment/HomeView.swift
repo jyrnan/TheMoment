@@ -18,7 +18,8 @@ struct HomeView: View {
         TabView(selection: $selectedTab) {
             BranchScreen(sheet: $sheet)
                 .tabItem {
-                    Label("Branch", systemImage: "arrow.triangle.branch")
+                    Label("", systemImage: "arrow.triangle.branch")
+//                    Image(systemName: "arrow.triangle.branch")
                 }
                 .tag("Branch")
 
@@ -28,7 +29,7 @@ struct HomeView: View {
                 Text("Search")
             }
             .tabItem {
-                Label("Search", systemImage: "magnifyingglass")
+                Label("", systemImage: "magnifyingglass")
             }
             .tag("Search")
 
@@ -36,19 +37,19 @@ struct HomeView: View {
                 .tabItem {
                     Image(systemName: "plus")
                         .font(.system(size: 80))
-                    Text("Hello")
+                    
                 }
                 .tag("Add")
 
             Text("Share")
                 .tabItem {
-                    Label("Share", systemImage: "square.and.arrow.up")
+                    Label("", systemImage: "square.and.arrow.up")
                 }
                 .tag("Share")
 
             Text("Setting")
                 .tabItem {
-                    Label("Setting", systemImage: "gear")
+                    Label("", systemImage: "gear")
                 }
                 .tag("Setting")
         }
