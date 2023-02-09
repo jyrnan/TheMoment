@@ -65,6 +65,9 @@ struct HomeView: View {
                 }
         }
         .sheet(item: $sheet, content: {$0})
+        .onAppear{
+            UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor:UIColor.white]
+        }
     }
 }
 

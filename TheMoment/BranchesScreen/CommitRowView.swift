@@ -104,13 +104,13 @@ struct CommitRowView: View {
     }
 
     var iconView: some View {
-        Circle()
+        Circle().fill(Color.accentColor.gradient)
             .overlay {
                 makeIcon(commit: commit)
                     .font(.caption)
                     .foregroundColor(Color(.white))
             }
-            .foregroundColor(.accentColor)
+            .foregroundColor(.red)
             .frame(width: iconRadius * 2, height: iconRadius * 2)
             .padding(.leading, leftSpace + lineWidth / 2 - iconRadius)
             .padding(.top, iconTopSpacing)
@@ -132,7 +132,7 @@ struct CommitRowView: View {
             .font(.caption.bold())
             .foregroundColor(.init(uiColor: .systemBackground))
             .padding(contentSpacing)
-            .background(Capsule().foregroundColor(.gray))
+            .background(Capsule().fill(.gray.gradient))
             .frame(maxWidth: .infinity, alignment: .leading)
             .readGeometry(\.size.height, key: DateViewHeight.self)
             .onPreferenceChange(DateViewHeight.self) { dateViewHeight = $0 }
@@ -170,6 +170,7 @@ struct CommitRowView: View {
     var contentView: some View {
         Text("\(commit.content!)")
             .lineLimit(5)
+            .multilineTextAlignment(.leading)
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
             .border(boardColor)
@@ -186,7 +187,7 @@ struct CommitRowView: View {
         }
         .clipped()
         .aspectRatio(1, contentMode: .fit)
-        .cornerRadius(4)
+        .cornerRadius(8)
         .frame(maxHeight: .infinity, alignment: .top)
     }
     
@@ -201,7 +202,7 @@ struct CommitRowView: View {
         }
         .clipped()
         .aspectRatio(16 / 9, contentMode: .fill)
-        .cornerRadius(8)
+        .cornerRadius(16)
         .frame(maxHeight: .infinity, alignment: .top)
     }
     

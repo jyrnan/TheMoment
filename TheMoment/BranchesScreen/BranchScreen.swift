@@ -18,8 +18,12 @@ struct BranchScreen: View {
                 .navigationTitle("Branch")
                 .navigationDestination(for: UUID.self, destination: { id in DetailView(id: id, path: $path) })
                 .toolbar {
-                    Button("Add", action: {})
-                    EditButton()
+                    HStack { // 添加 HStack
+                        EditButton()
+                        Button(action: {}) {
+                            Label("Add Item", systemImage: "plus")
+                        }
+                    }
                 }
         }
     }
@@ -30,4 +34,3 @@ struct BranchView_Previews: PreviewProvider {
         BranchScreen(sheet: .constant(nil))
     }
 }
-

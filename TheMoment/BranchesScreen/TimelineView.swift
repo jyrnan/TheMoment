@@ -23,39 +23,39 @@ struct TimelineView: View {
                                   endPoint: .bottomTrailing)
 
     var body: some View {
-        GeometryReader { proxy in
             List {
-                BannerView(proxy: proxy)
+                BannerView()
                     .listRowInsets(.init())
+                
 
-                ForEach(commits, id: \.id) { commit in
-                    CommitRowView(commit: commit)
-                        .listRowInsets(.init())
-                        .listRowSeparator(.hidden)
-                        .onTapGesture {
-                            path.append(commit.id)
-                        }
-//                        .swipeActions {
-//                            Button {
-//                                withAnimation{
-//                                    sheet = .commitDetail(commit)}
-//                            } label: {
-//                                Label("Edit", systemImage: "arrowshape.turn.up.left")
-//                            }.tint(.green)
-//                            Button {
-//                                withAnimation{
-//                                    commits.removeAll(where: {$0.id == commit.id})
+                        ForEach($commits, id: \.id, editActions: .delete) { $commit in
+                            CommitRowView(commit: commit)
+                                .listRowInsets(.init())
+                                .listRowSeparator(.hidden)
+                                .onTapGesture {
+                                    path.append(commit.id)
+                                }
+//                                .swipeActions {
+//                                    Button {
+//                                        withAnimation{
+//                                            sheet = .commitDetail(commit)}
+//                                    } label: {
+//                                        Label("Edit", systemImage: "arrowshape.turn.up.left")
+//                                    }.tint(.green)
+//                                    Button {
+//                                        withAnimation{
+//                                            commits.removeAll(where: {$0.id == commit.id})
+//                                        }
+//                                    } label: {
+//                                        Label("Delete", systemImage: "trash")
+//                                    }.tint(.red)
 //                                }
-//                            } label: {
-//                                Label("Delete", systemImage: "trash")
-//                            }.tint(.red)
-//                        }
-                }
-                .onDelete(perform: {_ in }) // 可以使EditButton生效
+                        }
+                        .onDelete(perform: {_ in }) // 可以使EditButton生效
             }
             .listStyle(.plain)
             .scrollIndicators(.hidden)
-        }
+//        }
     }
 }
 
