@@ -24,6 +24,8 @@ struct CommitRowView: View {
     
     @State var shouldShowDate: Bool = .random()
     @State var dateViewHeight: CGFloat = DateViewHeight.defaultValue
+    
+    @State var rowHeight: CGFloat = RowHeight.defaultValue
 
     var commit: Commit
     
@@ -34,7 +36,7 @@ struct CommitRowView: View {
                 if shouldShowDate { dotView }
                 iconView
             }
-            .frame(width: leftSpace + lineWidth + rightSpace)
+            .frame(width: leftSpace + lineWidth + rightSpace, height: rowHeight)
             .border(boardColor)
 
             VStack(spacing: contentSpacing) {
@@ -53,7 +55,7 @@ struct CommitRowView: View {
                 }
                 .border(boardColor)
                 
-                HStack(spacing: 0) {
+                HStack(alignment: .top,spacing: 0) {
                     VStack(alignment: .leading, spacing: contentSpacing) {
                         if commit.title != nil { titleView }
                         
@@ -65,6 +67,7 @@ struct CommitRowView: View {
                         imagesThumbView
                     }
                 }
+                .border(boardColor)
                 
                 if commit.images.count != 0, commit.content == nil {
                     imagesView
@@ -78,6 +81,10 @@ struct CommitRowView: View {
             }
             .padding(.trailing, textSpacing)
             .border(boardColor)
+        }
+        .readGeometry(\.size.height, key: RowHeight.self)
+        .onPreferenceChange(RowHeight.self) {
+            rowHeight = $0
         }
         .border(boardColor)
     }
@@ -182,13 +189,14 @@ struct CommitRowView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .layoutPriority(-1)
+            
             Color.clear
                 .frame(width: 64, height: 64)
         }
         .clipped()
         .aspectRatio(1, contentMode: .fit)
         .cornerRadius(8)
-        .frame(maxHeight: .infinity, alignment: .top)
+//        .frame(maxHeight: .infinity, alignment: .top)
     }
     
     var imagesView: some View {
@@ -197,13 +205,15 @@ struct CommitRowView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .layoutPriority(-1)
+            
             Color.clear
+                .frame(height: 240)
                 .frame(maxWidth: .infinity)
         }
         .clipped()
-        .aspectRatio(16 / 9, contentMode: .fill)
+        .aspectRatio(contentMode: .fill)
         .cornerRadius(16)
-        .frame(maxHeight: .infinity, alignment: .top)
+        .border(boardColor)
     }
     
     var weatherView: some View {
@@ -227,10 +237,13 @@ struct PostRowView_Previews: PreviewProvider {
         CommitRowView(commit: Commit.examples.first!)
         CommitRowView(commit: Commit.examples[1])
         CommitRowView(commit: Commit.examples[2])
+        CommitRowView(commit: Commit.examples[3])
+        CommitRowView(commit: Commit.examples[4])
     }
 }
 
 extension CommitRowView {
+    
     struct IconTopSpacing: PreferenceKey {
         static var defaultValue: CGFloat = 64
         
@@ -249,6 +262,14 @@ extension CommitRowView {
     
     struct TitleViewHeight: PreferenceKey {
         static var defaultValue: CGFloat = 24
+        
+        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+            value = nextValue()
+        }
+    }
+    
+    struct RowHeight: PreferenceKey {
+        static var defaultValue: CGFloat = 60
         
         static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
             value = nextValue()
