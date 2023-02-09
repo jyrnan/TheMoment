@@ -19,7 +19,7 @@ struct BannerView: View {
     
     var body: some View {
         ZStack {
-            Image(bannerImage)
+            Image(["Banner", "Image", "Meat"].randomElement() ?? "Banner")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .layoutPriority(-1)

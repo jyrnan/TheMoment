@@ -40,7 +40,9 @@ struct CommitRowView: View {
             .border(boardColor)
 
             VStack(spacing: contentSpacing) {
+                
                 VStack(spacing: textSpacing) {
+                    
                     Color.clear
                         .frame(height: textSpacing)
                         .border(boardColor)
@@ -143,7 +145,6 @@ struct CommitRowView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .readGeometry(\.size.height, key: DateViewHeight.self)
             .onPreferenceChange(DateViewHeight.self) { dateViewHeight = $0 }
-//            .padding(.bottom, contentSpacing)
     }
     
     var locationView: some View {
