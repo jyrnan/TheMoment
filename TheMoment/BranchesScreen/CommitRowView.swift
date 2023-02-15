@@ -81,7 +81,7 @@ struct CommitRowView: View {
                     commitTimeView
                 }
             }
-            .padding(.trailing, textSpacing)
+            .padding(.horizontal, textSpacing)
             .border(boardColor)
         }
         .readGeometry(\.size.height, key: RowHeight.self)
@@ -176,7 +176,7 @@ struct CommitRowView: View {
     }
     
     var contentView: some View {
-        Text("\(commit.content!)")
+        Text("\(commit.content!)").font(.callout)
             .lineLimit(5)
             .multilineTextAlignment(.leading)
             .frame(maxWidth: .infinity, alignment: .leading)

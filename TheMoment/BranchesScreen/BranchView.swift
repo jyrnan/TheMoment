@@ -1,5 +1,5 @@
 //
-//  TimelineView.swift
+//  BranchView.swift
 //  DemoTabView
 //
 //  Created by jyrnan on 2023/2/3.
@@ -7,12 +7,24 @@
 
 import SwiftUI
 
-struct TimelineView: View {
-    @Binding var path: [UUID]
+struct BranchView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @Binding var sheet: HomeView.Sheet?
 
     @State var commits: [Commit] = Array(repeating: Commit.examples, count: 1).flatMap { $0 .shuffled() }
     @State var commitsCopy: [Commit] = Array(repeating: Commit.examples, count: 1).flatMap { $0 .shuffled() }
+    
+//    @EnvironmentObject var vm: BranchViewModel
+    @Binding var path:[UUID]
+    
+    @Binding var selectedBranch: Int
+    var branch: Branch
+    var branchCount: Int
+    
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        animation: .default)
+    private var items: FetchedResults<Item>
 
     let gradient = LinearGradient(colors: [.orange, .green],
                                   startPoint: .topLeading,
@@ -20,7 +32,7 @@ struct TimelineView: View {
 
     var body: some View {
         List {
-            BannerView()
+            BannerView(selectedBranch: $selectedBranch, branch: branch, branchCount: branchCount)
                 .listRowInsets(.init())
 
             ForEach($commits, id: \.id, editActions: .delete) { $commit in
@@ -32,14 +44,19 @@ struct TimelineView: View {
                     }
             }
             .onDelete(perform: { _ in }) // 可以使EditButton生效
+            
+            ForEach(items) { item in
+                Text(item.timestamp ?? .now, format: .dateTime)
+            }
         }
         .listStyle(.plain)
         .scrollIndicators(.hidden)
+        
     }
 }
 
 struct TimelineView_Previews: PreviewProvider {
     static var previews: some View {
-        TimelineView(path: .constant([]), sheet: .constant(nil))
+        BranchView(sheet: .constant(nil), path: .constant([]), selectedBranch: .constant(0), branch: Branch(), branchCount: 4)
     }
 }

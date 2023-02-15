@@ -14,25 +14,38 @@ struct BannerView: View {
     let gapInDotAndAvatar: CGFloat = 4
     let viewHeight: CGFloat = 240
     
-    @State var avatarImage: String = "Avatar"
-    @State var bannerImage: String = "Banner"
+    @Binding var selectedBranch: Int
+    var branch: Branch
+    var branchCount:Int
     
+    @ViewBuilder
+    private func makeScrollBar(currentIndex: Int, total:Int) -> some View {
+        Rectangle()
+            .fill(.white.opacity(0.1))
+            .frame(height: 4)
+            .overlay{GeometryReader {proxy in
+                Rectangle()
+                    .fill(Color.white.opacity(0.6))
+                    .frame(width: proxy.size.width / CGFloat(total))
+                    .position(x:proxy.size.width / CGFloat(total) * ( CGFloat(currentIndex) + 0.5 ), y: 2)
+            }}
+    }
+        
     var body: some View {
         ZStack {
-            Image(["Banner", "Image", "Meat"].randomElement() ?? "Banner")
+            Image(branch.bannerBGImage)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .layoutPriority(-1)
-                .onTapGesture {
-                    withAnimation{
-                        bannerImage = ["Banner", "Image", "Meat"].randomElement() ?? "Banner"
-                    }
-                }
+            
+            makeScrollBar(currentIndex: selectedBranch, total: branchCount)
+                .frame(maxHeight: .infinity, alignment: .bottom)
+                .layoutPriority(-1)
                 
             VStack(alignment: .center, spacing: 0) {
                 Circle()
                     .overlay {
-                        Image(avatarImage)
+                        Image(branch.avatar)
                             .resizable()
                             .clipShape(Circle().inset(by: 3))
                     }
@@ -53,12 +66,32 @@ struct BannerView: View {
             .layoutPriority(-1)
             
             Text(Date.now.formatted(date: .abbreviated, time: .omitted))
-                .font(.subheadline.bold())
+                .font(.title3.bold())
                 .foregroundColor(.white)
-                .padding(.bottom, lineLength / 3)
-                .padding(.leading, Dim.leftSpace * 1.3)
+                .padding(.bottom, lineLength / 1)
+                .padding(.leading, Dim.leftSpace * 1.8)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                 .layoutPriority(-1)
+            
+            Image(systemName: "mail.stack") // arrow.left.arrow.right.circle"
+                .font(.title)
+                .foregroundColor(.white)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                .layoutPriority(-1)
+                .contextMenu{
+                    ForEach(0..<4) {int in
+                        Button(action: {
+                            selectedBranch = int
+                        }, label: {
+                            Text("Branch")
+                        })
+                        .buttonStyle(.bordered)
+                    }
+                }
+                .onTapGesture {
+                    selectedBranch = selectedBranch < branchCount - 1 ? selectedBranch + 1 : 0
+                }
             
             Color.clear
                 .frame(height: viewHeight)
@@ -69,6 +102,6 @@ struct BannerView: View {
 
 struct BannerView_Previews: PreviewProvider {
     static var previews: some View {
-        BannerView()
+        BannerView(selectedBranch: .constant(0), branch: Branch(), branchCount: 4)
     }
 }

@@ -8,31 +8,31 @@
 import SwiftUI
 
 struct BranchScreen: View {
+//    @StateObject var vm: BranchViewModel = BranchViewModel()
     @State var path: [UUID] = []
+    
     @Binding var sheet: HomeView.Sheet?
 
-    @State var switchTimeline: Int = 0
-    @State var branches: [String] = ["Main", "Life", "Workout", "Meditation"]
+    @State var selectedBranch: Int = 0
+    var branches: [Branch] = Branch.examples
 
     var body: some View {
         NavigationStack(path: $path) {
-            TimelineView(path: $path, sheet: $sheet)
+            BranchView(sheet: $sheet, path: $path, selectedBranch: $selectedBranch, branch: branches[selectedBranch], branchCount: branches.count)
                 .ignoresSafeArea(edges: .top)
-                .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
-                .id(switchTimeline)
-                .navigationTitle(branches[switchTimeline])
+                .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)).combined(with: .opacity))
+                .id(selectedBranch)
+                .navigationTitle(branches[selectedBranch].name)
                 .navigationDestination(for: UUID.self, destination: { id in DetailView(id: id, path: $path) })
                 .toolbar {
                     HStack { // 添加 HStack
                         EditButton()
-                        Button(action: { switchTimeline = switchTimeline < branches.count - 1 ? switchTimeline + 1 : 0 }) {
-//                            Label("Add Item", systemImage: "plus")
-                            Text("Add")
-                        }
                     }
                 }
         }
-        .animation(.default, value: switchTimeline)
+        .animation(.default, value: selectedBranch)
+        .tint(branches[selectedBranch].accentColor)
+        
     }
 }
 

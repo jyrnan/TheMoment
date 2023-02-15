@@ -68,6 +68,7 @@ struct HomeView: View {
         .onAppear{
             UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor:UIColor.white]
         }
+        .tint(.primary)
     }
 }
 

@@ -16,6 +16,7 @@ struct TheMomentApp: App {
 //            ContentView()
 //                .environment(\.managedObjectContext, persistenceController.container.viewContext)
             HomeView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
