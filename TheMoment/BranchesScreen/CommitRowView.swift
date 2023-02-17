@@ -12,7 +12,7 @@ struct CommitRowView: View {
     let lineWidth: CGFloat = Dim.lineWidth
     let iconRadius: CGFloat = 12
     let dotRadius: CGFloat = 4
-    let rightSpace: CGFloat = 16
+    let rightSpace: CGFloat = Dim.rightSpace
     
     let edgeSpacing: CGFloat = 16
     let textSpacing: CGFloat = 8

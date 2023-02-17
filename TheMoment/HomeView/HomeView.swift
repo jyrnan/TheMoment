@@ -64,7 +64,11 @@ struct HomeView: View {
                     sheet = .newCommit({_ in})
                 }
         }
-        .sheet(item: $sheet, content: {$0})
+        .sheet(item: $sheet){
+            $0
+            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+//            .environment(\.accentColor, .accentColor)
+        }
         .onAppear{
             UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor:UIColor.white]
         }

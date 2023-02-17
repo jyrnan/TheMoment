@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct BranchScreen: View {
-//    @StateObject var vm: BranchViewModel = BranchViewModel()
     @State var path: [UUID] = []
     
     @Binding var sheet: HomeView.Sheet?
@@ -24,14 +23,30 @@ struct BranchScreen: View {
                 .id(selectedBranch)
                 .navigationTitle(branches[selectedBranch].name)
                 .navigationDestination(for: UUID.self, destination: { id in DetailView(id: id, path: $path) })
-                .toolbar {
-                    HStack { // 添加 HStack
-                        EditButton()
+                .toolbar{
+                    Button{
+                            selectedBranch = selectedBranch < branches.count - 1 ? selectedBranch + 1 : 0
+                        
+                    } label: {
+                       Image(systemName: "arrow.left.arrow.right.circle") //Text("Switch")
+                            .foregroundColor(.white)
+                            .contextMenu{
+                                ForEach(0..<branches.count) { index in
+                                    Button{
+                                        selectedBranch = index
+                                    } label: {
+                                        Text(branches[index].name)
+                                    }
+                                    
+                                }
+                                
+                            }
                     }
+                    
                 }
+                .animation(.default, value: selectedBranch)
+                .tint(branches[selectedBranch].accentColor)
         }
-        .animation(.default, value: selectedBranch)
-        .tint(branches[selectedBranch].accentColor)
         
     }
 }

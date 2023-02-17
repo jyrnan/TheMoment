@@ -8,11 +8,7 @@
 import SwiftUI
 
 extension HomeView {
-    
     enum Sheet: Identifiable, View {
-        
-        
-        
         case newCommit((Commit) -> Void)
         case editCommit(Commit)
         case commitDetail(Commit)
@@ -30,14 +26,15 @@ extension HomeView {
         
         var body: some View {
             switch self {
-            case .newCommit(_):
-                Text("New Commit")
+            case .newCommit:
+                NewCommitView(id: id)
             case .editCommit(let commit):
                 Text(commit.title ?? "")
             case .commitDetail(let commit):
-                DetailView(id: commit.id, path:.constant([UUID()]))
-                
+                DetailView(id: commit.id, path: .constant([UUID()]))
             }
         }
     }
 }
+
+

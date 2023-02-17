@@ -20,15 +20,28 @@ struct BannerView: View {
     
     @ViewBuilder
     private func makeScrollBar(currentIndex: Int, total:Int) -> some View {
-        Rectangle()
-            .fill(.white.opacity(0.1))
-            .frame(height: 4)
-            .overlay{GeometryReader {proxy in
-                Rectangle()
-                    .fill(Color.white.opacity(0.6))
-                    .frame(width: proxy.size.width / CGFloat(total))
-                    .position(x:proxy.size.width / CGFloat(total) * ( CGFloat(currentIndex) + 0.5 ), y: 2)
-            }}
+//        Rectangle()
+//            .fill(.white.opacity(0.1))
+//            .frame(height: 4)
+//            .overlay{GeometryReader {proxy in
+//                Rectangle()
+//                    .fill(Color.white.opacity(0.6))
+//                    .frame(width: proxy.size.width / CGFloat(total))
+//                    .position(x:proxy.size.width / CGFloat(total) * ( CGFloat(currentIndex) + 0.5 ), y: 2)
+//            }}
+        HStack(spacing: 0){
+            ForEach(0..<total) {index in
+                Circle()
+                    .fill(currentIndex == index ? Color.accentColor : Color.white)
+                    .padding(0)
+                    .frame(width: 4, height: 4)
+                    .padding(3)
+            }
+        }
+//        .background(Capsule().fill(.background).opacity(0.4))
+        .padding(.trailing)
+        
+       
     }
         
     var body: some View {
@@ -39,7 +52,7 @@ struct BannerView: View {
                 .layoutPriority(-1)
             
             makeScrollBar(currentIndex: selectedBranch, total: branchCount)
-                .frame(maxHeight: .infinity, alignment: .bottom)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                 .layoutPriority(-1)
                 
             VStack(alignment: .center, spacing: 0) {
@@ -73,25 +86,25 @@ struct BannerView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                 .layoutPriority(-1)
             
-            Image(systemName: "mail.stack") // arrow.left.arrow.right.circle"
-                .font(.title)
-                .foregroundColor(.white)
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                .layoutPriority(-1)
-                .contextMenu{
-                    ForEach(0..<4) {int in
-                        Button(action: {
-                            selectedBranch = int
-                        }, label: {
-                            Text("Branch")
-                        })
-                        .buttonStyle(.bordered)
-                    }
-                }
-                .onTapGesture {
-                    selectedBranch = selectedBranch < branchCount - 1 ? selectedBranch + 1 : 0
-                }
+//            Image(systemName: "arrow.left.arrow.right.circle") // arrow.left.arrow.right.circle mail.stack"
+//                .font(.title)
+//                .foregroundColor(.white)
+//                .padding()
+//                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+//                .layoutPriority(-1)
+//                .contextMenu{
+//                    ForEach(0..<4) {int in
+//                        Button(action: {
+//                            selectedBranch = int
+//                        }, label: {
+//                            Text("Branch")
+//                        })
+//                        .buttonStyle(.bordered)
+//                    }
+//                }
+//                .onTapGesture {
+//                    selectedBranch = selectedBranch < branchCount - 1 ? selectedBranch + 1 : 0
+//                }
             
             Color.clear
                 .frame(height: viewHeight)

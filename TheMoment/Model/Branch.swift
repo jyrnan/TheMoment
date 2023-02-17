@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Branch: Identifiable {
     var id = UUID()
-    var name: String = "Main"
+    var name: String = ["Main","Banner", "Image", "Meat"].randomElement() ?? "Main"
     var bannerBGImage: String = ["Banner", "Image", "Meat"].randomElement() ?? "Banner"
     var avatar: String = "Avatar"
     var accentColor: Color = colors.randomElement() ?? .accentColor

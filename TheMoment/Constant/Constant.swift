@@ -9,6 +9,7 @@ import Foundation
 
 struct Dim {
     static let leftSpace: CGFloat = 40
+    static let rightSpace: CGFloat = 16
     static let lineWidth: CGFloat = 2
     static let dotRadius: CGFloat = 4
 }

@@ -14,7 +14,6 @@ struct BranchView: View {
     @State var commits: [Commit] = Array(repeating: Commit.examples, count: 1).flatMap { $0 .shuffled() }
     @State var commitsCopy: [Commit] = Array(repeating: Commit.examples, count: 1).flatMap { $0 .shuffled() }
     
-//    @EnvironmentObject var vm: BranchViewModel
     @Binding var path:[UUID]
     
     @Binding var selectedBranch: Int
@@ -34,6 +33,9 @@ struct BranchView: View {
         List {
             BannerView(selectedBranch: $selectedBranch, branch: branch, branchCount: branchCount)
                 .listRowInsets(.init())
+            
+            makeInfoView()
+                .listRowInsets(.init())
 
             ForEach($commits, id: \.id, editActions: .delete) { $commit in
                 CommitRowView(commit: commit)
@@ -52,6 +54,27 @@ struct BranchView: View {
         .listStyle(.plain)
         .scrollIndicators(.hidden)
         
+    }
+    
+    private func makeInfoView() -> some View {
+        
+        HStack(spacing: 0) {
+            HStack(spacing: 0){
+                Rectangle()
+                    .foregroundColor(.accentColor)
+                    .frame(width: 2)
+                    .padding(.leading, Dim.leftSpace)
+                    .padding(.trailing, Dim.rightSpace)
+                    .frame(width: Dim.leftSpace + Dim.rightSpace + 2, alignment: .leading)
+                (Text("... 232 ").bold() + Text("Days ") + Text("2344 ").bold() + Text("Commits ") + Text("2555 ").bold() + Text("Photos"))
+                    .lineLimit(1)
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                    .padding(8)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+            
+        }
     }
 }
 
