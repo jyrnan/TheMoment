@@ -26,7 +26,7 @@ struct BranchScreen: View {
             BranchView(sheet: $sheet,
                        path: $path,
                        selectedBranch: $selectedBranch,
-//                       branch: getCurrentBranch(),
+                       branch: CD_Branch(context: viewContext),
                        branchCount: branches.count)
 //                .ignoresSafeArea(edges: .top)
 //                .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)).combined(with: .opacity))
@@ -87,7 +87,7 @@ struct BranchScreen: View {
             branch.uuid = UUID()
             return branch
         }
-        return branches.filter{$0.uuid == selectedBranch}.first ?? branches.first!
+        return branches.filter{$0.uuid == selectedBranch}.first ?? viewContext.insertObject()
     }
 }
 

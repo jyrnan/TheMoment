@@ -14,7 +14,7 @@ struct BranchView: View {
     @Binding var path:[UUID]
     
     @Binding var selectedBranch: UUID
-//    var branch: CD_Branch
+    var branch: CD_Branch
     var branchCount: Int
     
     @Environment(\.managedObjectContext) private var viewContext
@@ -91,9 +91,11 @@ struct BranchView: View {
 }
 
 struct TimelineView_Previews: PreviewProvider {
+    static let viewContext = PersistenceController.shared.container.viewContext
     static var previews: some View {
         BranchView(sheet: .constant(nil), path: .constant([]), selectedBranch: .constant(UUID()),
-//                   branch: CD_Branch(),
+                   branch: CD_Branch(context: viewContext),
                    branchCount: 4)
+//        .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
     }
 }
