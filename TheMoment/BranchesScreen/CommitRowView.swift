@@ -18,6 +18,8 @@ struct CommitRowView: View {
     let textSpacing: CGFloat = 8
     let contentSpacing: CGFloat = 4
     
+    @Environment(\.managedObjectContext) private var viewContext
+    
     @State var shouldShowBorder: Bool = false
     
     var boardColor: Color { shouldShowBorder ? .red : .clear }
@@ -27,7 +29,7 @@ struct CommitRowView: View {
     
     @State var rowHeight: CGFloat = RowHeight.defaultValue
 
-    var commit: Commit
+    var commit: CD_Commit
     
     var body: some View {
         HStack(spacing: 0) {
@@ -65,13 +67,13 @@ struct CommitRowView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    if commit.images.count != 0, commit.content != nil {
+                    if commit.images?.count != 0, commit.content != nil {
                         imagesThumbView
                     }
                 }
                 .border(boardColor)
                 
-                if commit.images.count != 0, commit.content == nil {
+                if commit.images?.count != 0, commit.content == nil {
                     imagesView
                 }
                 
@@ -105,9 +107,9 @@ struct CommitRowView: View {
     }
     
     @State private var iconTopSpacing: CGFloat = IconTopSpacing.defaultValue
-    func makeIcon(commit: Commit) -> some View {
+    func makeIcon(commit: CD_Commit) -> some View {
         if let emoji = commit.emoji { return Text(emoji).font(.callout) }
-        if !commit.images.isEmpty { return Text("\(Image(systemName: "photo.fill"))") }
+        if commit.images?.first != nil  { return Text("\(Image(systemName: "photo.fill"))") }
         if commit.title != nil || commit.content != nil { return Text("\(Image(systemName: "message.fill"))") }
         return Text("\(Image(systemName: "mappin.and.ellipse"))")
     }
@@ -137,7 +139,7 @@ struct CommitRowView: View {
     }
     
     var dateView: some View {
-        Text(commit.date.formatted(date: .abbreviated, time: .omitted))
+        Text(commit.date?.formatted(date: .abbreviated, time: .omitted) ?? ".now")
             .font(.caption.bold())
             .foregroundColor(.init(uiColor: .systemBackground))
             .padding(contentSpacing)
@@ -171,6 +173,7 @@ struct CommitRowView: View {
             .onTapGesture {
                 print("\(commit.title!)")
                 shouldShowBorder.toggle()
+//                commit.cd_commit(context: viewContext)
             }
             .border(boardColor)
     }
@@ -202,7 +205,7 @@ struct CommitRowView: View {
     
     var imagesView: some View {
         ZStack {
-            Image(commit.images.first ?? "")
+            Image(commit.images?.first ?? "")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .layoutPriority(-1)
@@ -226,7 +229,7 @@ struct CommitRowView: View {
     }
     
     var commitTimeView: some View {
-        Text(commit.date.formatted(date: .abbreviated, time: .shortened))
+        Text(commit.date?.formatted(date: .abbreviated, time: .shortened) ?? ".now")
             .font(.caption2)
             .foregroundColor(.gray)
             .border(boardColor)
@@ -234,12 +237,9 @@ struct CommitRowView: View {
 }
 
 struct PostRowView_Previews: PreviewProvider {
+    static let viewContext = PersistenceController.shared.container.viewContext
     static var previews: some View {
-        CommitRowView(commit: Commit.examples.first!)
-        CommitRowView(commit: Commit.examples[1])
-        CommitRowView(commit: Commit.examples[2])
-        CommitRowView(commit: Commit.examples[3])
-        CommitRowView(commit: Commit.examples[4])
+        CommitRowView(commit: CD_Commit.new(context: viewContext))
     }
 }
 

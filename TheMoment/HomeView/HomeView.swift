@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(\.dismiss) var dissmiss
+    
     @State var selectedTab: String = "Branch"
     @State var sheet: Sheet?
 
@@ -39,6 +41,7 @@ struct HomeView: View {
                     
                 }
                 .tag("Add")
+                .disabled(true)
 
             Text("Share")
                 .tabItem {
@@ -53,26 +56,29 @@ struct HomeView: View {
                 .tag("Setting")
         }
         .overlay{
-            Image(systemName: "plus.circle.fill")
-                .resizable()
-                .aspectRatio(1, contentMode: .fill)
-                .symbolRenderingMode(.palette)
-                .foregroundStyle(Color(.label).opacity(0.5), .ultraThinMaterial)
-                .frame(width: 40, height: 44)
-                .frame(maxHeight: .infinity, alignment: .bottom)
-                .onTapGesture {
-                    sheet = .newCommit({_ in})
-                }
+            plusButtonView
         }
         .sheet(item: $sheet){
-            $0
+            $0.presentationDetents([.height(300),.medium, .large])
             .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-//            .environment(\.accentColor, .accentColor)
         }
         .onAppear{
             UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor:UIColor.white]
         }
         .tint(.primary)
+    }
+    
+    var plusButtonView: some View {
+        Image(systemName: "plus.circle.fill")
+            .resizable()
+            .aspectRatio(1, contentMode: .fill)
+            .symbolRenderingMode(.palette)
+            .foregroundStyle(Color(.label).opacity(0.5), .ultraThinMaterial)
+            .frame(width: 40, height: 44)
+            .frame(maxHeight: .infinity, alignment: .bottom)
+            .onTapGesture {
+                sheet = .newCommit
+            }
     }
 }
 

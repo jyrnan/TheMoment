@@ -9,29 +9,37 @@ import SwiftUI
 
 extension HomeView {
     enum Sheet: Identifiable, View {
-        case newCommit((Commit) -> Void)
-        case editCommit(Commit)
-        case commitDetail(Commit)
+        case newCommit
+        case editCommit(CD_Commit)
+        case newBranch
+        case editBranch(CD_Branch)
         
-        var id: Commit.ID {
+        var id: UUID {
             switch self {
             case .newCommit:
                 return UUID()
             case .editCommit(let commit):
-                return commit.id
-            case .commitDetail(let commit):
-                return commit.id
+                return commit.uuid!
+           
+                
+            case .newBranch:
+                return UUID()
+            case .editBranch(let branch):
+                return branch.uuid!
             }
         }
         
         var body: some View {
             switch self {
             case .newCommit:
-                NewCommitView(id: id)
+                EditCommitView(uuid: id)
             case .editCommit(let commit):
-                Text(commit.title ?? "")
-            case .commitDetail(let commit):
-                DetailView(id: commit.id, path: .constant([UUID()]))
+                EditCommitView(commit: commit)
+        
+            case .newBranch:
+                EditBranchView(uuid: id)
+            case .editBranch(let branch):
+                EditBranchView(branch: branch)
             }
         }
     }

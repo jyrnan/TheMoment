@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CD_Branch" representedClassName=".CD_Branch" syncable="YES">
+        <attribute name="accentColor" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="avatarImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Image" inverseName="avatar" inverseEntity="CD_Image"/>
+        <relationship name="bannerImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Image" inverseName="banner" inverseEntity="CD_Image"/>
+        <relationship name="commit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Commit" inverseName="branch" inverseEntity="CD_Commit"/>
+    </entity>
+    <entity name="CD_Commit" representedClassName=".CD_Commit" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="emoji" optional="YES" attributeType="String"/>
+        <attribute name="images" optional="YES" attributeType="Transformable" valueTransformerName="" customClassName="[String]"/>
+        <attribute name="location" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="weather" optional="YES" attributeType="String"/>
+        <relationship name="branch" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Branch" inverseName="commit" inverseEntity="CD_Branch"/>
+        <relationship name="oringinalImages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_Image" inverseName="commit" inverseEntity="CD_Image"/>
+    </entity>
+    <entity name="CD_Image" representedClassName="CD_Image" syncable="YES" codeGenerationType="class">
+        <attribute name="data" optional="YES" attributeType="Binary"/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="avatar" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Branch" inverseName="avatarImage" inverseEntity="CD_Branch"/>
+        <relationship name="banner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Branch" inverseName="bannerImage" inverseEntity="CD_Branch"/>
+        <relationship name="commit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Commit" inverseName="oringinalImages" inverseEntity="CD_Commit"/>
+    </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>

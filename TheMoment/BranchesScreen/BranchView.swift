@@ -8,22 +8,20 @@
 import SwiftUI
 
 struct BranchView: View {
-    @Environment(\.managedObjectContext) private var viewContext
+    
     @Binding var sheet: HomeView.Sheet?
 
-    @State var commits: [Commit] = Array(repeating: Commit.examples, count: 1).flatMap { $0 .shuffled() }
-    @State var commitsCopy: [Commit] = Array(repeating: Commit.examples, count: 1).flatMap { $0 .shuffled() }
-    
     @Binding var path:[UUID]
     
-    @Binding var selectedBranch: Int
-    var branch: Branch
+    @Binding var selectedBranch: UUID
+//    var branch: CD_Branch
     var branchCount: Int
     
+    @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \CD_Commit.date, ascending: false)],
         animation: .default)
-    private var items: FetchedResults<Item>
+    private var cd_Commits: FetchedResults<CD_Commit>
 
     let gradient = LinearGradient(colors: [.orange, .green],
                                   startPoint: .topLeading,
@@ -31,25 +29,24 @@ struct BranchView: View {
 
     var body: some View {
         List {
-            BannerView(selectedBranch: $selectedBranch, branch: branch, branchCount: branchCount)
-                .listRowInsets(.init())
+//            BannerView(selectedBranch: $selectedBranch, branch: branch, branchCount: branchCount)
+//                .listRowInsets(.init())
+//            
+//            makeInfoView()
+//                .listRowInsets(.init())
+//
+//            ForEach(cd_Commits, id: \.id) { commit in
+//                CommitRowView(commit: commit)
+//                    .listRowInsets(.init())
+//                    .listRowSeparator(.hidden)
+//                    .onTapGesture {
+//                        path.append(commit.uuid!)
+//                    }
+//            }
+//            .onDelete(perform: {index in
+//                deleteItems(offsets: index)
+//            }) // 可以使EditButton生效
             
-            makeInfoView()
-                .listRowInsets(.init())
-
-            ForEach($commits, id: \.id, editActions: .delete) { $commit in
-                CommitRowView(commit: commit)
-                    .listRowInsets(.init())
-                    .listRowSeparator(.hidden)
-                    .onTapGesture {
-                        path.append(commit.id)
-                    }
-            }
-            .onDelete(perform: { _ in }) // 可以使EditButton生效
-            
-            ForEach(items) { item in
-                Text(item.timestamp ?? .now, format: .dateTime)
-            }
         }
         .listStyle(.plain)
         .scrollIndicators(.hidden)
@@ -76,10 +73,27 @@ struct BranchView: View {
             
         }
     }
+    
+    private func deleteItems(offsets: IndexSet) {
+        withAnimation {
+            offsets.map { cd_Commits[$0] }.forEach(viewContext.delete)
+
+            do {
+                try viewContext.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            }
+        }
+    }
 }
 
 struct TimelineView_Previews: PreviewProvider {
     static var previews: some View {
-        BranchView(sheet: .constant(nil), path: .constant([]), selectedBranch: .constant(0), branch: Branch(), branchCount: 4)
+        BranchView(sheet: .constant(nil), path: .constant([]), selectedBranch: .constant(UUID()),
+//                   branch: CD_Branch(),
+                   branchCount: 4)
     }
 }

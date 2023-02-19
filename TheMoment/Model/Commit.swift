@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct Commit: Equatable, Identifiable {
     let id = UUID()
@@ -39,3 +40,19 @@ extension Commit {
     ]
 }
 
+extension Commit {
+    func cd_commit(context: NSManagedObjectContext) -> CD_Commit {
+        let commit: CD_Commit = context.fetchOrInsert(id: id.uuidString)
+        commit.uuid = id
+        commit.title = title
+        commit.content = content
+        commit.date = date
+        commit.emoji = emoji
+        commit.location = location
+        commit.images = images
+        
+        context.saveOrRollback()
+        
+        return commit
+    }
+}

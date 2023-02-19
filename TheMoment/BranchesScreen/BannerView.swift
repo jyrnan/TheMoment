@@ -14,21 +14,13 @@ struct BannerView: View {
     let gapInDotAndAvatar: CGFloat = 4
     let viewHeight: CGFloat = 240
     
-    @Binding var selectedBranch: Int
-    var branch: Branch
+    @Binding var selectedBranch: UUID
+    var branch: CD_Branch
     var branchCount:Int
     
     @ViewBuilder
     private func makeScrollBar(currentIndex: Int, total:Int) -> some View {
-//        Rectangle()
-//            .fill(.white.opacity(0.1))
-//            .frame(height: 4)
-//            .overlay{GeometryReader {proxy in
-//                Rectangle()
-//                    .fill(Color.white.opacity(0.6))
-//                    .frame(width: proxy.size.width / CGFloat(total))
-//                    .position(x:proxy.size.width / CGFloat(total) * ( CGFloat(currentIndex) + 0.5 ), y: 2)
-//            }}
+
         HStack(spacing: 0){
             ForEach(0..<total) {index in
                 Circle()
@@ -38,7 +30,6 @@ struct BannerView: View {
                     .padding(3)
             }
         }
-//        .background(Capsule().fill(.background).opacity(0.4))
         .padding(.trailing)
         
        
@@ -46,19 +37,19 @@ struct BannerView: View {
         
     var body: some View {
         ZStack {
-            Image(branch.bannerBGImage)
+            Image("Image")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .layoutPriority(-1)
             
-            makeScrollBar(currentIndex: selectedBranch, total: branchCount)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                .layoutPriority(-1)
+//            makeScrollBar(currentIndex: selectedBranch, total: branchCount)
+//                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+//                .layoutPriority(-1)
                 
             VStack(alignment: .center, spacing: 0) {
                 Circle()
                     .overlay {
-                        Image(branch.avatar)
+                        Image(systemName: "person")
                             .resizable()
                             .clipShape(Circle().inset(by: 3))
                     }
@@ -115,6 +106,6 @@ struct BannerView: View {
 
 struct BannerView_Previews: PreviewProvider {
     static var previews: some View {
-        BannerView(selectedBranch: .constant(0), branch: Branch(), branchCount: 4)
+        BannerView(selectedBranch: .constant(UUID()), branch: CD_Branch(), branchCount: 4)
     }
 }

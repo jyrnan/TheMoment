@@ -15,6 +15,7 @@ struct AuthenticationScreen: View {
     @Binding var state: TheMomentApp.AuthenticationState
     
     @State private var password: String = ""
+    @State private var authType: AuthType = .face
     
     var body: some View {
         VStack(spacing: 0) {
@@ -58,6 +59,11 @@ struct AuthenticationScreen: View {
             .transition(.move(edge: .bottom))
             .id(state)
             .animation(.default, value: state)
+        }
+        .task {
+            if authType == .face {
+                authByFaceid()
+            }
         }
     }
 

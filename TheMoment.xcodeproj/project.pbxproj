@@ -7,10 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D21758B0299F241300EF7DF1 /* NewCommitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21758AF299F241300EF7DF1 /* NewCommitView.swift */; };
+		D21758B0299F241300EF7DF1 /* EditCommitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21758AF299F241300EF7DF1 /* EditCommitView.swift */; };
 		D21CF67C299F4F1800171BE7 /* NSManagedObjectContext+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CF67B299F4F1800171BE7 /* NSManagedObjectContext+.swift */; };
 		D21CF67E299F538F00171BE7 /* ManagedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CF67D299F538F00171BE7 /* ManagedProtocol.swift */; };
+		D21CF689299F6A7F00171BE7 /* CD_Commit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CF687299F6A7F00171BE7 /* CD_Commit+CoreDataClass.swift */; };
+		D21CF68A299F6A7F00171BE7 /* CD_Commit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CF688299F6A7F00171BE7 /* CD_Commit+CoreDataProperties.swift */; };
+		D21CF68D29A05C9200171BE7 /* EditCommitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CF68C29A05C9200171BE7 /* EditCommitViewModel.swift */; };
+		D21CF6A229A1BB0A00171BE7 /* CD_Commit+Managed.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CF6A129A1BB0A00171BE7 /* CD_Commit+Managed.swift */; };
 		D257F5D6299A2731006CA065 /* BranchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D257F5D5299A2731006CA065 /* BranchViewModel.swift */; };
+		D284CA9529A20C7C00C8EC7C /* CD_Branch+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9429A20C7C00C8EC7C /* CD_Branch+.swift */; };
+		D284CA9829A2107700C8EC7C /* CD_Branch+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9629A2107700C8EC7C /* CD_Branch+CoreDataClass.swift */; };
+		D284CA9929A2107700C8EC7C /* CD_Branch+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9729A2107700C8EC7C /* CD_Branch+CoreDataProperties.swift */; };
+		D284CA9C29A2393600C8EC7C /* EditBranchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9B29A2393600C8EC7C /* EditBranchView.swift */; };
+		D284CA9E29A2398D00C8EC7C /* EditBranchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9D29A2398D00C8EC7C /* EditBranchViewModel.swift */; };
 		D2AC54EC299B77E100075DD0 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AC54EB299B77E100075DD0 /* Branch.swift */; };
 		D2EBB20E299E27E6004EA1D5 /* AuthenticationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EBB20D299E27E6004EA1D5 /* AuthenticationScreen.swift */; };
 		D2F51778298D07240091B527 /* TheMomentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F51777298D07240091B527 /* TheMomentApp.swift */; };
@@ -53,10 +62,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D21758AF299F241300EF7DF1 /* NewCommitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCommitView.swift; sourceTree = "<group>"; };
+		D21758AF299F241300EF7DF1 /* EditCommitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommitView.swift; sourceTree = "<group>"; };
 		D21CF67B299F4F1800171BE7 /* NSManagedObjectContext+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+.swift"; sourceTree = "<group>"; };
 		D21CF67D299F538F00171BE7 /* ManagedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedProtocol.swift; sourceTree = "<group>"; };
+		D21CF687299F6A7F00171BE7 /* CD_Commit+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Commit+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D21CF688299F6A7F00171BE7 /* CD_Commit+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Commit+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D21CF68C29A05C9200171BE7 /* EditCommitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommitViewModel.swift; sourceTree = "<group>"; };
+		D21CF6A129A1BB0A00171BE7 /* CD_Commit+Managed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Commit+Managed.swift"; sourceTree = "<group>"; };
 		D257F5D5299A2731006CA065 /* BranchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchViewModel.swift; sourceTree = "<group>"; };
+		D284CA9429A20C7C00C8EC7C /* CD_Branch+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Branch+.swift"; sourceTree = "<group>"; };
+		D284CA9629A2107700C8EC7C /* CD_Branch+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Branch+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D284CA9729A2107700C8EC7C /* CD_Branch+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Branch+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D284CA9B29A2393600C8EC7C /* EditBranchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBranchView.swift; sourceTree = "<group>"; };
+		D284CA9D29A2398D00C8EC7C /* EditBranchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBranchViewModel.swift; sourceTree = "<group>"; };
 		D2AC54EB299B77E100075DD0 /* Branch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
 		D2EBB20D299E27E6004EA1D5 /* AuthenticationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationScreen.swift; sourceTree = "<group>"; };
 		D2F51774298D07240091B527 /* TheMoment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMoment.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,7 +133,10 @@
 			children = (
 				D2F517AB298D08040091B527 /* HomeView.swift */,
 				D2F517BC298E77930091B527 /* Sheet.swift */,
-				D21758AF299F241300EF7DF1 /* NewCommitView.swift */,
+				D21758AF299F241300EF7DF1 /* EditCommitView.swift */,
+				D21CF68C29A05C9200171BE7 /* EditCommitViewModel.swift */,
+				D284CA9B29A2393600C8EC7C /* EditBranchView.swift */,
+				D284CA9D29A2398D00C8EC7C /* EditBranchViewModel.swift */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -126,9 +147,31 @@
 				D2F51780298D07250091B527 /* Persistence.swift */,
 				D21CF67D299F538F00171BE7 /* ManagedProtocol.swift */,
 				D21CF67B299F4F1800171BE7 /* NSManagedObjectContext+.swift */,
+				D284CA9A29A214B400C8EC7C /* CD_Branch */,
+				D21CF68B299F6A8E00171BE7 /* CD_Commit */,
 				D2F51782298D07250091B527 /* TheMoment.xcdatamodeld */,
 			);
 			path = Persistance;
+			sourceTree = "<group>";
+		};
+		D21CF68B299F6A8E00171BE7 /* CD_Commit */ = {
+			isa = PBXGroup;
+			children = (
+				D21CF687299F6A7F00171BE7 /* CD_Commit+CoreDataClass.swift */,
+				D21CF688299F6A7F00171BE7 /* CD_Commit+CoreDataProperties.swift */,
+				D21CF6A129A1BB0A00171BE7 /* CD_Commit+Managed.swift */,
+			);
+			path = CD_Commit;
+			sourceTree = "<group>";
+		};
+		D284CA9A29A214B400C8EC7C /* CD_Branch */ = {
+			isa = PBXGroup;
+			children = (
+				D284CA9429A20C7C00C8EC7C /* CD_Branch+.swift */,
+				D284CA9629A2107700C8EC7C /* CD_Branch+CoreDataClass.swift */,
+				D284CA9729A2107700C8EC7C /* CD_Branch+CoreDataProperties.swift */,
+			);
+			path = CD_Branch;
 			sourceTree = "<group>";
 		};
 		D2EBB20F299E27FF004EA1D5 /* AuthenticationScreen */ = {
@@ -373,21 +416,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D21758B0299F241300EF7DF1 /* NewCommitView.swift in Sources */,
+				D21758B0299F241300EF7DF1 /* EditCommitView.swift in Sources */,
+				D21CF6A229A1BB0A00171BE7 /* CD_Commit+Managed.swift in Sources */,
 				D2F517B2298D0F750091B527 /* DetailView.swift in Sources */,
 				D2F51781298D07250091B527 /* Persistence.swift in Sources */,
 				D2F517AC298D08040091B527 /* HomeView.swift in Sources */,
+				D284CA9929A2107700C8EC7C /* CD_Branch+CoreDataProperties.swift in Sources */,
 				D2F5177A298D07240091B527 /* ContentView.swift in Sources */,
 				D2F517BF2991F8A90091B527 /* View+.swift in Sources */,
+				D284CA9529A20C7C00C8EC7C /* CD_Branch+.swift in Sources */,
 				D2AC54EC299B77E100075DD0 /* Branch.swift in Sources */,
 				D2EBB20E299E27E6004EA1D5 /* AuthenticationScreen.swift in Sources */,
 				D257F5D6299A2731006CA065 /* BranchViewModel.swift in Sources */,
 				D2F51778298D07240091B527 /* TheMomentApp.swift in Sources */,
+				D284CA9E29A2398D00C8EC7C /* EditBranchViewModel.swift in Sources */,
+				D21CF689299F6A7F00171BE7 /* CD_Commit+CoreDataClass.swift in Sources */,
+				D21CF68D29A05C9200171BE7 /* EditCommitViewModel.swift in Sources */,
 				D2F517AA298D076E0091B527 /* Commit.swift in Sources */,
 				D21CF67E299F538F00171BE7 /* ManagedProtocol.swift in Sources */,
+				D21CF68A299F6A7F00171BE7 /* CD_Commit+CoreDataProperties.swift in Sources */,
 				D2F517B0298D0F260091B527 /* CommitRowView.swift in Sources */,
+				D284CA9829A2107700C8EC7C /* CD_Branch+CoreDataClass.swift in Sources */,
 				D2F517B8298E2AC30091B527 /* BannerView.swift in Sources */,
 				D2F517A8298D07620091B527 /* BranchView.swift in Sources */,
+				D284CA9C29A2393600C8EC7C /* EditBranchView.swift in Sources */,
 				D2F517B4298D12380091B527 /* BranchScreen.swift in Sources */,
 				D2F517BD298E77930091B527 /* Sheet.swift in Sources */,
 				D2F51784298D07250091B527 /* TheMoment.xcdatamodeld in Sources */,

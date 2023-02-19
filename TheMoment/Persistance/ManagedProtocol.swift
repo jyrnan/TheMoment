@@ -13,7 +13,7 @@ protocol Managed: NSFetchRequestResult {
     static var defaultSortDescriptors: [NSSortDescriptor] {get}
     
     static func makeDefaultPredicate(id: String) -> NSPredicate
-    
+    var uuid: UUID? {get}
 }
 
 extension Managed {
@@ -32,4 +32,11 @@ extension Managed {
 extension Managed where Self: NSManagedObject {
     static var entityName: String {return entity().name!}
 }
+
+extension Managed where Self: NSManagedObject {
+    static func makeDefaultPredicate(id: String) -> NSPredicate {
+        return NSPredicate(format: "%K == %@", #keyPath(CD_Commit.uuid.uuidString), id)
+    }
+}
+
 
