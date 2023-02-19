@@ -29,23 +29,23 @@ struct BranchView: View {
 
     var body: some View {
         List {
-//            BannerView(selectedBranch: $selectedBranch, branch: branch, branchCount: branchCount)
-//                .listRowInsets(.init())
-//            
-//            makeInfoView()
-//                .listRowInsets(.init())
-//
-//            ForEach(cd_Commits, id: \.id) { commit in
-//                CommitRowView(commit: commit)
-//                    .listRowInsets(.init())
-//                    .listRowSeparator(.hidden)
-//                    .onTapGesture {
-//                        path.append(commit.uuid!)
-//                    }
-//            }
-//            .onDelete(perform: {index in
-//                deleteItems(offsets: index)
-//            }) // 可以使EditButton生效
+            BannerView(selectedBranch: $selectedBranch, branch: branch, branchCount: branchCount)
+                .listRowInsets(.init())
+            
+            makeInfoView()
+                .listRowInsets(.init())
+
+            ForEach(cd_Commits, id: \.id) { commit in
+                CommitRowView(commit: commit)
+                    .listRowInsets(.init())
+                    .listRowSeparator(.hidden)
+                    .onTapGesture {
+                        path.append(commit.uuid!)
+                    }
+            }
+            .onDelete(perform: {index in
+                deleteItems(offsets: index)
+            }) // 可以使EditButton生效
             
         }
         .listStyle(.plain)
