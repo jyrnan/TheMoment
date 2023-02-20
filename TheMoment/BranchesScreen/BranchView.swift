@@ -11,7 +11,7 @@ struct BranchView: View {
     
     @Binding var sheet: HomeView.Sheet?
 
-    @Binding var path:[UUID]
+    @Binding var path:[CD_Commit]
     
     @Binding var selectedBranch: UUID?
     var branch: CD_Branch
@@ -35,12 +35,12 @@ struct BranchView: View {
             makeInfoView()
                 .listRowInsets(.init())
 
-            ForEach(cd_Commits, id: \.id) { commit in
+            ForEach(cd_Commits) { commit in
                 CommitRowView(commit: commit)
                     .listRowInsets(.init())
                     .listRowSeparator(.hidden)
                     .onTapGesture {
-                        path.append(commit.uuid!)
+                        path.append(commit)
                     }
             }
             .onDelete(perform: {index in

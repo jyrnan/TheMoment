@@ -21,6 +21,7 @@ public extension CD_Commit {
     @NSManaged var emoji: String?
     @NSManaged var images: [String]?
     @NSManaged var date: Date?
+    @NSManaged var editAt: Date?
     @NSManaged var weather: String?
 }
 

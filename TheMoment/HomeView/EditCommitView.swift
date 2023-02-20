@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EditCommitView: View {
-    @StateObject var vm: EditCommitViewModel = .init()
+    @StateObject var vm: EditCommitViewModel
     
     @Environment(\.dismiss) var dissmiss
     var uuid: UUID?
@@ -21,6 +21,12 @@ struct EditCommitView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \CD_Branch.name, ascending: false)],
         animation: .default)
     private var cd_Branches: FetchedResults<CD_Branch>
+    
+    init(uuid: UUID? = nil, commit: CD_Commit? = nil) {
+        _vm = StateObject(wrappedValue: EditCommitViewModel(commit: commit))
+        self.uuid = uuid
+        self.commit = commit
+    }
     
     var body: some View {
         VStack {
@@ -44,9 +50,15 @@ struct EditCommitView: View {
                 .listRowInsets(.init())
                 
                 Section(content: {
-                    TextEditor(text: $vm.text).padding()
-                        .frame(minHeight: 60,maxHeight: 200)
-                }, header: { Text("Words") }, footer: {
+                    TextField("Title", text: $vm.title)
+                        .padding(.horizontal)
+                        
+                    TextEditor(text: $vm.content)
+                        .padding(.horizontal)
+                        .frame(height:120)
+                },
+                        header: { Text("Words") },
+                        footer: {
                     Text("\(Image(systemName: "sun.max")) \(vm.weather) \(arc4random_uniform(25))°C")
                     
                         .font(.caption2)
@@ -80,13 +92,20 @@ struct EditCommitView: View {
             }
 
             Button {
-                if vm.addCommit() { dissmiss() }
+                if isEditMode {
+                    guard vm.updateAndSave(commit: commit!) else {return}
+                    dissmiss()
+                } else {
+                    let newCommit = vm.newCommit(uuid: uuid!)
+                    guard vm.updateAndSave(commit: newCommit) else {return}
+                    dissmiss()
+                }
             } label: {
-                Text("Add Commit")
+                Text(isEditMode ? "Save Commit" : "Add Commit")
             }
             .padding()
             .tint(.accentColor)
-            .disabled(vm.text == "")
+            .disabled(vm.title == "")
             
             if isEditMode {
                 Button(role: .destructive, action: {
@@ -96,6 +115,11 @@ struct EditCommitView: View {
                 }, label: { Text("Delete Commit") })
                     .padding()
             }
+        }
+        .onAppear{
+            guard commit != nil else { return }
+            vm.title = commit?.title ?? ""
+            vm.content = commit?.content ?? ""
         }
     }
 }

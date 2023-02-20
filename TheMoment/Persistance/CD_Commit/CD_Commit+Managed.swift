@@ -23,4 +23,14 @@ extension CD_Commit {
         
         return commit
     }
+    static func noTitle(context: NSManagedObjectContext) -> CD_Commit {
+        let commit = CD_Commit(context: context)
+        commit.uuid = UUID()
+        commit.content = "TheMoment[3626:983176] [general] 'NSKeyedUnarchiveFromData' should not be used to for un-archiving and will be removed in a future release"
+        commit.date = Date.now
+        commit.images = ["Meat"]
+        
+        return commit
+    }
 }
+

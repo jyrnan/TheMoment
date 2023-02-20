@@ -29,7 +29,7 @@ struct CommitRowView: View {
     
     @State var rowHeight: CGFloat = RowHeight.defaultValue
 
-    var commit: CD_Commit
+    @ObservedObject var commit: CD_Commit
     
     var body: some View {
         HStack(spacing: 0) {
@@ -62,8 +62,9 @@ struct CommitRowView: View {
                 HStack(alignment: .top,spacing: 0) {
                     VStack(alignment: .leading, spacing: contentSpacing) {
                         if commit.title != nil { titleView }
-                        
+//                        titleView
                         if commit.content != nil { contentView }
+//                        contentView
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
@@ -84,12 +85,13 @@ struct CommitRowView: View {
                 }
             }
             .padding(.horizontal, textSpacing)
+            .readGeometry(\.size.height, key: RowHeight.self)
+            .onPreferenceChange(RowHeight.self) {
+                rowHeight = $0
+            }
             .border(boardColor)
         }
-        .readGeometry(\.size.height, key: RowHeight.self)
-        .onPreferenceChange(RowHeight.self) {
-            rowHeight = $0
-        }
+        
         .border(boardColor)
     }
     
@@ -165,7 +167,7 @@ struct CommitRowView: View {
     }
     
     var titleView: some View {
-        Text("\(commit.title!)")
+        Text(commit.title ?? "")
             .font(.body.bold())
             .lineLimit(1)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -179,7 +181,7 @@ struct CommitRowView: View {
     }
     
     var contentView: some View {
-        Text("\(commit.content!)").font(.callout)
+        Text(commit.content ?? "").font(.callout)
             .lineLimit(5)
             .multilineTextAlignment(.leading)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -240,6 +242,7 @@ struct PostRowView_Previews: PreviewProvider {
     static let viewContext = PersistenceController.shared.container.viewContext
     static var previews: some View {
         CommitRowView(commit: CD_Commit.new(context: viewContext))
+        CommitRowView(commit: CD_Commit.noTitle(context: viewContext))
     }
 }
 

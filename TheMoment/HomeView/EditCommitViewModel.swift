@@ -10,7 +10,10 @@ import Foundation
 class EditCommitViewModel: ObservableObject {
     let viewContext = PersistenceController.shared.container.viewContext
     
-    @Published var text: String = ""
+    var commit: CD_Commit?
+    
+    @Published var title: String = ""
+    @Published var content: String = ""
     
     @Published var branches:[Branch] = Branch.examples
     @Published var selectedBranch: UUID?
@@ -19,26 +22,41 @@ class EditCommitViewModel: ObservableObject {
     @Published var images: [String] = ["Image", "Meat", "Banner"]
     @Published var weather: String = ["Sunny", "Cloudy", "Rain", "Storm"].randomElement() ?? "Sunny"
     
+    init(commit: CD_Commit?) {
+//        guard let commit = commit else {return}
+        self.title = commit?.title ?? ""
+        self.content = commit?.content ?? ""
+        
+    }
+    
     deinit{
         print(#line, String(describing: self))
     }
     
-    func addCommit() -> Bool {
-        
+    func newCommit(uuid: UUID) -> CD_Commit {
         let commit: CD_Commit = viewContext.insertObject()
-        commit.uuid = UUID()
+        commit.uuid = uuid
+        // 创建时间在首次创建进行修改
+        updateDate(commit: commit, date: .now)
+        return commit
+    }
+    
+    func updateAndSave(commit: CD_Commit) -> Bool {
+        commit.title = title.count > 0 ? title : nil
+        commit.content = content.count > 0 ? content : nil
         
-        var titleAndContent = text.split(maxSplits: 1,omittingEmptySubsequences: true,  whereSeparator: {$0 == "\n"}).compactMap(String.init)
+        commit.editAt = .now
+        commit.images = images
         
-        if titleAndContent.count > 1 {
-            commit.title = titleAndContent.first
-            commit.content = titleAndContent.last
-        } else {
-            commit.title = titleAndContent.first
-        }
-        
-        commit.date = .now
-        commit.images = ["Meat"]
         return viewContext.saveOrRollback()
+    }
+    
+    func delete(commit: CD_Commit) -> Bool {
+        viewContext.delete(commit)
+        return viewContext.saveOrRollback()
+    }
+    
+    func updateDate(commit: CD_Commit, date: Date) {
+        commit.date = date
     }
 }
