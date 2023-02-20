@@ -13,7 +13,7 @@ struct BranchScreen: View {
 
     @Binding var sheet: HomeView.Sheet?
 
-    @State var selectedBranch: UUID = UUID()
+    @State var selectedBranch: UUID?
 
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
@@ -31,63 +31,88 @@ struct BranchScreen: View {
                 .ignoresSafeArea(edges: .top)
                 .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)).combined(with: .opacity))
                 .id(selectedBranch)
-                .navigationTitle("Moment")
-                .navigationDestination(for: UUID.self, destination: { id in DetailView(id: id, path: $path) })
+                .navigationTitle(getCurrentBranch().name ?? "Moment")
+                .navigationDestination(for: UUID.self, destination: { id in EditCommitView(uuid: id) })
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-//                            selectedBranch = selectedBranch < branches.count - 1 ? selectedBranch + 1 : 0
-
+                            switchToNextBranch()
                         } label: {
                             Text("Switch")
-                                .foregroundColor(.white)
-                                .contextMenu {
-                                    ForEach(branches) { branch in
-                                        Button {
-                                            
-                                        } label: {
-                                            Text(branch.name ?? "Moment")
-                                        }
-                                    }
-                                }
                         }
                     }
+                    
                     ToolbarItemGroup(placement: .secondaryAction) {
                         ForEach(branches) { branch in
 
                             // 这里面似乎只能放Button类型的View
                             Button {
-                                selectedBranch = branch.uuid!
+                                selectedBranch = branch.uuid
                             } label: {
-                                Text(branch.name ?? "Moment")
+                                Label(branch.name ?? "Moment", systemImage: branch.uuid == selectedBranch ? "checkmark" : "")
                             }
                         }
+                        
                         Button {
                             sheet = .editBranch(getCurrentBranch())
                         } label: {
-                            Text("Edit Current")
+                            Label("Edit Current", systemImage: "pencil")
                         }
 
                         Button {
                             sheet = .newBranch
                         } label: {
-                            Text("New Branch")
+//                            Text("New Branch")
+                            Label("New Branch", systemImage: "plus").labelStyle(DefaultLabelStyle())
                         }
                     }
                 }
                 .animation(.default, value: selectedBranch)
-//                .tint(branches[selectedBranch].accentColor)
+                .tint(getCurrentBranch().color)
         }
     }
 
     private func getCurrentBranch() -> CD_Branch {
         guard !branches.isEmpty else {
-            let branch: CD_Branch = CD_Branch(context: viewContext) //viewContext.insertObject()
-            branch.name = "Moment"
-            branch.uuid = UUID()
-            return branch
+            return makeInitialBranch()
         }
-        return branches.filter{$0.uuid == selectedBranch}.first ?? branches.first!
+
+        guard selectedBranch != nil,
+              let branch = branches.filter { $0.uuid == selectedBranch }.first else { return branches.first! }
+        return branch
+    }
+
+    private func makeInitialBranch() -> CD_Branch {
+        let branch: CD_Branch = viewContext.insertObject()
+        branch.name = "Moment"
+        branch.uuid = UUID()
+
+        return branch
+    }
+    
+    private func switchToNextBranch(){
+        guard branches.count > 1 else {return}
+        
+        if selectedBranch == nil {
+            selectedBranch = branches.first?.uuid
+            switchToNextBranch()
+        }
+        
+        let uuidArray = branches.map(\.uuid)
+        
+        if selectedBranch == uuidArray.last {
+            selectedBranch = uuidArray.first!
+        } else {
+            if let currentIndex = uuidArray.firstIndex(of: selectedBranch){
+                let nextIndex = uuidArray.index(after: currentIndex)
+                selectedBranch = uuidArray[nextIndex]
+            }
+            
+        }
+        
+        
+        
+        
     }
 }
 

@@ -11,6 +11,7 @@ class EditBranchViewModel: ObservableObject {
     let viewContext = PersistenceController.shared.container.viewContext
     
     @Published var name: String = ""
+    @Published var selectedColor: String = "system"
     
     func newBranch(uuid: UUID) -> CD_Branch {
         let newBranch: CD_Branch = viewContext.insertObject()
@@ -22,7 +23,7 @@ class EditBranchViewModel: ObservableObject {
     func updateAndSave(branch: CD_Branch) -> Bool {
         
         branch.name = name
-        
+        branch.accentColor = selectedColor
         return viewContext.saveOrRollback()
     }
     

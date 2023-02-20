@@ -8,9 +8,9 @@
 import CoreData
 import Foundation
 
-extension CD_Commit: Managed {
-    
-}
+//extension CD_Commit: Managed {
+//    
+//}
 
 extension CD_Commit {
     static func new(context: NSManagedObjectContext) -> CD_Commit {

@@ -16,15 +16,24 @@ struct EditBranchView: View {
     var uuid: UUID?
     
     var isEditMode: Bool { branch != nil}
-    
+        
     var body: some View {
         VStack {
             Form {
-                Section(content: { TextEditor(text: $vm.name)
+                Section(content: { TextField("Branch Name", text: $vm.name)
                         .frame(maxHeight: 200)
-                }, header: { Text("Input some words below") }, footer: {
+                }, header: { Text("Branch Name") }, footer: {
                     
                 })
+                
+                Picker("Branch Color", selection: $vm.selectedColor) {
+                    ForEach(CD_Branch.BranchColor.allCases, id: \.rawValue) { color in
+                        Text(color.rawValue)
+//                        Label(color.rawValue, systemImage: "folder")
+                            .tag(color.rawValue)
+                    }
+                }
+//                .pickerStyle(.segmented)
             }
   
             VStack{
@@ -46,24 +55,31 @@ struct EditBranchView: View {
                 .disabled(vm.name == "")
                 
                 if isEditMode {
-                    Button {
-                            guard vm.delete(branch: branch!) else {return}
-                            dissmiss()
-                    } label: {
-                        Text("Delete Branch")
-                    }
+                    Button(role: .destructive, action: { guard vm.delete(branch: branch!) else {return}
+                        dissmiss()
+                        
+                    }, label: {Text("Delete Branch")})
                     .padding()
-                    
+
                 }
                 
             }
             
+        }
+        .onAppear{
+            vm.selectedColor = branch?.accentColor ?? "system"
+            vm.name = branch?.name ?? ""
+            
+            // 这段代码用来定制Picker在segement模式下的颜色
+            UISegmentedControl.appearance().selectedSegmentTintColor = .red
+                UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.systemYellow], for: .normal)
+                UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
         }
     }
 }
 
 struct EditBranchView_Previews: PreviewProvider {
     static var previews: some View {
-        EditBranchView()
+        EditBranchView(branch: CD_Branch(context: PersistenceController.shared.container.viewContext))
     }
 }

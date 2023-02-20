@@ -14,7 +14,7 @@ struct BannerView: View {
     let gapInDotAndAvatar: CGFloat = 4
     let viewHeight: CGFloat = 240
     
-    @Binding var selectedBranch: UUID
+    @Binding var selectedBranch: UUID?
     var branch: CD_Branch
     var branchCount:Int
     
@@ -37,19 +37,19 @@ struct BannerView: View {
         
     var body: some View {
         ZStack {
-            Image("Image")
+            Image("Banner")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .layoutPriority(-1)
             
-//            makeScrollBar(currentIndex: selectedBranch, total: branchCount)
-//                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-//                .layoutPriority(-1)
+            SwitchBranchView(selectedBranch: $selectedBranch)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                .layoutPriority(-1)
                 
             VStack(alignment: .center, spacing: 0) {
                 Circle()
                     .overlay {
-                        Image(systemName: "person")
+                        Image("Avatar")
                             .resizable()
                             .clipShape(Circle().inset(by: 3))
                     }

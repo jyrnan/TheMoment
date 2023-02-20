@@ -9,10 +9,9 @@ import SwiftUI
 
 class BranchViewModel: ObservableObject {
    
-    @Published var selectedBranch: Int = 0
+    @Published var selectedBranch: UUID?
     
     // NavigationStack path
     @Published var path: [UUID] = []
-    
     
 }

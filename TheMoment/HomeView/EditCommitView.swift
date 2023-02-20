@@ -14,6 +14,8 @@ struct EditCommitView: View {
     var uuid: UUID?
     var commit: CD_Commit?
     
+    var isEditMode: Bool { commit != nil }
+    
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \CD_Branch.name, ascending: false)],
@@ -22,21 +24,50 @@ struct EditCommitView: View {
     
     var body: some View {
         VStack {
-            Form {
-                Section(content: { TextEditor(text: $vm.text)
-                        .frame(maxHeight: 200)
-                }, header: { Text("Input some words below") }, footer: {
+            List {
+                Section(content: {
+                            Picker("", selection: $vm.selectedBranch) {
+                                ForEach(cd_Branches) { branch in
+                                    Text(branch.name ?? "Moment")
+                                        .tag(branch.uuid)
+                                }
+                            }
+                            .padding(.horizontal)
+                        },
+                        header: { Text("Branch") },
+                        footer: {
+                            Text("Choose which branch to commit. You can also change it later")
+                    
+                                .font(.caption2)
+                                .foregroundColor(.gray)
+                        })
+                .listRowInsets(.init())
+                
+                Section(content: {
+                    TextEditor(text: $vm.text).padding()
+                        .frame(minHeight: 60,maxHeight: 200)
+                }, header: { Text("Words") }, footer: {
                     Text("\(Image(systemName: "sun.max")) \(vm.weather) \(arc4random_uniform(25))°C")
                     
                         .font(.caption2)
                         .foregroundColor(.gray)
-                })
+                }).listRowInsets(.init())
             
-                Picker("Commit to", selection: $vm.selectedBranch) {
-                    ForEach(cd_Branches, id: \.id) { branch in
-                        Text(branch.name ?? "Moment")
-                            .tag(branch.id)
-                    }
+                if !vm.images.isEmpty {
+                    Section(content: {
+                                TabView{
+                                    ForEach(vm.images, id: \.self) {image in
+                                        Image(image)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                    }
+                                    
+                                }.frame(height: 200)
+                                .tabViewStyle(.page)
+                            },
+                            header: { Text(vm.images.first ?? "Photo") },
+                            footer: {})
+                        .listRowInsets(.init())
                 }
                 
                 Section(content: {
@@ -45,6 +76,7 @@ struct EditCommitView: View {
                         },
                         header: { Text(vm.location) },
                         footer: {})
+                    .listRowInsets(.init())
             }
 
             Button {
@@ -55,14 +87,22 @@ struct EditCommitView: View {
             .padding()
             .tint(.accentColor)
             .disabled(vm.text == "")
-            Spacer()
+            
+            if isEditMode {
+                Button(role: .destructive, action: {
+                    viewContext.delete(commit!)
+                    dissmiss()
+                    
+                }, label: { Text("Delete Commit") })
+                    .padding()
+            }
         }
     }
 }
 
 struct NewCommitView_Previews: PreviewProvider {
     static var previews: some View {
-        EditCommitView(uuid: UUID())
+        EditCommitView(uuid: UUID(), commit: CD_Commit(context: PersistenceController.shared.container.viewContext))
             .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
     }
 }

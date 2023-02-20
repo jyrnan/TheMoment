@@ -13,7 +13,7 @@ struct BranchView: View {
 
     @Binding var path:[UUID]
     
-    @Binding var selectedBranch: UUID
+    @Binding var selectedBranch: UUID?
     var branch: CD_Branch
     var branchCount: Int
     

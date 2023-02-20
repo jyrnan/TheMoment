@@ -20,6 +20,7 @@
 		D284CA9929A2107700C8EC7C /* CD_Branch+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9729A2107700C8EC7C /* CD_Branch+CoreDataProperties.swift */; };
 		D284CA9C29A2393600C8EC7C /* EditBranchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9B29A2393600C8EC7C /* EditBranchView.swift */; };
 		D284CA9E29A2398D00C8EC7C /* EditBranchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9D29A2398D00C8EC7C /* EditBranchViewModel.swift */; };
+		D284CAA029A318B600C8EC7C /* SwitchBranchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9F29A318B600C8EC7C /* SwitchBranchView.swift */; };
 		D2AC54EC299B77E100075DD0 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AC54EB299B77E100075DD0 /* Branch.swift */; };
 		D2EBB20E299E27E6004EA1D5 /* AuthenticationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EBB20D299E27E6004EA1D5 /* AuthenticationScreen.swift */; };
 		D2F51778298D07240091B527 /* TheMomentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F51777298D07240091B527 /* TheMomentApp.swift */; };
@@ -75,6 +76,7 @@
 		D284CA9729A2107700C8EC7C /* CD_Branch+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Branch+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D284CA9B29A2393600C8EC7C /* EditBranchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBranchView.swift; sourceTree = "<group>"; };
 		D284CA9D29A2398D00C8EC7C /* EditBranchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBranchViewModel.swift; sourceTree = "<group>"; };
+		D284CA9F29A318B600C8EC7C /* SwitchBranchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchBranchView.swift; sourceTree = "<group>"; };
 		D2AC54EB299B77E100075DD0 /* Branch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
 		D2EBB20D299E27E6004EA1D5 /* AuthenticationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationScreen.swift; sourceTree = "<group>"; };
 		D2F51774298D07240091B527 /* TheMoment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMoment.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -251,7 +253,6 @@
 			children = (
 				D2F517A9298D076E0091B527 /* Commit.swift */,
 				D2AC54EB299B77E100075DD0 /* Branch.swift */,
-				D257F5D5299A2731006CA065 /* BranchViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -260,8 +261,10 @@
 			isa = PBXGroup;
 			children = (
 				D2F517B3298D12380091B527 /* BranchScreen.swift */,
+				D257F5D5299A2731006CA065 /* BranchViewModel.swift */,
 				D2F517A7298D07620091B527 /* BranchView.swift */,
 				D2F517B7298E2AC30091B527 /* BannerView.swift */,
+				D284CA9F29A318B600C8EC7C /* SwitchBranchView.swift */,
 				D2F517AF298D0F260091B527 /* CommitRowView.swift */,
 				D2F517B1298D0F750091B527 /* DetailView.swift */,
 			);
@@ -418,6 +421,7 @@
 			files = (
 				D21758B0299F241300EF7DF1 /* EditCommitView.swift in Sources */,
 				D21CF6A229A1BB0A00171BE7 /* CD_Commit+Managed.swift in Sources */,
+				D284CAA029A318B600C8EC7C /* SwitchBranchView.swift in Sources */,
 				D2F517B2298D0F750091B527 /* DetailView.swift in Sources */,
 				D2F51781298D07250091B527 /* Persistence.swift in Sources */,
 				D2F517AC298D08040091B527 /* HomeView.swift in Sources */,

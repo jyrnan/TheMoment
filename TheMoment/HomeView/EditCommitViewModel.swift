@@ -41,13 +41,4 @@ class EditCommitViewModel: ObservableObject {
         commit.images = ["Meat"]
         return viewContext.saveOrRollback()
     }
-    
-    func addBranch(name: String) -> Bool {
-        let branch: CD_Branch = viewContext.insertObject()
-        branch.uuid = UUID()
-        
-        branch.name = name
-        
-        return viewContext.saveOrRollback()
-    }
 }
