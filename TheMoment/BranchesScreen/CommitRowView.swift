@@ -38,7 +38,7 @@ struct CommitRowView: View {
                 if shouldShowDate { dotView }
                 iconView
             }
-            .frame(width: leftSpace + lineWidth + rightSpace, height: rowHeight)
+            .frame(width: leftSpace + lineWidth + rightSpace)//, height: rowHeight)
             .border(boardColor)
 
             VStack(spacing: contentSpacing) {
@@ -191,7 +191,7 @@ struct CommitRowView: View {
     
     var imagesThumbView: some View {
         ZStack {
-            Image("Image")
+            Image(commit.images?.randomElement() ?? "Image")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .layoutPriority(-1)
@@ -207,13 +207,18 @@ struct CommitRowView: View {
     
     var imagesView: some View {
         ZStack {
-            Image(commit.images?.first ?? "")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
+            TabView{
+                ForEach(commit.images ?? [], id: \.self){image in
+                    Image(image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                       
+                }
+            }
+            .tabViewStyle(.page)
                 .layoutPriority(-1)
-            
             Color.clear
-                .frame(height: 240)
+                .frame(height: 200)
                 .frame(maxWidth: .infinity)
         }
         .clipped()

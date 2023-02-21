@@ -47,39 +47,62 @@ struct EditCommitView: View {
                                 .font(.caption2)
                                 .foregroundColor(.gray)
                         })
-                .listRowInsets(.init())
+                        .listRowInsets(.init())
                 
                 Section(content: {
-                    TextField("Title", text: $vm.title)
-                        .padding(.horizontal)
+                            TextField("Title", text: $vm.title)
+                                .padding(.horizontal)
                         
-                    TextEditor(text: $vm.content)
-                        .padding(.horizontal)
-                        .frame(height:120)
-                },
+                            TextEditor(text: $vm.content)
+                                .padding(.horizontal)
+//                        .fixedSize()
+                                .frame(minHeight: 120)
+                    
+                        },
                         header: { Text("Words") },
                         footer: {
-                    Text("\(Image(systemName: "sun.max")) \(vm.weather) \(arc4random_uniform(25))°C")
+                            Text("\(Image(systemName: "sun.max")) \(vm.weather) \(arc4random_uniform(25))°C")
                     
-                        .font(.caption2)
-                        .foregroundColor(.gray)
-                }).listRowInsets(.init())
+                                .font(.caption2)
+                                .foregroundColor(.gray)
+                        }).listRowInsets(.init())
             
                 if !vm.images.isEmpty {
                     Section(content: {
-                                TabView{
-                                    ForEach(vm.images, id: \.self) {image in
+                                TabView {
+                                    ForEach(vm.images, id: \.self) { image in
                                         Image(image)
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
                                     }
-                                    
-                                }.frame(height: 200)
+                                }
+                                .frame(height: 240)
                                 .tabViewStyle(.page)
                             },
                             header: { Text(vm.images.first ?? "Photo") },
                             footer: {})
-                        .listRowInsets(.init())
+                        .listRowInsets(.init(.init()))
+                }
+                
+                if vm.images.count > 1 {
+                    HStack {
+                        ForEach(vm.images,id: \.self) {image in
+                            ZStack {
+                                Image(image)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .layoutPriority(-1)
+                                Color.clear
+                                    .frame(width: 48, height: 48)
+                            }
+                            .cornerRadius(8)
+                            .clipped()
+                            .aspectRatio(contentMode: .fill)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(.init())
                 }
                 
                 Section(content: {
@@ -89,15 +112,24 @@ struct EditCommitView: View {
                         header: { Text(vm.location) },
                         footer: {})
                     .listRowInsets(.init())
+                
+                if isEditMode {
+                    Button(role: .destructive, action: {
+                        viewContext.delete(commit!)
+                        dissmiss()
+                        
+                    }, label: { Text("Delete Commit").frame(maxWidth: .infinity, alignment: .center) })
+//                    .listRowBackground(Color.red)
+                }
             }
 
             Button {
                 if isEditMode {
-                    guard vm.updateAndSave(commit: commit!) else {return}
+                    guard vm.updateAndSave(commit: commit!) else { return }
                     dissmiss()
                 } else {
                     let newCommit = vm.newCommit(uuid: uuid!)
-                    guard vm.updateAndSave(commit: newCommit) else {return}
+                    guard vm.updateAndSave(commit: newCommit) else { return }
                     dissmiss()
                 }
             } label: {
@@ -105,18 +137,9 @@ struct EditCommitView: View {
             }
             .padding()
             .tint(.accentColor)
-            .disabled(vm.title == "")
-            
-            if isEditMode {
-                Button(role: .destructive, action: {
-                    viewContext.delete(commit!)
-                    dissmiss()
-                    
-                }, label: { Text("Delete Commit") })
-                    .padding()
-            }
+            .disabled(vm.title == "" && vm.content == "" && vm.images.isEmpty)
         }
-        .onAppear{
+        .onAppear {
             guard commit != nil else { return }
             vm.title = commit?.title ?? ""
             vm.content = commit?.content ?? ""

@@ -23,7 +23,7 @@ struct SwitchBranchView: View {
                 Circle()
                     .fill(branch.uuid == selectedBranch ? Color.accentColor : Color.white)
                     .padding(0)
-                    .frame(width: 4, height: 4)
+                    .frame(width: 6, height: 6)
                     .padding(3)
             }
         }

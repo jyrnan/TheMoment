@@ -57,6 +57,7 @@ struct HomeView: View {
         }
         .overlay{
             plusButtonView
+                .ignoresSafeArea(.keyboard)
         }
         .sheet(item: $sheet){
             $0.presentationDetents([.height(300),.medium, .large])
