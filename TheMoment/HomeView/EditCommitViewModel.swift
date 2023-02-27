@@ -47,7 +47,7 @@ class EditCommitViewModel: ObservableObject {
         commit.branch = selectedBranch
         
         commit.editAt = .now
-        commit.images = images
+//        commit.images = images
         
         return viewContext.saveOrRollback()
     }

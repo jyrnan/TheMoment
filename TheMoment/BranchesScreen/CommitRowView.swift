@@ -69,7 +69,7 @@ struct CommitRowView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     if commit.images?.count != 0, commit.content != nil {
-                        imagesThumbView
+                        imagesThumbView.padding(.leading, 4)
                     }
                 }
                 .border(boardColor)
@@ -191,7 +191,7 @@ struct CommitRowView: View {
     
     var imagesThumbView: some View {
         ZStack {
-            Image(commit.images?.randomElement() ?? "Image")
+            Image(commit.images?.compactMap{($0 as? CD_Thumbnail)?.title}.first ?? "Meat")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .layoutPriority(-1)
@@ -208,7 +208,7 @@ struct CommitRowView: View {
     var imagesView: some View {
         ZStack {
             TabView{
-                ForEach(commit.images ?? [], id: \.self){image in
+                ForEach(["Image", "Banner", "Meat"], id: \.self){image in
                     Image(image)
                         .resizable()
                         .aspectRatio(contentMode: .fill)

@@ -28,6 +28,8 @@ struct BranchView: View {
                                   endPoint: .bottomTrailing)
 
     var body: some View {
+        let commits = branch.name == "Moment" ? cd_Commits.map{$0} : cd_Commits.filter{$0.branch == branch}
+        
         List {
             BannerView(selectedBranch: $selectedBranch, branch: branch, branchCount: branchCount)
                 .listRowInsets(.init())
@@ -35,7 +37,7 @@ struct BranchView: View {
             makeInfoView()
                 .listRowInsets(.init())
 
-            ForEach(cd_Commits, id: \.id) { commit in
+            ForEach(commits, id: \.id) { commit in
                 CommitRowView(commit: commit)
                     .listRowInsets(.init())
                     .listRowSeparator(.hidden)

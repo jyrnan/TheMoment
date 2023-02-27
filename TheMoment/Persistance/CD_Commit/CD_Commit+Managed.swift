@@ -19,7 +19,7 @@ extension CD_Commit {
         commit.uuid = UUID()
         commit.content = "TheMoment[3626:983176] [general] 'NSKeyedUnarchiveFromData' should not be used to for un-archiving and will be removed in a future release"
         commit.date = Date.now
-        commit.images = ["Meat"]
+        commit.images = [CD_Thumbnail.sample1(context: context)]
         
         return commit
     }
@@ -28,9 +28,18 @@ extension CD_Commit {
         commit.uuid = UUID()
         commit.content = "TheMoment[3626:983176] [general] 'NSKeyedUnarchiveFromData' should not be used to for un-archiving and will be removed in a future release"
         commit.date = Date.now
-        commit.images = ["Meat"]
+        commit.images = [CD_Thumbnail.sample1(context: context)]
+        
         
         return commit
     }
 }
 
+extension CD_Thumbnail {
+    static func sample1(context: NSManagedObjectContext) -> CD_Thumbnail {
+        let thumbnail = CD_Thumbnail(context: context)
+        thumbnail.title = "Image"
+        
+        return thumbnail
+    }
+}

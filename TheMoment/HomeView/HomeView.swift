@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(\.dismiss) var dissmiss
-    
+
     @State var selectedTab: String = "Branch"
     @State var sheet: Sheet?
 
@@ -24,6 +24,20 @@ struct HomeView: View {
                 }
                 .tag("Branch")
 
+            MediaScreen()
+                .tabItem {
+                    Label("Media", systemImage: "square.on.square.dashed")
+                }
+                .tag("Media")
+
+            Text("Add")
+                .tabItem {
+                    Image(systemName: "plus")
+                        .font(.system(size: 80))
+                }
+                .tag("Add")
+                .disabled(true)
+
             ZStack {
                 gradient
                     .opacity(0.25)
@@ -34,41 +48,26 @@ struct HomeView: View {
             }
             .tag("Search")
 
-            Text("Add")
-                .tabItem {
-                    Image(systemName: "plus")
-                        .font(.system(size: 80))
-                    
-                }
-                .tag("Add")
-                .disabled(true)
-
-            Text("Share")
-                .tabItem {
-                    Label("Media", systemImage: "square.on.square.dashed")
-                }
-                .tag("Media")
-
             Text("Setting")
                 .tabItem {
                     Label("Setting", systemImage: "gear")
                 }
                 .tag("Setting")
         }
-        .overlay{
+        .overlay {
             plusButtonView
                 .ignoresSafeArea(.keyboard)
         }
-        .sheet(item: $sheet){
-            $0.presentationDetents([.height(300),.medium, .large])
-            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        .sheet(item: $sheet) {
+            $0.presentationDetents([.height(300), .medium, .large])
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
         }
-        .onAppear{
-            UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor:UIColor.white]
+        .onAppear {
+            UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         }
         .tint(.primary)
     }
-    
+
     var plusButtonView: some View {
         Image(systemName: "plus.circle.fill")
             .resizable()

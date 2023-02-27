@@ -12,6 +12,8 @@
 		D21CF67E299F538F00171BE7 /* ManagedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CF67D299F538F00171BE7 /* ManagedProtocol.swift */; };
 		D21CF68D29A05C9200171BE7 /* EditCommitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CF68C29A05C9200171BE7 /* EditCommitViewModel.swift */; };
 		D21CF6A229A1BB0A00171BE7 /* CD_Commit+Managed.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21CF6A129A1BB0A00171BE7 /* CD_Commit+Managed.swift */; };
+		D2331DB029AC979C003BD590 /* MediaScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2331DAF29AC979C003BD590 /* MediaScreen.swift */; };
+		D2331DB329ACAB57003BD590 /* MediaScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2331DB229ACAB57003BD590 /* MediaScreenModel.swift */; };
 		D257F5D6299A2731006CA065 /* BranchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D257F5D5299A2731006CA065 /* BranchViewModel.swift */; };
 		D284CA9529A20C7C00C8EC7C /* CD_Branch+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9429A20C7C00C8EC7C /* CD_Branch+.swift */; };
 		D284CA9C29A2393600C8EC7C /* EditBranchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9B29A2393600C8EC7C /* EditBranchView.swift */; };
@@ -64,6 +66,8 @@
 		D21CF67D299F538F00171BE7 /* ManagedProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedProtocol.swift; sourceTree = "<group>"; };
 		D21CF68C29A05C9200171BE7 /* EditCommitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommitViewModel.swift; sourceTree = "<group>"; };
 		D21CF6A129A1BB0A00171BE7 /* CD_Commit+Managed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Commit+Managed.swift"; sourceTree = "<group>"; };
+		D2331DAF29AC979C003BD590 /* MediaScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaScreen.swift; sourceTree = "<group>"; };
+		D2331DB229ACAB57003BD590 /* MediaScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaScreenModel.swift; sourceTree = "<group>"; };
 		D257F5D5299A2731006CA065 /* BranchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchViewModel.swift; sourceTree = "<group>"; };
 		D284CA9429A20C7C00C8EC7C /* CD_Branch+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Branch+.swift"; sourceTree = "<group>"; };
 		D284CA9B29A2393600C8EC7C /* EditBranchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBranchView.swift; sourceTree = "<group>"; };
@@ -156,6 +160,15 @@
 			path = CD_Commit;
 			sourceTree = "<group>";
 		};
+		D2331DB129AC97B4003BD590 /* MediaScreen */ = {
+			isa = PBXGroup;
+			children = (
+				D2331DAF29AC979C003BD590 /* MediaScreen.swift */,
+				D2331DB229ACAB57003BD590 /* MediaScreenModel.swift */,
+			);
+			path = MediaScreen;
+			sourceTree = "<group>";
+		};
 		D284CA9A29A214B400C8EC7C /* CD_Branch */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +213,7 @@
 				D21758AE299F200100EF7DF1 /* HomeView */,
 				D2F517BB298E43220091B527 /* Constant */,
 				D2F517AE298D0EDE0091B527 /* BranchesScreen */,
+				D2331DB129AC97B4003BD590 /* MediaScreen */,
 				D2EBB20F299E27FF004EA1D5 /* AuthenticationScreen */,
 				D2F517C2299240390091B527 /* Resource */,
 				D2F517BE2991F8A90091B527 /* View+.swift */,
@@ -410,6 +424,7 @@
 				D21758B0299F241300EF7DF1 /* EditCommitView.swift in Sources */,
 				D21CF6A229A1BB0A00171BE7 /* CD_Commit+Managed.swift in Sources */,
 				D284CAA029A318B600C8EC7C /* SwitchBranchView.swift in Sources */,
+				D2331DB029AC979C003BD590 /* MediaScreen.swift in Sources */,
 				D2F517B2298D0F750091B527 /* DetailView.swift in Sources */,
 				D2F51781298D07250091B527 /* Persistence.swift in Sources */,
 				D2F517AC298D08040091B527 /* HomeView.swift in Sources */,
@@ -432,6 +447,7 @@
 				D2F517BD298E77930091B527 /* Sheet.swift in Sources */,
 				D2F51784298D07250091B527 /* TheMoment.xcdatamodeld in Sources */,
 				D2F517BA298E43180091B527 /* Constant.swift in Sources */,
+				D2331DB329ACAB57003BD590 /* MediaScreenModel.swift in Sources */,
 				D21CF67C299F4F1800171BE7 /* NSManagedObjectContext+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
