@@ -13,6 +13,7 @@ extension NSManagedObjectContext {
         let obj = A(context: self)
         return obj
     }
+    
 }
 
 extension NSManagedObjectContext {
@@ -65,6 +66,12 @@ public extension NSManagedObjectContext {
         perform {
             block()
             _ = self.saveOrRollback()
+        }
+    }
+    
+    func doAsyncAction() {
+        perform {
+            print("hello")
         }
     }
 }

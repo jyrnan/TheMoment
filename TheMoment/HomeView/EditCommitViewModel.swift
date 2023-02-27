@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 class EditCommitViewModel: ObservableObject {
     let viewContext = PersistenceController.shared.container.viewContext
@@ -16,17 +17,15 @@ class EditCommitViewModel: ObservableObject {
     @Published var content: String = ""
     
     @Published var branches:[Branch] = Branch.examples
-    @Published var selectedBranch: UUID?
-    
+    @Published var selectedBranch: CD_Branch?
+
     @Published var location: String = "22.54°N, 36.38°E"
     @Published var images: [String] = ["Image", "Meat", "Banner"]
     @Published var weather: String = ["Sunny", "Cloudy", "Rain", "Storm"].randomElement() ?? "Sunny"
     
     init(commit: CD_Commit?) {
-//        guard let commit = commit else {return}
         self.title = commit?.title ?? ""
         self.content = commit?.content ?? ""
-        
     }
     
     deinit{
@@ -44,6 +43,8 @@ class EditCommitViewModel: ObservableObject {
     func updateAndSave(commit: CD_Commit) -> Bool {
         commit.title = title.count > 0 ? title : nil
         commit.content = content.count > 0 ? content : nil
+        
+        commit.branch = selectedBranch
         
         commit.editAt = .now
         commit.images = images

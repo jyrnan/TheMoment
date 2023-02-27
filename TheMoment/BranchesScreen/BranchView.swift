@@ -14,7 +14,7 @@ struct BranchView: View {
     @Binding var path:[CD_Commit]
     
     @Binding var selectedBranch: UUID?
-    var branch: CD_Branch
+    @ObservedObject var branch: CD_Branch
     var branchCount: Int
     
     @Environment(\.managedObjectContext) private var viewContext
@@ -35,7 +35,7 @@ struct BranchView: View {
             makeInfoView()
                 .listRowInsets(.init())
 
-            ForEach(cd_Commits) { commit in
+            ForEach(cd_Commits, id: \.id) { commit in
                 CommitRowView(commit: commit)
                     .listRowInsets(.init())
                     .listRowSeparator(.hidden)

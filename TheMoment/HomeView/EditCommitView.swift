@@ -35,10 +35,14 @@ struct EditCommitView: View {
                             Picker("", selection: $vm.selectedBranch) {
                                 ForEach(cd_Branches) { branch in
                                     Text(branch.name ?? "Moment")
-                                        .tag(branch.uuid)
+                                        .tag(branch).tag(Optional(branch))
                                 }
                             }
                             .padding(.horizontal)
+                            .onAppear{
+                                cd_Branches.map{print($0.objectID)}
+                                cd_Branches.map{try? viewContext.existingObject(with: $0.objectID)}.forEach{print($0)}
+                            }
                         },
                         header: { Text("Branch") },
                         footer: {
@@ -86,7 +90,7 @@ struct EditCommitView: View {
                 
                 if vm.images.count > 1 {
                     HStack {
-                        ForEach(vm.images,id: \.self) {image in
+                        ForEach(vm.images, id: \.self) { image in
                             ZStack {
                                 Image(image)
                                     .resizable()
@@ -143,6 +147,7 @@ struct EditCommitView: View {
             guard commit != nil else { return }
             vm.title = commit?.title ?? ""
             vm.content = commit?.content ?? ""
+            vm.selectedBranch = commit?.branch
         }
     }
 }
