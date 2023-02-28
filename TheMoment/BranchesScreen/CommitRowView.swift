@@ -39,7 +39,7 @@ struct CommitRowView: View {
                 if shouldShowDate { dotView }
                 iconView
             }
-            .frame(width: leftSpace + lineWidth + rightSpace) // , height: rowHeight)
+            .frame(width: leftSpace + lineWidth + rightSpace)
             .border(boardColor)
 
             VStack(spacing: contentSpacing) {
@@ -61,9 +61,7 @@ struct CommitRowView: View {
                 HStack(alignment: .top, spacing: 0) {
                     VStack(alignment: .leading, spacing: contentSpacing) {
                         if commit.title != nil { titleView }
-//                        titleView
                         if commit.content != nil { contentView }
-//                        contentView
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
@@ -110,7 +108,7 @@ struct CommitRowView: View {
     @State private var iconTopSpacing: CGFloat = IconTopSpacing.defaultValue
     func makeIcon(commit: CD_Commit) -> some View {
         if let emoji = commit.emoji { return Text(emoji).font(.callout) }
-        if commit.images?.first != nil { return Text("\(Image(systemName: "photo.fill"))") }
+      if !commit.thumbnailsArray.isEmpty { return Text("\(Image(systemName: "photo.fill"))") }
         if commit.title != nil || commit.content != nil { return Text("\(Image(systemName: "message.fill"))") }
         return Text("\(Image(systemName: "mappin.and.ellipse"))")
     }
@@ -161,7 +159,7 @@ struct CommitRowView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .onTapGesture {
-            shouldShowBorder.toggle()
+//            shouldShowBorder.toggle()
         }
     }
     
@@ -171,11 +169,6 @@ struct CommitRowView: View {
             .lineLimit(1)
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
-            .onTapGesture {
-                print("\(commit.title!)")
-                shouldShowBorder.toggle()
-//                commit.cd_commit(context: viewContext)
-            }
             .border(boardColor)
     }
     
@@ -201,7 +194,6 @@ struct CommitRowView: View {
         .clipped()
         .aspectRatio(1, contentMode: .fit)
         .cornerRadius(8)
-//        .frame(maxHeight: .infinity, alignment: .top)
     }
     
     var imagesView: some View {
