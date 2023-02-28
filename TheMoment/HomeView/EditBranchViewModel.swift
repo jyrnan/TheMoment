@@ -24,6 +24,7 @@ class EditBranchViewModel: ObservableObject {
         
         branch.name = name
         branch.accentColor = selectedColor
+        branch.date = .now
         return viewContext.saveOrRollback()
     }
     

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct CommitRowView: View {
     let leftSpace: CGFloat = Dim.leftSpace
@@ -38,13 +39,11 @@ struct CommitRowView: View {
                 if shouldShowDate { dotView }
                 iconView
             }
-            .frame(width: leftSpace + lineWidth + rightSpace)//, height: rowHeight)
+            .frame(width: leftSpace + lineWidth + rightSpace) // , height: rowHeight)
             .border(boardColor)
 
             VStack(spacing: contentSpacing) {
-                
                 VStack(spacing: textSpacing) {
-                    
                     Color.clear
                         .frame(height: textSpacing)
                         .border(boardColor)
@@ -59,7 +58,7 @@ struct CommitRowView: View {
                 }
                 .border(boardColor)
                 
-                HStack(alignment: .top,spacing: 0) {
+                HStack(alignment: .top, spacing: 0) {
                     VStack(alignment: .leading, spacing: contentSpacing) {
                         if commit.title != nil { titleView }
 //                        titleView
@@ -111,7 +110,7 @@ struct CommitRowView: View {
     @State private var iconTopSpacing: CGFloat = IconTopSpacing.defaultValue
     func makeIcon(commit: CD_Commit) -> some View {
         if let emoji = commit.emoji { return Text(emoji).font(.callout) }
-        if commit.images?.first != nil  { return Text("\(Image(systemName: "photo.fill"))") }
+        if commit.images?.first != nil { return Text("\(Image(systemName: "photo.fill"))") }
         if commit.title != nil || commit.content != nil { return Text("\(Image(systemName: "message.fill"))") }
         return Text("\(Image(systemName: "mappin.and.ellipse"))")
     }
@@ -191,7 +190,7 @@ struct CommitRowView: View {
     
     var imagesThumbView: some View {
         ZStack {
-            Image(commit.images?.compactMap{($0 as? CD_Thumbnail)?.title}.first ?? "Meat")
+            Image(uiImage: commit.firstThumbnail)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .layoutPriority(-1)
@@ -207,16 +206,16 @@ struct CommitRowView: View {
     
     var imagesView: some View {
         ZStack {
-            TabView{
-                ForEach(["Image", "Banner", "Meat"], id: \.self){image in
-                    Image(image)
+            TabView {
+                ForEach(commit.thumbnailsArray, id: \.id) { thumbnail in
+                    Image(uiImage: UIImage(data:thumbnail.data!)!)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                       
                 }
             }
             .tabViewStyle(.page)
-                .layoutPriority(-1)
+            .layoutPriority(-1)
+            
             Color.clear
                 .frame(height: 200)
                 .frame(maxWidth: .infinity)
@@ -252,7 +251,6 @@ struct PostRowView_Previews: PreviewProvider {
 }
 
 extension CommitRowView {
-    
     struct IconTopSpacing: PreferenceKey {
         static var defaultValue: CGFloat = 64
         
@@ -285,3 +283,4 @@ extension CommitRowView {
         }
     }
 }
+

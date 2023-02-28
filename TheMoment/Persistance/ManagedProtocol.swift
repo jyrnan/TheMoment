@@ -33,11 +33,5 @@ extension NSManagedObject {
     static var entityName: String {return entity().name!}
 }
 
-//extension NSManagedObject {
-//    static func makeDefaultPredicate(id: String) -> NSPredicate {
-////        return NSPredicate(format: "%K == %@", #keyPath(CD_Commit.uuid.uuidString), id)
-//        return NSPredicate(format: "%K == %@", \Self.uuid.uuidString, id)
-//    }
-//}
 
 

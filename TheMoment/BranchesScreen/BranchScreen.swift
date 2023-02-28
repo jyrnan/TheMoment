@@ -17,7 +17,7 @@ struct BranchScreen: View {
 
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \CD_Branch.name, ascending: false)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \CD_Branch.date, ascending: true)],
         animation: .default)
     private var branches: FetchedResults<CD_Branch>
 
@@ -74,19 +74,11 @@ struct BranchScreen: View {
 
     private func getCurrentBranch() -> CD_Branch {
         guard !branches.isEmpty else {
-            return makeInitialBranch()
+            fatalError("No Branch")
         }
 
         guard selectedBranch != nil,
               let branch = branches.filter { $0.uuid == selectedBranch }.first else { return branches.first! }
-        return branch
-    }
-
-    private func makeInitialBranch() -> CD_Branch {
-        let branch: CD_Branch = viewContext.insertObject()
-        branch.name = "Moment"
-        branch.uuid = UUID()
-
         return branch
     }
     

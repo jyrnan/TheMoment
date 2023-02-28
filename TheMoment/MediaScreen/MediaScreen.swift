@@ -9,11 +9,11 @@ import SwiftUI
 import PhotosUI
 
 struct MediaScreen: View {
-    @StateObject var vm = MediaScreenModel()
+    @StateObject var vm = PhotoPickerViewModel()
     
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \CD_Thumbnail.date, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \CD_Thumbnail.date, ascending: false)],
         animation: .default)
     private var thumbnails: FetchedResults<CD_Thumbnail>
     
@@ -34,11 +34,19 @@ struct MediaScreen: View {
                     
                                         }
                 
-                PhotosPicker(selection: $vm.imageSelection){
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill).opacity(0.5)
-                        .frame(width: 40, height: 40, alignment: .center)
+                PhotosPicker(selection: $vm.imageSelections, maxSelectionCount: 9){
+                    ZStack {
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .scaledToFill()
+                            .opacity(0.5)
+                            .frame(width: 40, height: 40, alignment: .center)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                            .border(.red).layoutPriority(-1)
+                        
+                        Circle()
+                            .fill(.clear)
+                    }
                 }
                 
             }

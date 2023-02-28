@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct EditCommitView: View {
     @StateObject var vm: EditCommitViewModel
@@ -18,7 +19,7 @@ struct EditCommitView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \CD_Branch.name, ascending: false)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \CD_Branch.date, ascending: true)],
         animation: .default)
     private var cd_Branches: FetchedResults<CD_Branch>
     
@@ -31,26 +32,23 @@ struct EditCommitView: View {
     var body: some View {
         VStack {
             List {
-                Section(content: {
-                            Picker("", selection: $vm.selectedBranch) {
+//                Section(content: {
+                            Picker("Branch", selection: $vm.selectedBranch) {
                                 ForEach(cd_Branches) { branch in
                                     Text(branch.name ?? "Moment")
-                                        .tag(branch).tag(Optional(branch))
+                                        .tag(branch)
+                                        .tag(Optional(branch))
                                 }
                             }
                             .padding(.horizontal)
-                            .onAppear{
-                                cd_Branches.map{print($0.objectID)}
-                                cd_Branches.map{try? viewContext.existingObject(with: $0.objectID)}.forEach{print($0)}
-                            }
-                        },
-                        header: { Text("Branch") },
-                        footer: {
-                            Text("Choose which branch to commit. You can also change it later")
-                    
-                                .font(.caption2)
-                                .foregroundColor(.gray)
-                        })
+//                        },
+//                        header: { Text("") },
+//                        footer: {
+//                            Text("Choose which branch to commit. You can also change it later")
+//
+//                                .font(.caption2)
+//                                .foregroundColor(.gray)
+//                        })
                         .listRowInsets(.init())
                 
                 Section(content: {
@@ -59,11 +57,10 @@ struct EditCommitView: View {
                         
                             TextEditor(text: $vm.content)
                                 .padding(.horizontal)
-//                        .fixedSize()
                                 .frame(minHeight: 120)
                     
                         },
-                        header: { Text("Words") },
+                        header: { Text("Title and content") },
                         footer: {
                             Text("\(Image(systemName: "sun.max")) \(vm.weather) \(arc4random_uniform(25))°C")
                     
@@ -71,44 +68,49 @@ struct EditCommitView: View {
                                 .foregroundColor(.gray)
                         }).listRowInsets(.init())
             
-                if !vm.images.isEmpty {
+                
                     Section(content: {
-                                TabView {
-                                    ForEach(vm.images, id: \.self) { image in
-                                        Image(image)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                    }
+                        if !vm.images.isEmpty {
+                            TabView {
+                                ForEach(vm.images, id: \.self) { image in
+                                    Image(uiImage: UIImage(data: image.data!) ?? UIImage(systemName: "photo")!)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
                                 }
-                                .frame(height: 240)
-                                .tabViewStyle(.page)
+                            }
+                            .frame(height: 240)
+                            .tabViewStyle(.page)
+                        }
+                            
                             },
-                            header: { Text(vm.images.first ?? "Photo") },
+                            header: { Text( "Photo") },
                             footer: {})
                         .listRowInsets(.init(.init()))
-                }
                 
-                if vm.images.count > 1 {
-                    HStack {
-                        ForEach(vm.images, id: \.self) { image in
-                            ZStack {
-                                Image(image)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .layoutPriority(-1)
-                                Color.clear
-                                    .frame(width: 48, height: 48)
-                            }
-                            .cornerRadius(8)
-                            .clipped()
-                            .aspectRatio(contentMode: .fill)
+                HStack {
+                    ForEach(vm.images, id: \.self) { image in
+                        ZStack {
+                            Image(uiImage: UIImage(data: image.data!) ?? UIImage(systemName: "photo")!)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .layoutPriority(-1)
+                            Color.clear
+                                .frame(width: 32, height: 32)
                         }
+                        .cornerRadius(8)
+                        .clipped()
+                        .aspectRatio(contentMode: .fill)
                     }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(.init())
+                    
+                    
+                    PhotosPicker(selection: $vm.imageSelections,maxSelectionCount: 9) {
+                        Image(systemName: "plus.circle.fill").font(.title).opacity(0.5)
+                    }
                 }
-                
+                .frame(maxWidth: .infinity, alignment: .center)
+                .listRowBackground(Color.clear)
+                .listRowInsets(.init())
+
                 Section(content: {
                             Rectangle().fill(.gray)
                                 .frame(height: 200)
@@ -123,9 +125,9 @@ struct EditCommitView: View {
                         dissmiss()
                         
                     }, label: { Text("Delete Commit").frame(maxWidth: .infinity, alignment: .center) })
-//                    .listRowBackground(Color.red)
                 }
             }
+            .scrollDismissesKeyboard(.automatic)
 
             Button {
                 if isEditMode {
@@ -143,12 +145,13 @@ struct EditCommitView: View {
             .tint(.accentColor)
             .disabled(vm.title == "" && vm.content == "" && vm.images.isEmpty)
         }
-        .onAppear {
-            guard commit != nil else { return }
-            vm.title = commit?.title ?? ""
-            vm.content = commit?.content ?? ""
-            vm.selectedBranch = commit?.branch
-        }
+//        .onAppear {
+//            guard commit != nil else { return }
+//            vm.title = commit?.title ?? ""
+//            vm.content = commit?.content ?? ""
+//            vm.selectedBranch = commit?.branch
+//            commit?.images?.forEach{vm.images.append($0 as! CD_Thumbnail)}
+//        }
     }
 }
 
