@@ -8,41 +8,44 @@
 import SwiftUI
 
 extension HomeView {
-    enum Sheet: Identifiable, View {
-        case newCommit
-        case editCommit(CD_Commit)
-        case newBranch
-        case editBranch(CD_Branch)
-        
-        var id: UUID {
-            switch self {
-            case .newCommit:
-                return UUID()
-            case .editCommit(let commit):
-                return commit.uuid!
+  enum Sheet: Identifiable, View {
+    case newCommit
+    case editCommit(CD_Commit)
+    case newBranch
+    case editBranch(CD_Branch)
+    case imageViewer(CD_Image)
+    
+    var id: UUID {
+      switch self {
+      case .newCommit:
+        return UUID()
+      case .editCommit(let commit):
+        return commit.uuid!
            
-                
-            case .newBranch:
-                return UUID()
-            case .editBranch(let branch):
-                return branch.uuid!
-            }
-        }
-        
-        var body: some View {
-            switch self {
-            case .newCommit:
-                EditCommitView(uuid: id)
-            case .editCommit(let commit):
-                EditCommitView(commit: commit)
-        
-            case .newBranch:
-                EditBranchView(uuid: id)
-            case .editBranch(let branch):
-                EditBranchView(branch: branch)
-            }
-        }
+      case .newBranch:
+        return UUID()
+      case .editBranch(let branch):
+        return branch.uuid!
+      case .imageViewer(let image):
+        return image.uuid!
+      }
     }
+        
+    var body: some View {
+      switch self {
+      case .newCommit:
+        EditCommitView(uuid: id, sheet: .constant(nil))
+      case .editCommit(let commit):
+        EditCommitView(commit: commit, sheet: .constant(nil))
+                
+      case .newBranch:
+        EditBranchView(uuid: id)
+      case .editBranch(let branch):
+        EditBranchView(branch: branch)
+        
+      case .imageViewer(let image):
+        Image(uiImage: UIImage(data: image.data!)!)
+      }
+    }
+  }
 }
-
-

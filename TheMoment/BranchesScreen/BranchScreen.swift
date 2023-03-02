@@ -32,7 +32,7 @@ struct BranchScreen: View {
                 .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)).combined(with: .opacity))
                 .id(selectedBranch)
                 .navigationTitle(getCurrentBranch().name ?? "Moment")
-                .navigationDestination(for: CD_Commit.self, destination: { commit in EditCommitView(commit: commit) })
+                .navigationDestination(for: CD_Commit.self, destination: { commit in EditCommitView(commit: commit, sheet: $sheet) })
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {

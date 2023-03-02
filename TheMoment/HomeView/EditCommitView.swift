@@ -10,6 +10,9 @@ import SwiftUI
 
 struct EditCommitView: View {
   @StateObject var vm: EditCommitViewModel
+  @Binding var sheet: HomeView.Sheet?
+  
+  @State var selectedThumbTab: CD_Thumbnail?
   
   @State var textEditorHeight: CGFloat = 20
     
@@ -25,10 +28,11 @@ struct EditCommitView: View {
     animation: .default)
   private var cd_Branches: FetchedResults<CD_Branch>
     
-  init(uuid: UUID? = nil, commit: CD_Commit? = nil) {
+  init(uuid: UUID? = nil, commit: CD_Commit? = nil, sheet: Binding<HomeView.Sheet?>) {
     _vm = StateObject(wrappedValue: EditCommitViewModel(commit: commit))
     self.uuid = uuid
     self.commit = commit
+    _sheet = sheet
   }
     
   var body: some View {
@@ -72,15 +76,7 @@ struct EditCommitView: View {
             
         Section(content: {
                   if !vm.images.isEmpty {
-                    TabView {
-                      ForEach(vm.images, id: \.self) { image in
-                        Image(uiImage: UIImage(data: image.data!) ?? UIImage(systemName: "photo")!)
-                          .resizable()
-                          .aspectRatio(contentMode: .fill)
-                      }
-                    }
-                    .frame(height: 240)
-                    .tabViewStyle(.page)
+                    ImagePageTabView(thumbnails: vm.images, selectedTab: $selectedThumbTab)
                   }
                             
                 },
@@ -103,7 +99,7 @@ struct EditCommitView: View {
             .aspectRatio(contentMode: .fill)
           }
                     
-          PhotosPicker(selection: $vm.imageSelections, maxSelectionCount: 9) {
+          PhotosPicker(selection: $vm.imageSelections, maxSelectionCount: 5) {
             Image(systemName: "plus.circle.fill").font(.title).opacity(0.5)
           }
         }
@@ -123,6 +119,7 @@ struct EditCommitView: View {
           Button(role: .destructive, action: {
             viewContext.delete(commit!)
             dissmiss()
+            viewContext.saveOrRollback()
           }, label: { Text("Delete Commit").frame(maxWidth: .infinity, alignment: .center) })
         }
       }
@@ -149,7 +146,7 @@ struct EditCommitView: View {
 
 struct NewCommitView_Previews: PreviewProvider {
   static var previews: some View {
-    EditCommitView(uuid: UUID(), commit: CD_Commit(context: PersistenceController.shared.container.viewContext))
+    EditCommitView(uuid: UUID(), commit: CD_Commit(context: PersistenceController.shared.container.viewContext), sheet: .constant(nil))
       .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
   }
 }
@@ -160,3 +157,4 @@ struct ViewHeightKey: PreferenceKey {
     value = value + nextValue()
   }
 }
+
