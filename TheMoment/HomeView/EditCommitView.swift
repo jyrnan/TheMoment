@@ -10,8 +10,8 @@ import SwiftUI
 
 struct EditCommitView: View {
   @StateObject var vm: EditCommitViewModel
-  @Binding var sheet: HomeView.Sheet?
   
+  // 用来标记这个View里面缩略图Tab的选择项
   @State var selectedThumbTab: CD_Thumbnail?
   
   @State var textEditorHeight: CGFloat = 20
@@ -28,11 +28,11 @@ struct EditCommitView: View {
     animation: .default)
   private var cd_Branches: FetchedResults<CD_Branch>
     
-  init(uuid: UUID? = nil, commit: CD_Commit? = nil, sheet: Binding<HomeView.Sheet?>) {
+  init(uuid: UUID? = nil, commit: CD_Commit? = nil, selectedThumbTab: CD_Thumbnail? = nil) {
     _vm = StateObject(wrappedValue: EditCommitViewModel(commit: commit))
     self.uuid = uuid
     self.commit = commit
-    _sheet = sheet
+    _selectedThumbTab = State(initialValue: selectedThumbTab)
   }
     
   var body: some View {
@@ -76,7 +76,7 @@ struct EditCommitView: View {
             
         Section(content: {
                   if !vm.images.isEmpty {
-                    ImagePageTabView(thumbnails: vm.images, selectedTab: $selectedThumbTab)
+                    ImagePageTabView(thumbnails: vm.images, selectedThumbTab: $selectedThumbTab)
                   }
                             
                 },
@@ -146,7 +146,7 @@ struct EditCommitView: View {
 
 struct NewCommitView_Previews: PreviewProvider {
   static var previews: some View {
-    EditCommitView(uuid: UUID(), commit: CD_Commit(context: PersistenceController.shared.container.viewContext), sheet: .constant(nil))
+    EditCommitView(uuid: UUID(), commit: CD_Commit(context: PersistenceController.shared.container.viewContext))
       .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
   }
 }

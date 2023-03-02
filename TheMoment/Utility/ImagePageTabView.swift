@@ -10,15 +10,16 @@ import SwiftUI
 struct ImagePageTabView: View {
   var thumbnails: [CD_Thumbnail]
   @State var thumbToViewed: CD_Thumbnail?
-  @Binding var selectedTab: CD_Thumbnail?
+  @Binding var selectedThumbTab: CD_Thumbnail?
 
   var body: some View {
-    TabView(selection: $selectedTab) {
+    TabView(selection: $selectedThumbTab) {
       ForEach(thumbnails, id: \.self) { thumbnail in
         Image(uiImage: UIImage(data: thumbnail.data!) ?? UIImage(systemName: "photo")!)
           .resizable()
           .aspectRatio(contentMode: .fill)
           .tag(thumbnail)
+          .tag(Optional(thumbnail))
           .onTapGesture {
             thumbToViewed = thumbnail
           }
@@ -34,6 +35,6 @@ struct ImagePageTabView: View {
 
 struct ImagePageTabView_Previews: PreviewProvider {
   static var previews: some View {
-    ImagePageTabView(thumbnails: [], selectedTab: .constant(nil))
+    ImagePageTabView(thumbnails: [], selectedThumbTab: .constant(nil))
   }
 }

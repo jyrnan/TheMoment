@@ -29,7 +29,7 @@ struct MediaScreen: View {
               .scaledToFill()
               .layoutPriority(-1)
               .onTapGesture {
-                fullSheet = .editCommit(thumbnail.commit!)
+                fullSheet = .editCommit(thumbnail.commit!, thumbnail)
               }
             Color.clear
           }
