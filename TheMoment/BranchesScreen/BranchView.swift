@@ -28,11 +28,11 @@ struct BranchView: View {
 
   var body: some View {
     let commits = branch.name == "Moment" ? cd_Commits.map { $0 } : cd_Commits.filter { $0.branch == branch }
-        
+
     List {
       BannerView(selectedBranch: $selectedBranch, branch: branch, branchCount: branchCount)
         .listRowInsets(.init())
-            
+
       makeInfoView()
         .listRowInsets(.init())
 
@@ -93,6 +93,5 @@ struct TimelineView_Previews: PreviewProvider {
     BranchView(sheet: .constant(nil), path: .constant([]), selectedBranch: .constant(UUID()),
                branch: CD_Branch(context: viewContext),
                branchCount: 4)
-//        .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
   }
 }

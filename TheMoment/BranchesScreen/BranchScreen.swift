@@ -78,7 +78,7 @@ struct BranchScreen: View {
         }
 
         guard selectedBranch != nil,
-              let branch = branches.filter { $0.uuid == selectedBranch }.first else { return branches.first! }
+              let branch = branches.filter({ $0.uuid == selectedBranch }).first else { return branches.first! }
         return branch
     }
     
