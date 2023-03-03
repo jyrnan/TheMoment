@@ -60,7 +60,7 @@ struct HomeView: View {
         .ignoresSafeArea(.keyboard)
     }
     .sheet(item: $sheet) {
-      $0.presentationDetents([.height(300), .medium, .large])
+      $0.presentationDetents([.height(350), .medium, .large])
         .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
     }
     .sheet(item: $fullSheet) {

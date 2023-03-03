@@ -29,7 +29,11 @@ struct MediaScreen: View {
               .scaledToFill()
               .layoutPriority(-1)
               .onTapGesture {
-                fullSheet = .editCommit(thumbnail.commit!, thumbnail)
+                if let commit = thumbnail.commit {
+                  fullSheet = .editCommit(commit, thumbnail)
+                } else {
+                  fullSheet = makeCommitByImage(thumbnail: thumbnail)
+                }
               }
             Color.clear
           }
@@ -44,5 +48,17 @@ struct MediaScreen: View {
 struct MediaScreen_Previews: PreviewProvider {
   static var previews: some View {
     MediaScreen(fullSheet: .constant(.newCommit))
+  }
+}
+
+extension MediaScreen {
+  private func makeCommitByImage(thumbnail: CD_Thumbnail) -> HomeView.Sheet {
+    let commit = CD_Commit(context: viewContext)
+    commit.uuid = UUID()
+    commit.images = NSSet(object: thumbnail)
+    commit.date = thumbnail.date
+    commit.editAt = .now
+        
+    return .editCommit(commit, thumbnail)
   }
 }

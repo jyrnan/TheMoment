@@ -11,6 +11,8 @@ import PhotosUI
 import SwiftUI
 
 class EditCommitViewModel: ObservableObject {
+  // MARK: - Properties
+  
   let viewContext = PersistenceController.shared.container.viewContext
     
   var commit: CD_Commit?
@@ -22,9 +24,10 @@ class EditCommitViewModel: ObservableObject {
   @Published var images: [CD_Thumbnail] = []
     
   @Published var selectedBranch: CD_Branch?
-  @Published var imageSelections: [PhotosPickerItem] = [] {
+  
+  @Published var photosPickerItems: [PhotosPickerItem] = [] {
     didSet {
-      if !imageSelections.isEmpty {
+      if !photosPickerItems.isEmpty {
         Task {
           await convertPhotoPickerItem()
         }
@@ -38,7 +41,7 @@ class EditCommitViewModel: ObservableObject {
     }
   }
     
-  // MARK: - Functions
+  // MARK: - Private Methods
     
   private func configViewModel(with commit: CD_Commit) {
     title = commit.title ?? ""
@@ -76,11 +79,13 @@ class EditCommitViewModel: ObservableObject {
   }
 }
 
+// MARK: - Extension for
+
 extension EditCommitViewModel {
   fileprivate func convertPhotoPickerItem() async {
     var thumbnails: [CD_Thumbnail] = []
     await withTaskGroup(of: CD_Thumbnail?.self) { group in
-      imageSelections.forEach { item in
+      photosPickerItems.forEach { item in
         group.addTask {
           await self.loadTransferable(from: item)
         }
@@ -94,22 +99,22 @@ extension EditCommitViewModel {
     }
         
     await MainActor.run { [thumbnails] in
+      let thumbnails = thumbnails.compactMap { viewContext.object(with: $0.objectID) as? CD_Thumbnail }
       self.images.append(contentsOf: thumbnails)
-      self.imageSelections.removeAll()
+      self.photosPickerItems.removeAll()
     }
   }
     
   private func loadTransferable(from imageSelection: PhotosPickerItem) async -> CD_Thumbnail? {
-    guard let data = try? await imageSelection.loadTransferable(type: Data.self) else { return nil }
+    guard let data = try? await imageSelection.loadTransferable(type: Data.self), let itemIdentifier = imageSelection.itemIdentifier else { return nil }
     
     let thumbData = await ImageCompressor.getCompressBySize(data: data)
     
-    return await createThumbnail(data: data, thumbData: thumbData, itemIdentifier: imageSelection.itemIdentifier)
+    return await createThumbnailBg(data: data, thumbData: thumbData, itemIdentifier: itemIdentifier)
   }
     
   @MainActor
-  private func createThumbnail(data: Data, thumbData: Data ,itemIdentifier: String?) -> CD_Thumbnail {
-    
+  private func createThumbnail(data: Data, thumbData: Data, itemIdentifier: String) -> CD_Thumbnail {
     let origin = CD_Image(context: viewContext)
     origin.data = data
     origin.title = itemIdentifier
@@ -127,5 +132,35 @@ extension EditCommitViewModel {
     
     return thumbnail
   }
+  
+  private func createThumbnailBg(data: Data, thumbData: Data, itemIdentifier: String) async -> CD_Thumbnail? {
+    let container = PersistenceController.shared.container
+    
+    return try? await container.performBackgroundTask { context in
+      
+      let asset = PHAsset.fetchAssets(withLocalIdentifiers: [itemIdentifier], options: nil)
+     
+      let origin = CD_Image(context: context)
+      origin.data = data
+      origin.title = itemIdentifier
+      origin.date = asset.firstObject?.creationDate
+      origin.editAt = .now
+      origin.uuid = UUID()
+      
+      let thumbnail = CD_Thumbnail(context: context)
+      thumbnail.data = thumbData
+      thumbnail.title = itemIdentifier
+      thumbnail.date = asset.firstObject?.creationDate
+      thumbnail.editAt = .now
+      thumbnail.uuid = UUID()
+      thumbnail.origin = origin
+      
+//      do {
+      try context.save()
+      return thumbnail
+//      } catch {
+//        fatalError()
+//      }
+    }
+  }
 }
-

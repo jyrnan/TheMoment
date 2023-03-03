@@ -10,48 +10,50 @@ import PhotosUI
 import SwiftUI
 
 class PhotoPickerViewModel: ObservableObject {
-    let viewContext = PersistenceController.shared.container.viewContext
+  let viewContext = PersistenceController.shared.container.viewContext
     
-    @Published var imageSelections: [PhotosPickerItem] = [] {
-        didSet {
-            if !imageSelections.isEmpty {
-                Task {
-                    await withTaskGroup(of: Void.self) { group in
-                        imageSelections.forEach { item in
-                            group.addTask {
-                                await self.loadTransferable(from: item)
-                            }
-                        }
-                    }
-                    await MainActor.run {self.imageSelections.removeAll()}
-                }
+  @Published var imageSelections: [PhotosPickerItem] = [] {
+    didSet {
+      if !imageSelections.isEmpty {
+        Task {
+          await withTaskGroup(of: Void.self) { group in
+            imageSelections.forEach { item in
+              group.addTask {
+                await self.loadTransferable(from: item)
+              }
             }
+          }
+          await MainActor.run { self.imageSelections.removeAll() }
         }
+      }
     }
+  }
     
-    // MARK: - Private Methods
+  // MARK: - Private Methods
     
-    private func loadTransferable(from imageSelection: PhotosPickerItem) async {
-        do {
-            if let data = try await imageSelection.loadTransferable(type: Data.self) {
-                await createThumbnail(data: data, itemIdentifier: imageSelection.itemIdentifier)
-            }
-        } catch {
-            print(error)
-        }
+  private func loadTransferable(from imageSelection: PhotosPickerItem) async {
+    do {
+      if let data = try await imageSelection.loadTransferable(type: Data.self) {
+        let asset = PHAsset.fetchAssets(withLocalIdentifiers: [imageSelection.itemIdentifier!], options: nil)
+        print(#line, asset.firstObject?.location)
+        await createThumbnail(data: data, itemIdentifier: imageSelection.itemIdentifier)
+      }
+    } catch {
+      print(error)
     }
+  }
     
-    @MainActor
-    private func createThumbnail(data: Data, itemIdentifier: String?) {
-        withAnimation {
-            let thumbnail = CD_Thumbnail(context: viewContext)
-            thumbnail.data = data
-            thumbnail.title = itemIdentifier
+  @MainActor
+  private func createThumbnail(data: Data, itemIdentifier: String?) {
+    withAnimation {
+      let thumbnail = CD_Thumbnail(context: viewContext)
+      thumbnail.data = data
+      thumbnail.title = itemIdentifier
             
-            thumbnail.date = .now
-            thumbnail.editAt = .now
+      thumbnail.date = .now
+      thumbnail.editAt = .now
             
 //            _ = viewContext.saveOrRollback()
-        }
     }
+  }
 }

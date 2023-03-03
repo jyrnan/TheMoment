@@ -37,6 +37,14 @@ struct EditCommitView: View {
     
   var body: some View {
     VStack {
+//      Image(systemName: "xmark.circle.fill")
+//        .font(.title2)
+//        .opacity(0.5)
+//        .padding([.top, .trailing])
+//        .frame(maxWidth: .infinity, alignment: .trailing)
+//        .onTapGesture {
+//          dissmiss()
+//        }
       List {
 //                Section(content: {
         Picker("Branch", selection: $vm.selectedBranch) {
@@ -85,21 +93,9 @@ struct EditCommitView: View {
           .listRowInsets(.init(.init()))
                 
         HStack {
-          ForEach(vm.images, id: \.self) { image in
-            ZStack {
-              Image(uiImage: UIImage(data: image.data!) ?? UIImage(systemName: "photo")!)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .layoutPriority(-1)
-              Color.clear
-                .frame(width: 32, height: 32)
-            }
-            .cornerRadius(8)
-            .clipped()
-            .aspectRatio(contentMode: .fill)
-          }
+          ThumbnailRowView(thumbnails: vm.images, selectedThumbTab: $selectedThumbTab)
                     
-          PhotosPicker(selection: $vm.imageSelections, maxSelectionCount: 5) {
+          PhotosPicker(selection: $vm.photosPickerItems, photoLibrary: .shared()) {
             Image(systemName: "plus.circle.fill").font(.title).opacity(0.5)
           }
         }
@@ -117,9 +113,10 @@ struct EditCommitView: View {
                 
         if isEditMode {
           Button(role: .destructive, action: {
-            viewContext.delete(commit!)
             dissmiss()
-            viewContext.saveOrRollback()
+            vm.delete(commit: commit!)
+//            viewContext.delete(commit!)
+//            viewContext.saveOrRollback()
           }, label: { Text("Delete Commit").frame(maxWidth: .infinity, alignment: .center) })
         }
       }
@@ -140,7 +137,7 @@ struct EditCommitView: View {
       .padding()
       .tint(.accentColor)
       .disabled(vm.title == "" && vm.content == "" && vm.images.isEmpty)
-    }
+    }.background(Color(uiColor: .systemGroupedBackground))
   }
 }
 
@@ -157,4 +154,5 @@ struct ViewHeightKey: PreferenceKey {
     value = value + nextValue()
   }
 }
+
 

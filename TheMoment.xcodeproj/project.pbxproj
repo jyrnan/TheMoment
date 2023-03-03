@@ -18,6 +18,7 @@
 		D2331DD129B0804D003BD590 /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2331DD029B0804D003BD590 /* ImageViewer.swift */; };
 		D2331DD429B080CE003BD590 /* ImagePageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2331DD329B080CE003BD590 /* ImagePageTabView.swift */; };
 		D2331DD629B0890E003BD590 /* ImageCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2331DD529B0890E003BD590 /* ImageCompressor.swift */; };
+		D2331DD829B1D80F003BD590 /* ThumbnailRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2331DD729B1D80F003BD590 /* ThumbnailRowView.swift */; };
 		D257F5D6299A2731006CA065 /* BranchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D257F5D5299A2731006CA065 /* BranchViewModel.swift */; };
 		D284CA9529A20C7C00C8EC7C /* CD_Branch+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9429A20C7C00C8EC7C /* CD_Branch+.swift */; };
 		D284CA9C29A2393600C8EC7C /* EditBranchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9B29A2393600C8EC7C /* EditBranchView.swift */; };
@@ -76,6 +77,7 @@
 		D2331DD029B0804D003BD590 /* ImageViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
 		D2331DD329B080CE003BD590 /* ImagePageTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePageTabView.swift; sourceTree = "<group>"; };
 		D2331DD529B0890E003BD590 /* ImageCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCompressor.swift; sourceTree = "<group>"; };
+		D2331DD729B1D80F003BD590 /* ThumbnailRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailRowView.swift; sourceTree = "<group>"; };
 		D257F5D5299A2731006CA065 /* BranchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchViewModel.swift; sourceTree = "<group>"; };
 		D284CA9429A20C7C00C8EC7C /* CD_Branch+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Branch+.swift"; sourceTree = "<group>"; };
 		D284CA9B29A2393600C8EC7C /* EditBranchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBranchView.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			children = (
 				D2331DD029B0804D003BD590 /* ImageViewer.swift */,
 				D2331DD329B080CE003BD590 /* ImagePageTabView.swift */,
+				D2331DD729B1D80F003BD590 /* ThumbnailRowView.swift */,
 				D2331DD529B0890E003BD590 /* ImageCompressor.swift */,
 			);
 			path = Utility;
@@ -471,6 +474,7 @@
 				D2F517BD298E77930091B527 /* Sheet.swift in Sources */,
 				D2F51784298D07250091B527 /* TheMoment.xcdatamodeld in Sources */,
 				D2F517BA298E43180091B527 /* Constant.swift in Sources */,
+				D2331DD829B1D80F003BD590 /* ThumbnailRowView.swift in Sources */,
 				D2331DB329ACAB57003BD590 /* PhotoPickerViewModel.swift in Sources */,
 				D21CF67C299F4F1800171BE7 /* NSManagedObjectContext+.swift in Sources */,
 			);
@@ -635,6 +639,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TheMoment/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Use Face ID instead of a password to access your account.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "The Moment need to access your photo library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -665,6 +671,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TheMoment/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Use Face ID instead of a password to access your account.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "The Moment need to access your photo library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
