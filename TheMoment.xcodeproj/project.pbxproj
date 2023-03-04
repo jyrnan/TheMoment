@@ -19,7 +19,9 @@
 		D2331DD429B080CE003BD590 /* ImagePageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2331DD329B080CE003BD590 /* ImagePageTabView.swift */; };
 		D2331DD629B0890E003BD590 /* ImageCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2331DD529B0890E003BD590 /* ImageCompressor.swift */; };
 		D2331DD829B1D80F003BD590 /* ThumbnailRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2331DD729B1D80F003BD590 /* ThumbnailRowView.swift */; };
-		D257F5D6299A2731006CA065 /* BranchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D257F5D5299A2731006CA065 /* BranchViewModel.swift */; };
+		D25D1E8529B2FB1B008EA2E9 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25D1E8429B2FB1B008EA2E9 /* MapViewModel.swift */; };
+		D25D1E8729B2FCAD008EA2E9 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25D1E8629B2FCAD008EA2E9 /* MapView.swift */; };
+		D25D1E8A29B3464E008EA2E9 /* EditCommitView+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25D1E8929B3464E008EA2E9 /* EditCommitView+Location.swift */; };
 		D284CA9529A20C7C00C8EC7C /* CD_Branch+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9429A20C7C00C8EC7C /* CD_Branch+.swift */; };
 		D284CA9C29A2393600C8EC7C /* EditBranchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9B29A2393600C8EC7C /* EditBranchView.swift */; };
 		D284CA9E29A2398D00C8EC7C /* EditBranchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9D29A2398D00C8EC7C /* EditBranchViewModel.swift */; };
@@ -77,7 +79,11 @@
 		D2331DD329B080CE003BD590 /* ImagePageTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePageTabView.swift; sourceTree = "<group>"; };
 		D2331DD529B0890E003BD590 /* ImageCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCompressor.swift; sourceTree = "<group>"; };
 		D2331DD729B1D80F003BD590 /* ThumbnailRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailRowView.swift; sourceTree = "<group>"; };
-		D257F5D5299A2731006CA065 /* BranchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchViewModel.swift; sourceTree = "<group>"; };
+		D25D1E8029B2BC6F008EA2E9 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
+		D25D1E8229B2BF54008EA2E9 /* TheMoment.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = TheMoment.xctestplan; path = TheMoment.xcodeproj/TheMoment.xctestplan; sourceTree = "<group>"; };
+		D25D1E8429B2FB1B008EA2E9 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		D25D1E8629B2FCAD008EA2E9 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		D25D1E8929B3464E008EA2E9 /* EditCommitView+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditCommitView+Location.swift"; sourceTree = "<group>"; };
 		D284CA9429A20C7C00C8EC7C /* CD_Branch+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Branch+.swift"; sourceTree = "<group>"; };
 		D284CA9B29A2393600C8EC7C /* EditBranchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBranchView.swift; sourceTree = "<group>"; };
 		D284CA9D29A2398D00C8EC7C /* EditBranchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBranchViewModel.swift; sourceTree = "<group>"; };
@@ -139,10 +145,7 @@
 			children = (
 				D2F517AB298D08040091B527 /* HomeView.swift */,
 				D2F517BC298E77930091B527 /* Sheet.swift */,
-				D21758AF299F241300EF7DF1 /* EditCommitView.swift */,
-				D21CF68C29A05C9200171BE7 /* EditCommitViewModel.swift */,
-				D284CA9B29A2393600C8EC7C /* EditBranchView.swift */,
-				D284CA9D29A2398D00C8EC7C /* EditBranchViewModel.swift */,
+				D25D1E8829B345FF008EA2E9 /* EditView */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -181,12 +184,34 @@
 		D2331DD229B08075003BD590 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				D2331DD029B0804D003BD590 /* ImageViewer.swift */,
-				D2331DD329B080CE003BD590 /* ImagePageTabView.swift */,
-				D2331DD729B1D80F003BD590 /* ThumbnailRowView.swift */,
-				D2331DD529B0890E003BD590 /* ImageCompressor.swift */,
+				D25D1E8329B2FAF8008EA2E9 /* ImageView */,
+				D25D1E8429B2FB1B008EA2E9 /* MapViewModel.swift */,
+				D25D1E8629B2FCAD008EA2E9 /* MapView.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		D25D1E8329B2FAF8008EA2E9 /* ImageView */ = {
+			isa = PBXGroup;
+			children = (
+				D2331DD729B1D80F003BD590 /* ThumbnailRowView.swift */,
+				D2331DD529B0890E003BD590 /* ImageCompressor.swift */,
+				D2331DD029B0804D003BD590 /* ImageViewer.swift */,
+				D2331DD329B080CE003BD590 /* ImagePageTabView.swift */,
+			);
+			path = ImageView;
+			sourceTree = "<group>";
+		};
+		D25D1E8829B345FF008EA2E9 /* EditView */ = {
+			isa = PBXGroup;
+			children = (
+				D21758AF299F241300EF7DF1 /* EditCommitView.swift */,
+				D21CF68C29A05C9200171BE7 /* EditCommitViewModel.swift */,
+				D25D1E8929B3464E008EA2E9 /* EditCommitView+Location.swift */,
+				D284CA9B29A2393600C8EC7C /* EditBranchView.swift */,
+				D284CA9D29A2398D00C8EC7C /* EditBranchViewModel.swift */,
+			);
+			path = EditView;
 			sourceTree = "<group>";
 		};
 		D284CA9A29A214B400C8EC7C /* CD_Branch */ = {
@@ -208,6 +233,7 @@
 		D2F5176B298D07240091B527 = {
 			isa = PBXGroup;
 			children = (
+				D25D1E8229B2BF54008EA2E9 /* TheMoment.xctestplan */,
 				D2F51776298D07240091B527 /* TheMoment */,
 				D2F5178D298D07250091B527 /* TheMomentTests */,
 				D2F51797298D07250091B527 /* TheMomentUITests */,
@@ -256,6 +282,7 @@
 		D2F5178D298D07250091B527 /* TheMomentTests */ = {
 			isa = PBXGroup;
 			children = (
+				D25D1E8029B2BC6F008EA2E9 /* TestPlan.xctestplan */,
 				D2F5178E298D07250091B527 /* TheMomentTests.swift */,
 			);
 			path = TheMomentTests;
@@ -283,7 +310,6 @@
 			isa = PBXGroup;
 			children = (
 				D2F517B3298D12380091B527 /* BranchScreen.swift */,
-				D257F5D5299A2731006CA065 /* BranchViewModel.swift */,
 				D2F517A7298D07620091B527 /* BranchView.swift */,
 				D2F517B7298E2AC30091B527 /* BannerView.swift */,
 				D284CA9F29A318B600C8EC7C /* SwitchBranchView.swift */,
@@ -442,6 +468,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2331DD629B0890E003BD590 /* ImageCompressor.swift in Sources */,
+				D25D1E8A29B3464E008EA2E9 /* EditCommitView+Location.swift in Sources */,
 				D21758B0299F241300EF7DF1 /* EditCommitView.swift in Sources */,
 				D2331DD429B080CE003BD590 /* ImagePageTabView.swift in Sources */,
 				D21CF6A229A1BB0A00171BE7 /* CD_Commit+.swift in Sources */,
@@ -450,13 +477,13 @@
 				D2331DB029AC979C003BD590 /* MediaScreen.swift in Sources */,
 				D2F517B2298D0F750091B527 /* DetailView.swift in Sources */,
 				D2331DB529ADF5F3003BD590 /* CD_Thumbnail+.swift in Sources */,
+				D25D1E8729B2FCAD008EA2E9 /* MapView.swift in Sources */,
 				D2F51781298D07250091B527 /* Persistence.swift in Sources */,
 				D2F517AC298D08040091B527 /* HomeView.swift in Sources */,
 				D2F517BF2991F8A90091B527 /* View+.swift in Sources */,
 				D284CA9529A20C7C00C8EC7C /* CD_Branch+.swift in Sources */,
 				D2AC54EC299B77E100075DD0 /* Branch.swift in Sources */,
 				D2EBB20E299E27E6004EA1D5 /* AuthenticationScreen.swift in Sources */,
-				D257F5D6299A2731006CA065 /* BranchViewModel.swift in Sources */,
 				D2F51778298D07240091B527 /* TheMomentApp.swift in Sources */,
 				D284CA9E29A2398D00C8EC7C /* EditBranchViewModel.swift in Sources */,
 				D21CF68D29A05C9200171BE7 /* EditCommitViewModel.swift in Sources */,
@@ -472,6 +499,7 @@
 				D2F517BA298E43180091B527 /* Constant.swift in Sources */,
 				D2331DD829B1D80F003BD590 /* ThumbnailRowView.swift in Sources */,
 				D2331DB329ACAB57003BD590 /* PhotoPickerViewModel.swift in Sources */,
+				D25D1E8529B2FB1B008EA2E9 /* MapViewModel.swift in Sources */,
 				D21CF67C299F4F1800171BE7 /* NSManagedObjectContext+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -635,8 +663,12 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TheMoment/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Use Face ID instead of a password to access your account.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "The Moment need to access your photo library";
+				INFOPLIST_KEY_NSLocationUsageDescription = "$(PRODUCT_NAME)";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The Moment need to access your location to recod";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Moment need to access your photo library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -667,8 +699,12 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TheMoment/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Use Face ID instead of a password to access your account.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "The Moment need to access your photo library";
+				INFOPLIST_KEY_NSLocationUsageDescription = "$(PRODUCT_NAME)";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The Moment need to access your location to recod";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Moment need to access your photo library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

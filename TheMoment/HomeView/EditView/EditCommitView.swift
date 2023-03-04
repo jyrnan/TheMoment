@@ -65,6 +65,7 @@ struct EditCommitView: View {
                       .font(.system(.body))
                       .foregroundColor(.clear)
                       .padding(14)
+                      .frame(maxHeight: 300)
                       .background(GeometryReader {
                         Color.clear.preference(key: ViewHeightKey.self,
                                                value: $0.frame(in: .local).size.height)
@@ -72,7 +73,8 @@ struct EditCommitView: View {
                     TextEditor(text: $vm.content)
                       .frame(height: max(40, textEditorHeight))
                       .padding(.horizontal)
-                  }.onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
+                  }
+                  .onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
                 },
                 header: { Text("Title and content") },
                 footer: {
@@ -104,7 +106,7 @@ struct EditCommitView: View {
         .listRowInsets(.init())
 
         Section(content: {
-                  Rectangle().fill(.gray)
+          MapView(region: $vm.region)
                     .frame(height: 200)
                 },
                 header: { Text(vm.location) },
@@ -122,22 +124,26 @@ struct EditCommitView: View {
       }
       .scrollDismissesKeyboard(.immediately)
 
-      Button {
-        if isEditMode {
-          guard vm.updateAndSave(commit: commit!) else { return }
-          dissmiss()
-        } else {
-          let newCommit = vm.newCommit(uuid: uuid!)
-          guard vm.updateAndSave(commit: newCommit) else { return }
-          dissmiss()
+      HStack {
+        Button(role: .cancel, action: {}, label: { Text("Cancel") }).padding()
+        Spacer()
+        Button {
+          if isEditMode {
+            guard vm.updateAndSave(commit: commit!) else { return }
+            dissmiss()
+          } else {
+            let newCommit = vm.newCommit(uuid: uuid!)
+            guard vm.updateAndSave(commit: newCommit) else { return }
+            dissmiss()
+          }
+        } label: {
+          Text(isEditMode ? "Save" : "Add")
         }
-      } label: {
-        Text(isEditMode ? "Save Commit" : "Add Commit")
+        .padding()
+        .tint(.accentColor)
+        .disabled(vm.title == "" && vm.content == "" && vm.images.isEmpty)
       }
-      .padding()
-      .tint(.accentColor)
-      .disabled(vm.title == "" && vm.content == "" && vm.images.isEmpty)
-    }.background(Color(uiColor: .systemGroupedBackground))
+    }
   }
 }
 
@@ -154,5 +160,3 @@ struct ViewHeightKey: PreferenceKey {
     value = value + nextValue()
   }
 }
-
-

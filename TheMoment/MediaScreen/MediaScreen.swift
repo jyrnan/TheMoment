@@ -11,7 +11,7 @@ import SwiftUI
 struct MediaScreen: View {
   @StateObject var vm = PhotoPickerViewModel()
   @Binding var fullSheet: HomeView.Sheet?
-  
+
   @Environment(\.managedObjectContext) private var viewContext
   @FetchRequest(
     sortDescriptors: [NSSortDescriptor(keyPath: \CD_Thumbnail.date, ascending: false)],
@@ -37,8 +37,19 @@ struct MediaScreen: View {
               }
             Color.clear
           }
+          
+           
+          
           .clipped()
           .aspectRatio(1, contentMode: .fill)
+          .overlay(alignment: .bottomTrailing) {
+            Image(systemName: "link.badge.plus")
+              .resizable()
+              .aspectRatio(contentMode: .fill)
+              .frame(width: 24, height: 24)
+              .foregroundColor(.white)
+              .padding(6)
+            .opacity(thumbnail.commit == nil ? 1 : 0)}
         }
       }
     }
@@ -58,7 +69,7 @@ extension MediaScreen {
     commit.images = NSSet(object: thumbnail)
     commit.date = thumbnail.date
     commit.editAt = .now
-        
+
     return .editCommit(commit, thumbnail)
   }
 }

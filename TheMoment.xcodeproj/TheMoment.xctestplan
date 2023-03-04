@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "62EB77B7-7036-456E-AF10-C9A7E7640144",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:TheMoment.xcodeproj",
+      "identifier" : "D2F51773298D07240091B527",
+      "name" : "TheMoment"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:TheMoment.xcodeproj",
+        "identifier" : "D2F51789298D07250091B527",
+        "name" : "TheMomentTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:TheMoment.xcodeproj",
+        "identifier" : "D2F51793298D07250091B527",
+        "name" : "TheMomentUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "3B419EEF-2EFE-4094-B077-D863879C3409",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    },
+    {
+      "id" : "1B764C80-1A2F-4D9B-9B17-53679B1CD1AA",
+      "name" : "Configuration 2",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:TheMoment.xcodeproj",
+        "identifier" : "D2F51789298D07250091B527",
+        "name" : "TheMomentTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:TheMoment.xcodeproj",
+        "identifier" : "D2F51793298D07250091B527",
+        "name" : "TheMomentUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

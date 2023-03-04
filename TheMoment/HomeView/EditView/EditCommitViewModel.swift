@@ -9,8 +9,9 @@ import CoreData
 import Foundation
 import PhotosUI
 import SwiftUI
+import MapKit
 
-class EditCommitViewModel: ObservableObject {
+class EditCommitViewModel: NSObject, ObservableObject {
   // MARK: - Properties
   
   let viewContext = PersistenceController.shared.container.viewContext
@@ -22,6 +23,9 @@ class EditCommitViewModel: ObservableObject {
   @Published var location: String = "22.54°N, 36.38°E"
   @Published var weather: String = ["Sunny", "Cloudy", "Rain", "Storm"].randomElement() ?? "Sunny"
   @Published var images: [CD_Thumbnail] = []
+  
+  @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.3315, longitude: -121.89),
+                                             span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
     
   @Published var selectedBranch: CD_Branch?
   
@@ -34,11 +38,15 @@ class EditCommitViewModel: ObservableObject {
       }
     }
   }
+  
+  var locationManager = CLLocationManager()
     
   init(commit: CD_Commit? = nil) {
+    super.init()
     if let commit = commit {
       configViewModel(with: commit)
     }
+    locationManager.delegate = self
   }
     
   // MARK: - Private Methods
