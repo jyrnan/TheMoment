@@ -85,7 +85,7 @@ struct HomeView: View {
       .frame(maxHeight: .infinity, alignment: .bottom)
       .onTapGesture {
         let viewModel = EditCommitViewModel()
-        viewModel.selectedBranch = currentBranch
+        viewModel.currentBranch = currentBranch
         sheet = .newCommit(viewModel)
       }
   }

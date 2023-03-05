@@ -17,6 +17,8 @@ struct EditCommitView: View {
   @State var textEditorHeight: CGFloat = 20
   var isEditMode: Bool { true }
   
+//  @Binding var currentThumbnail: CD_Thumbnail?
+  
   //MARK: -
   @Environment(\.managedObjectContext) private var viewContext
   @FetchRequest(
@@ -28,13 +30,14 @@ struct EditCommitView: View {
   
   init(viewModel: EditCommitViewModel) {
     _vm = StateObject(wrappedValue: viewModel)
+//    _currentThumbnail = currentThumbnail
   }
     
   var body: some View {
     VStack {
       List {
 //                Section(content: {
-        Picker("Branch", selection: $vm.selectedBranch) {
+        Picker("Branch", selection: $vm.currentBranch) {
           ForEach(cd_Branches) { branch in
             Text(branch.name ?? "Moment")
               .tag(branch)

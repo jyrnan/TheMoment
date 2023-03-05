@@ -30,7 +30,9 @@ struct MediaScreen: View {
               .layoutPriority(-1)
               .onTapGesture {
                 if let commit = thumbnail.commit {
-                  fullSheet = .editCommit(commit, thumbnail)
+                  let viewModel = EditCommitViewModel(commit: commit)
+                  viewModel.selectedThumbTab = thumbnail
+                  fullSheet = .editCommit(viewModel)
                 } else {
                   fullSheet = makeCommitByImage(thumbnail: thumbnail)
                 }
@@ -69,7 +71,9 @@ extension MediaScreen {
     commit.images = NSSet(object: thumbnail)
     commit.date = thumbnail.date
     commit.editAt = .now
+    
+    let viewModel = EditCommitViewModel(commit: commit)
 
-    return .editCommit(commit, thumbnail)
+    return .editCommit(viewModel)
   }
 }

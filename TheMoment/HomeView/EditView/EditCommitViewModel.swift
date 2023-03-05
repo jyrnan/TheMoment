@@ -27,7 +27,7 @@ class EditCommitViewModel: NSObject, ObservableObject {
   @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.3315, longitude: -121.89),
                                              span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
   
-  @Published var selectedBranch: CD_Branch?
+  @Published var currentBranch: CD_Branch?
   // 用来标记这个View里面缩略图Tab的选择项
   @Published var selectedThumbTab: CD_Thumbnail?
   
@@ -60,7 +60,7 @@ class EditCommitViewModel: NSObject, ObservableObject {
     location = commit.location ?? "22.54°N, 36.38°E"
     weather = commit.weather ?? "Sunny"
     images = commit.thumbnailsArray
-    selectedBranch = commit.branch
+    currentBranch = commit.branch
   }
     
   func newCommit() -> CD_Commit {
@@ -75,7 +75,7 @@ class EditCommitViewModel: NSObject, ObservableObject {
     let commit = self.commit ?? newCommit()
     commit.title = title.count > 0 ? title : nil
     commit.content = content.count > 0 ? content : nil
-    commit.branch = selectedBranch
+    commit.branch = currentBranch
     commit.editAt = .now
     commit.images = NSSet(array: images)
         

@@ -9,18 +9,18 @@ import SwiftUI
 
 extension HomeView {
   enum Sheet: Identifiable, View {
-    case newCommit(EditCommitViewModel)
-    case editCommit(CD_Commit, CD_Thumbnail)
+    case newCommit(EditCommitViewModel) //需要通过VM传入currentBranch
+    case editCommit(EditCommitViewModel)
     case newBranch
     case editBranch(CD_Branch)
     case imageViewer(CD_Image)
     
     var id: UUID {
       switch self {
-      case .newCommit(let viewModel):
+      case .newCommit(let _):
         return UUID()
-      case .editCommit(let commit, _):
-        return commit.uuid!
+      case .editCommit(let viewModel):
+        return viewModel.commit?.uuid ?? UUID()
            
       case .newBranch:
         return UUID()
@@ -36,8 +36,7 @@ extension HomeView {
       switch self {
       case .newCommit(let viewModel):
         EditCommitView(viewModel: viewModel)
-      case .editCommit(let commit, let thumbnail):
-        let viewModel = EditCommitViewModel(commit: commit)
+      case .editCommit(let viewModel):
         EditCommitView(viewModel: viewModel)
                 
       case .newBranch:

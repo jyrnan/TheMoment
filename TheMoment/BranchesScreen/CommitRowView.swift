@@ -32,6 +32,7 @@ struct CommitRowView: View {
 
   @ObservedObject var commit: CD_Commit
   
+  @State var currentThumbnail: CD_Thumbnail?
   
   var body: some View {
     HStack(spacing: 0) {
@@ -201,12 +202,9 @@ struct CommitRowView: View {
     ZStack {
       TabView {
         ForEach(commit.thumbnailsArray, id: \.id) { thumbnail in
-          ZStack{
             Image(uiImage: UIImage(data: thumbnail.data!)!)
               .resizable()
               .aspectRatio(contentMode: .fill)
-            Text(thumbnail.date?.formatted() ?? "NO DATE")
-          }
         }
       }
       .tabViewStyle(.page)
