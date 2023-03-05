@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SwitchBranchView: View {
     
-    @Binding var selectedBranch: UUID?
+    @Binding var selectedBranch: CD_Branch
     
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
@@ -21,7 +21,7 @@ struct SwitchBranchView: View {
         HStack(spacing: 0){
             ForEach(branches) {branch in
                 Circle()
-                    .fill(branch.uuid == selectedBranch ? Color.accentColor : Color.white)
+                    .fill(branch == selectedBranch ? Color.accentColor : Color.white)
                     .padding(0)
                     .frame(width: 6, height: 6)
                     .padding(3)
@@ -33,6 +33,6 @@ struct SwitchBranchView: View {
 
 struct SwitchBranchView_Previews: PreviewProvider {
     static var previews: some View {
-        SwitchBranchView(selectedBranch: .constant(UUID()))
+        SwitchBranchView(selectedBranch: .constant(CD_Branch()))
     }
 }

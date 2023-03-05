@@ -10,10 +10,8 @@ import SwiftUI
 
 struct BranchScreen: View {
     @State var path: [CD_Commit] = []
-
     @Binding var sheet: HomeView.Sheet?
-
-    @State var selectedBranch: UUID?
+    @Binding var currentBranch: CD_Branch
 
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
@@ -25,14 +23,13 @@ struct BranchScreen: View {
         NavigationStack(path: $path) {
             BranchView(sheet: $sheet,
                        path: $path,
-                       selectedBranch: $selectedBranch,
-                       branch: getCurrentBranch(),
+                       currentBranch: $currentBranch,
                        branchCount: branches.count)
                 .ignoresSafeArea(edges: .top)
                 .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)).combined(with: .opacity))
-                .id(selectedBranch)
-                .navigationTitle(getCurrentBranch().name ?? "Moment")
-                .navigationDestination(for: CD_Commit.self, destination: { commit in EditCommitView(commit: commit) })
+                .id(currentBranch)
+                .navigationTitle(currentBranch.name ?? "Moment")
+                .navigationDestination(for: CD_Commit.self, destination: { commit in EditCommitView(viewModel: EditCommitViewModel(commit: commit)) })
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
@@ -41,20 +38,20 @@ struct BranchScreen: View {
                             Text("Switch")
                         }
                     }
-                    
+
                     ToolbarItemGroup(placement: .secondaryAction) {
                         ForEach(branches) { branch in
 
                             // 这里面似乎只能放Button类型的View
                             Button {
-                                selectedBranch = branch.uuid
+                                currentBranch = branch
                             } label: {
-                                Label(branch.name ?? "Moment", systemImage: branch.uuid == selectedBranch ? "checkmark" : "")
+                                Label(branch.name ?? "Moment", systemImage: branch == currentBranch ? "checkmark" : "")
                             }
                         }
-                        
+
                         Button {
-                            sheet = .editBranch(getCurrentBranch())
+                            sheet = .editBranch(currentBranch)
                         } label: {
                             Label("Edit Current", systemImage: "pencil")
                         }
@@ -62,55 +59,22 @@ struct BranchScreen: View {
                         Button {
                             sheet = .newBranch
                         } label: {
-//                            Text("New Branch")
                             Label("New Branch", systemImage: "plus").labelStyle(DefaultLabelStyle())
                         }
                     }
                 }
-                .animation(.default, value: selectedBranch)
-                .tint(getCurrentBranch().color)
+                .animation(.default, value: currentBranch)
+                .tint(currentBranch.color)
         }
-    }
-
-    private func getCurrentBranch() -> CD_Branch {
-        guard !branches.isEmpty else {
-            fatalError("No Branch")
-        }
-
-        guard selectedBranch != nil,
-              let branch = branches.filter({ $0.uuid == selectedBranch }).first else { return branches.first! }
-        return branch
     }
     
     private func switchToNextBranch(){
-        guard branches.count > 1 else {return}
-        
-        if selectedBranch == nil {
-            selectedBranch = branches.first?.uuid
-            switchToNextBranch()
-        }
-        
-        let uuidArray = branches.map(\.uuid)
-        
-        if selectedBranch == uuidArray.last {
-            selectedBranch = uuidArray.first!
-        } else {
-            if let currentIndex = uuidArray.firstIndex(of: selectedBranch){
-                let nextIndex = uuidArray.index(after: currentIndex)
-                selectedBranch = uuidArray[nextIndex]
-            }
-            
-        }
-        
-        
-        
-        
+
     }
 }
 
 struct BranchView_Previews: PreviewProvider {
     static var previews: some View {
-        BranchScreen(sheet: .constant(nil))
-            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+      BranchScreen(sheet: .constant(nil), currentBranch: .constant(CD_Branch.sample))
     }
 }

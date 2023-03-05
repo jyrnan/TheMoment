@@ -55,6 +55,10 @@ struct PersistenceController {
     }
 }
 
+extension PersistenceController {
+  static var viewContext: NSManagedObjectContext = shared.container.viewContext
+}
+
 extension NSManagedObjectContext {
     func addItem() {
         withAnimation {

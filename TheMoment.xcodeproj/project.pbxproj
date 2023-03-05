@@ -22,6 +22,7 @@
 		D25D1E8529B2FB1B008EA2E9 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25D1E8429B2FB1B008EA2E9 /* MapViewModel.swift */; };
 		D25D1E8729B2FCAD008EA2E9 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25D1E8629B2FCAD008EA2E9 /* MapView.swift */; };
 		D25D1E8A29B3464E008EA2E9 /* EditCommitView+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25D1E8929B3464E008EA2E9 /* EditCommitView+Location.swift */; };
+		D25D1EAA29B4166D008EA2E9 /* EditViewModel+PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25D1EA929B4166D008EA2E9 /* EditViewModel+PhotoPicker.swift */; };
 		D284CA9529A20C7C00C8EC7C /* CD_Branch+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9429A20C7C00C8EC7C /* CD_Branch+.swift */; };
 		D284CA9C29A2393600C8EC7C /* EditBranchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9B29A2393600C8EC7C /* EditBranchView.swift */; };
 		D284CA9E29A2398D00C8EC7C /* EditBranchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D284CA9D29A2398D00C8EC7C /* EditBranchViewModel.swift */; };
@@ -84,6 +85,7 @@
 		D25D1E8429B2FB1B008EA2E9 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		D25D1E8629B2FCAD008EA2E9 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		D25D1E8929B3464E008EA2E9 /* EditCommitView+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditCommitView+Location.swift"; sourceTree = "<group>"; };
+		D25D1EA929B4166D008EA2E9 /* EditViewModel+PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditViewModel+PhotoPicker.swift"; sourceTree = "<group>"; };
 		D284CA9429A20C7C00C8EC7C /* CD_Branch+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Branch+.swift"; sourceTree = "<group>"; };
 		D284CA9B29A2393600C8EC7C /* EditBranchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBranchView.swift; sourceTree = "<group>"; };
 		D284CA9D29A2398D00C8EC7C /* EditBranchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBranchViewModel.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				D21758AF299F241300EF7DF1 /* EditCommitView.swift */,
 				D21CF68C29A05C9200171BE7 /* EditCommitViewModel.swift */,
 				D25D1E8929B3464E008EA2E9 /* EditCommitView+Location.swift */,
+				D25D1EA929B4166D008EA2E9 /* EditViewModel+PhotoPicker.swift */,
 				D284CA9B29A2393600C8EC7C /* EditBranchView.swift */,
 				D284CA9D29A2398D00C8EC7C /* EditBranchViewModel.swift */,
 			);
@@ -497,6 +500,7 @@
 				D2F517BD298E77930091B527 /* Sheet.swift in Sources */,
 				D2F51784298D07250091B527 /* TheMoment.xcdatamodeld in Sources */,
 				D2F517BA298E43180091B527 /* Constant.swift in Sources */,
+				D25D1EAA29B4166D008EA2E9 /* EditViewModel+PhotoPicker.swift in Sources */,
 				D2331DD829B1D80F003BD590 /* ThumbnailRowView.swift in Sources */,
 				D2331DB329ACAB57003BD590 /* PhotoPickerViewModel.swift in Sources */,
 				D25D1E8529B2FB1B008EA2E9 /* MapViewModel.swift in Sources */,

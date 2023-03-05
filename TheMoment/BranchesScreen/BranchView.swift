@@ -12,8 +12,7 @@ struct BranchView: View {
 
   @Binding var path: [CD_Commit]
     
-  @Binding var selectedBranch: UUID?
-  @ObservedObject var branch: CD_Branch
+  @Binding var currentBranch: CD_Branch
   var branchCount: Int
     
   @Environment(\.managedObjectContext) private var viewContext
@@ -22,15 +21,11 @@ struct BranchView: View {
     animation: .default)
   private var cd_Commits: FetchedResults<CD_Commit>
 
-  let gradient = LinearGradient(colors: [.orange, .green],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing)
-
   var body: some View {
-    let commits = branch.name == "Moment" ? cd_Commits.map { $0 } : cd_Commits.filter { $0.branch == branch }
+    let commits = currentBranch.name == "Moment" ? cd_Commits.map { $0 } : cd_Commits.filter { $0.branch == currentBranch }
 
     List {
-      BannerView(selectedBranch: $selectedBranch, branch: branch, branchCount: branchCount)
+      BannerView(currentBranch: $currentBranch, branchCount: branchCount)
         .listRowInsets(.init())
 
       makeInfoView()
@@ -90,8 +85,9 @@ struct BranchView: View {
 struct TimelineView_Previews: PreviewProvider {
   static let viewContext = PersistenceController.shared.container.viewContext
   static var previews: some View {
-    BranchView(sheet: .constant(nil), path: .constant([]), selectedBranch: .constant(UUID()),
-               branch: CD_Branch(context: viewContext),
+    BranchView(sheet: .constant(nil), path: .constant([]),
+               currentBranch: .constant(CD_Branch(context: viewContext)),
                branchCount: 4)
+    .environment(\.managedObjectContext, viewContext)
   }
 }

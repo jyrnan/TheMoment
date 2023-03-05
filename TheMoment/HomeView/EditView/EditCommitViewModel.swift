@@ -7,28 +7,31 @@
 
 import CoreData
 import Foundation
+import MapKit
 import PhotosUI
 import SwiftUI
-import MapKit
 
 class EditCommitViewModel: NSObject, ObservableObject {
   // MARK: - Properties
   
   let viewContext = PersistenceController.shared.container.viewContext
-    
+  // 持有需要编辑的Commit
   var commit: CD_Commit?
-    
+  var locationManager = CLLocationManager()
+  
   @Published var title: String = ""
   @Published var content: String = ""
   @Published var location: String = "22.54°N, 36.38°E"
-  @Published var weather: String = ["Sunny", "Cloudy", "Rain", "Storm"].randomElement() ?? "Sunny"
-  @Published var images: [CD_Thumbnail] = []
-  
+  @Published var weather: String = "Sunny"
+  // 可能需要调整的地图位置属性
   @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 37.3315, longitude: -121.89),
                                              span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
-    
-  @Published var selectedBranch: CD_Branch?
   
+  @Published var selectedBranch: CD_Branch?
+  // 用来标记这个View里面缩略图Tab的选择项
+  @Published var selectedThumbTab: CD_Thumbnail?
+  
+  @Published var images: [CD_Thumbnail] = []
   @Published var photosPickerItems: [PhotosPickerItem] = [] {
     didSet {
       if !photosPickerItems.isEmpty {
@@ -38,36 +41,38 @@ class EditCommitViewModel: NSObject, ObservableObject {
       }
     }
   }
+  // 临时记录添加的图片，如果执行Cancel操作，从Context中delete这些CD_Thumbnail
+  var addedImageCache:[CD_Thumbnail] = []
   
-  var locationManager = CLLocationManager()
-    
   init(commit: CD_Commit? = nil) {
     super.init()
-    if let commit = commit {
-      configViewModel(with: commit)
-    }
+    configViewModel(with: commit)
     locationManager.delegate = self
   }
     
   // MARK: - Private Methods
     
-  private func configViewModel(with commit: CD_Commit) {
+  private func configViewModel(with commit: CD_Commit?) {
+    guard let commit = commit else { return }
+    self.commit = commit
     title = commit.title ?? ""
     content = commit.content ?? ""
     location = commit.location ?? "22.54°N, 36.38°E"
     weather = commit.weather ?? "Sunny"
     images = commit.thumbnailsArray
+    selectedBranch = commit.branch
   }
     
-  func newCommit(uuid: UUID) -> CD_Commit {
+  func newCommit() -> CD_Commit {
     let commit: CD_Commit = viewContext.insertObject()
-    commit.uuid = uuid
+    commit.uuid = UUID()
     // 创建时间在首次创建进行修改
     updateDate(commit: commit, date: .now)
     return commit
   }
     
-  func updateAndSave(commit: CD_Commit) -> Bool {
+  func updateAndSave() -> Bool {
+    let commit = self.commit ?? newCommit()
     commit.title = title.count > 0 ? title : nil
     commit.content = content.count > 0 ? content : nil
     commit.branch = selectedBranch
@@ -85,90 +90,10 @@ class EditCommitViewModel: NSObject, ObservableObject {
   func updateDate(commit: CD_Commit, date: Date) {
     commit.date = date
   }
-}
-
-// MARK: - Extension for
-
-extension EditCommitViewModel {
-  fileprivate func convertPhotoPickerItem() async {
-    var thumbnails: [CD_Thumbnail] = []
-    await withTaskGroup(of: CD_Thumbnail?.self) { group in
-      photosPickerItems.forEach { item in
-        group.addTask {
-          await self.loadTransferable(from: item)
-        }
-      }
-            
-      for await thumbnail in group {
-        if let thumbnail = thumbnail {
-          thumbnails.append(thumbnail)
-        }
-      }
-    }
-        
-    await MainActor.run { [thumbnails] in
-      let thumbnails = thumbnails.compactMap { viewContext.object(with: $0.objectID) as? CD_Thumbnail }
-      self.images.append(contentsOf: thumbnails)
-      self.photosPickerItems.removeAll()
-    }
-  }
-    
-  private func loadTransferable(from imageSelection: PhotosPickerItem) async -> CD_Thumbnail? {
-    guard let data = try? await imageSelection.loadTransferable(type: Data.self), let itemIdentifier = imageSelection.itemIdentifier else { return nil }
-    
-    let thumbData = await ImageCompressor.getCompressBySize(data: data)
-    
-    return await createThumbnailBg(data: data, thumbData: thumbData, itemIdentifier: itemIdentifier)
-  }
-    
-  @MainActor
-  private func createThumbnail(data: Data, thumbData: Data, itemIdentifier: String) -> CD_Thumbnail {
-    let origin = CD_Image(context: viewContext)
-    origin.data = data
-    origin.title = itemIdentifier
-    origin.date = .now
-    origin.editAt = .now
-    origin.uuid = UUID()
-    
-    let thumbnail = CD_Thumbnail(context: viewContext)
-    thumbnail.data = thumbData
-    thumbnail.title = itemIdentifier
-    thumbnail.date = .now
-    thumbnail.editAt = .now
-    thumbnail.uuid = UUID()
-    thumbnail.origin = origin
-    
-    return thumbnail
-  }
   
-  private func createThumbnailBg(data: Data, thumbData: Data, itemIdentifier: String) async -> CD_Thumbnail? {
-    let container = PersistenceController.shared.container
-    
-    return try? await container.performBackgroundTask { context in
-      
-      let asset = PHAsset.fetchAssets(withLocalIdentifiers: [itemIdentifier], options: nil)
-     
-      let origin = CD_Image(context: context)
-      origin.data = data
-      origin.title = itemIdentifier
-      origin.date = asset.firstObject?.creationDate
-      origin.editAt = .now
-      origin.uuid = UUID()
-      
-      let thumbnail = CD_Thumbnail(context: context)
-      thumbnail.data = thumbData
-      thumbnail.title = itemIdentifier
-      thumbnail.date = asset.firstObject?.creationDate
-      thumbnail.editAt = .now
-      thumbnail.uuid = UUID()
-      thumbnail.origin = origin
-      
-//      do {
-      try context.save()
-      return thumbnail
-//      } catch {
-//        fatalError()
-//      }
-    }
+  func cancel() {
+    addedImageCache.forEach{viewContext.delete($0)}
+    images.removeAll()
+    try? viewContext.save()
   }
 }

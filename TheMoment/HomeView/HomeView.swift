@@ -11,6 +11,9 @@ struct HomeView: View {
   @Environment(\.dismiss) var dissmiss
 
   @State var selectedTab: String = "Branch"
+  // 新建Commit需要知道当前Branch
+  @State var currentBranch: CD_Branch
+  
   @State var sheet: Sheet?
   @State var fullSheet: Sheet?
 
@@ -19,7 +22,7 @@ struct HomeView: View {
                                 endPoint: .bottomTrailing)
   var body: some View {
     TabView(selection: $selectedTab) {
-      BranchScreen(sheet: $sheet)
+      BranchScreen(sheet: $sheet, currentBranch: $currentBranch)
         .tabItem {
           Label("Branch", systemImage: "arrow.triangle.branch")
         }
@@ -69,7 +72,7 @@ struct HomeView: View {
     .onAppear {
       UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
     }
-    .tint(.primary)
+    .animation(.default, value: selectedTab)
   }
 
   var plusButtonView: some View {
@@ -81,14 +84,20 @@ struct HomeView: View {
       .frame(width: 40, height: 44)
       .frame(maxHeight: .infinity, alignment: .bottom)
       .onTapGesture {
-        sheet = .newCommit
+        let viewModel = EditCommitViewModel()
+        viewModel.selectedBranch = currentBranch
+        sheet = .newCommit(viewModel)
       }
   }
 }
 
 struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
-    HomeView()
-      .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+    HomeView(currentBranch: CD_Branch.sample)
+      .environment(\.managedObjectContext, PersistenceController.viewContext)
+      .task {
+        CD_Commit.sample
+        CD_Commit.sample
+      }
   }
 }

@@ -184,7 +184,7 @@ struct CommitRowView: View {
     
   var imagesThumbView: some View {
     ZStack {
-      Image(uiImage: commit.firstThumbnail)
+      Image(uiImage: commit.firstThumbImage)
         .resizable()
         .aspectRatio(contentMode: .fill)
         .layoutPriority(-1)
@@ -201,9 +201,12 @@ struct CommitRowView: View {
     ZStack {
       TabView {
         ForEach(commit.thumbnailsArray, id: \.id) { thumbnail in
-          Image(uiImage: UIImage(data: thumbnail.data!)!)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
+          ZStack{
+            Image(uiImage: UIImage(data: thumbnail.data!)!)
+              .resizable()
+              .aspectRatio(contentMode: .fill)
+            Text(thumbnail.date?.formatted() ?? "NO DATE")
+          }
         }
       }
       .tabViewStyle(.page)
@@ -238,8 +241,8 @@ struct CommitRowView: View {
 struct PostRowView_Previews: PreviewProvider {
   static let viewContext = PersistenceController.shared.container.viewContext
   static var previews: some View {
-    CommitRowView(commit: CD_Commit.new(context: viewContext))
-    CommitRowView(commit: CD_Commit.noTitle(context: viewContext))
+    CommitRowView(commit: CD_Commit.sample)
+    CommitRowView(commit: CD_Commit.sample)
   }
 }
 

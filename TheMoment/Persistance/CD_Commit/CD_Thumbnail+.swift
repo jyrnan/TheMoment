@@ -5,15 +5,16 @@
 //  Created by jyrnan on 2023/2/28.
 //
 
+import CoreData
 import Foundation
 import SwiftUI
-import CoreData
 
 extension CD_Thumbnail {
-    static func sample1(context: NSManagedObjectContext) -> CD_Thumbnail {
-        let thumbnail = CD_Thumbnail(context: context)
-        thumbnail.title = "Image"
-        
-        return thumbnail
-    }
+  
+  static var sample: CD_Thumbnail {
+    let thumbnail = CD_Thumbnail(context: PersistenceController.viewContext)
+    thumbnail.date = .now
+    thumbnail.data = UIImage(systemName: "photo")?.jpegData(compressionQuality: 1)!
+    return thumbnail
+  }
 }

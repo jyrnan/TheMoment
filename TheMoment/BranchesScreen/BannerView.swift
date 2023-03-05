@@ -14,8 +14,8 @@ struct BannerView: View {
     let gapInDotAndAvatar: CGFloat = 4
     let viewHeight: CGFloat = 240
     
-    @Binding var selectedBranch: UUID?
-    var branch: CD_Branch
+//    @Binding var selectedBranch: UUID?
+    @Binding var currentBranch: CD_Branch
     var branchCount:Int
     
     @ViewBuilder
@@ -42,7 +42,7 @@ struct BannerView: View {
                 .aspectRatio(contentMode: .fill)
                 .layoutPriority(-1)
             
-            SwitchBranchView(selectedBranch: $selectedBranch)
+            SwitchBranchView(selectedBranch: $currentBranch)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                 .layoutPriority(-1)
                 
@@ -76,27 +76,7 @@ struct BannerView: View {
                 .padding(.leading, Dim.leftSpace * 1.8)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                 .layoutPriority(-1)
-            
-//            Image(systemName: "arrow.left.arrow.right.circle") // arrow.left.arrow.right.circle mail.stack"
-//                .font(.title)
-//                .foregroundColor(.white)
-//                .padding()
-//                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-//                .layoutPriority(-1)
-//                .contextMenu{
-//                    ForEach(0..<4) {int in
-//                        Button(action: {
-//                            selectedBranch = int
-//                        }, label: {
-//                            Text("Branch")
-//                        })
-//                        .buttonStyle(.bordered)
-//                    }
-//                }
-//                .onTapGesture {
-//                    selectedBranch = selectedBranch < branchCount - 1 ? selectedBranch + 1 : 0
-//                }
-            
+
             Color.clear
                 .frame(height: viewHeight)
         }
@@ -106,6 +86,6 @@ struct BannerView: View {
 
 struct BannerView_Previews: PreviewProvider {
     static var previews: some View {
-        BannerView(selectedBranch: .constant(UUID()), branch: CD_Branch(), branchCount: 4)
+      BannerView(currentBranch: .constant(CD_Branch()), branchCount: 4)
     }
 }

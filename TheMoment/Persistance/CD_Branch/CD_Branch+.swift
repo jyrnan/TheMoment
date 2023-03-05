@@ -11,9 +11,9 @@ import SwiftUI
 //extension CD_Branch: Managed {}
 
 extension CD_Branch {
-    static var initial: CD_Branch {
-        let branch = CD_Branch()
-//        branch.name = "Moment"
+    static var sample: CD_Branch {
+      let branch = CD_Branch(context: PersistenceController.shared.container.viewContext)
+        branch.name = "Moment"
         return branch
     }
 }

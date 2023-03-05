@@ -9,42 +9,29 @@ import PhotosUI
 import SwiftUI
 
 struct EditCommitView: View {
-  @StateObject var vm: EditCommitViewModel
   
-  // 用来标记这个View里面缩略图Tab的选择项
-  @State var selectedThumbTab: CD_Thumbnail?
+  //MARK: - Properties
+  @StateObject var vm: EditCommitViewModel
+  @Environment(\.dismiss) var dissmiss
   
   @State var textEditorHeight: CGFloat = 20
-    
-  @Environment(\.dismiss) var dissmiss
-  var uuid: UUID?
-  var commit: CD_Commit?
-    
-  var isEditMode: Bool { commit != nil }
-    
+  var isEditMode: Bool { true }
+  
+  //MARK: -
   @Environment(\.managedObjectContext) private var viewContext
   @FetchRequest(
     sortDescriptors: [NSSortDescriptor(keyPath: \CD_Branch.date, ascending: true)],
     animation: .default)
   private var cd_Branches: FetchedResults<CD_Branch>
-    
-  init(uuid: UUID? = nil, commit: CD_Commit? = nil, selectedThumbTab: CD_Thumbnail? = nil) {
-    _vm = StateObject(wrappedValue: EditCommitViewModel(commit: commit))
-    self.uuid = uuid
-    self.commit = commit
-    _selectedThumbTab = State(initialValue: selectedThumbTab)
+  
+  //MARK: - init
+  
+  init(viewModel: EditCommitViewModel) {
+    _vm = StateObject(wrappedValue: viewModel)
   }
     
   var body: some View {
     VStack {
-//      Image(systemName: "xmark.circle.fill")
-//        .font(.title2)
-//        .opacity(0.5)
-//        .padding([.top, .trailing])
-//        .frame(maxWidth: .infinity, alignment: .trailing)
-//        .onTapGesture {
-//          dissmiss()
-//        }
       List {
 //                Section(content: {
         Picker("Branch", selection: $vm.selectedBranch) {
@@ -86,7 +73,7 @@ struct EditCommitView: View {
             
         Section(content: {
                   if !vm.images.isEmpty {
-                    ImagePageTabView(thumbnails: vm.images, selectedThumbTab: $selectedThumbTab)
+                    ImagePageTabView(thumbnails: vm.images, selectedThumbTab: $vm.selectedThumbTab)
                   }
                             
                 },
@@ -95,7 +82,7 @@ struct EditCommitView: View {
           .listRowInsets(.init(.init()))
                 
         HStack {
-          ThumbnailRowView(thumbnails: vm.images, selectedThumbTab: $selectedThumbTab)
+          ThumbnailRowView(thumbnails: vm.images, selectedThumbTab: $vm.selectedThumbTab)
                     
           PhotosPicker(selection: $vm.photosPickerItems, photoLibrary: .shared()) {
             Image(systemName: "plus.circle.fill").font(.title).opacity(0.5)
@@ -116,28 +103,30 @@ struct EditCommitView: View {
         if isEditMode {
           Button(role: .destructive, action: {
             dissmiss()
-            vm.delete(commit: commit!)
-//            viewContext.delete(commit!)
-//            viewContext.saveOrRollback()
+
           }, label: { Text("Delete Commit").frame(maxWidth: .infinity, alignment: .center) })
         }
       }
       .scrollDismissesKeyboard(.immediately)
 
       HStack {
-        Button(role: .cancel, action: {}, label: { Text("Cancel") }).padding()
+        Button(role: .cancel,
+               action: {
+          
+          dissmiss()
+          vm.cancel()
+        },
+               label: { Text("Cancel") })
+        .padding()
+        
         Spacer()
+        
         Button {
-          if isEditMode {
-            guard vm.updateAndSave(commit: commit!) else { return }
-            dissmiss()
-          } else {
-            let newCommit = vm.newCommit(uuid: uuid!)
-            guard vm.updateAndSave(commit: newCommit) else { return }
+          if vm.updateAndSave() {
             dissmiss()
           }
         } label: {
-          Text(isEditMode ? "Save" : "Add")
+          Text(vm.commit == nil ? "Add" : "Save")
         }
         .padding()
         .tint(.accentColor)
@@ -149,7 +138,7 @@ struct EditCommitView: View {
 
 struct NewCommitView_Previews: PreviewProvider {
   static var previews: some View {
-    EditCommitView(uuid: UUID(), commit: CD_Commit(context: PersistenceController.shared.container.viewContext))
+    EditCommitView(viewModel: EditCommitViewModel())
       .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
   }
 }

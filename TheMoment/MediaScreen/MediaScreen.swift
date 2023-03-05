@@ -24,7 +24,7 @@ struct MediaScreen: View {
       LazyVGrid(columns: gridRow, spacing: 2) {
         ForEach(thumbnails) { thumbnail in
           ZStack {
-            Image(uiImage: (UIImage(data: thumbnail.data!) ?? UIImage(systemName: "photo"))!)
+            Image(uiImage: (UIImage(data: thumbnail.data!)!))
               .resizable()
               .scaledToFill()
               .layoutPriority(-1)
@@ -37,9 +37,7 @@ struct MediaScreen: View {
               }
             Color.clear
           }
-          
-           
-          
+
           .clipped()
           .aspectRatio(1, contentMode: .fill)
           .overlay(alignment: .bottomTrailing) {
@@ -49,7 +47,8 @@ struct MediaScreen: View {
               .frame(width: 24, height: 24)
               .foregroundColor(.white)
               .padding(6)
-            .opacity(thumbnail.commit == nil ? 1 : 0)}
+              .opacity(thumbnail.commit == nil ? 1 : 0)
+          }
         }
       }
     }
@@ -58,11 +57,12 @@ struct MediaScreen: View {
 
 struct MediaScreen_Previews: PreviewProvider {
   static var previews: some View {
-    MediaScreen(fullSheet: .constant(.newCommit))
+    MediaScreen(fullSheet: .constant(.newCommit(EditCommitViewModel())))
   }
 }
 
 extension MediaScreen {
+  
   private func makeCommitByImage(thumbnail: CD_Thumbnail) -> HomeView.Sheet {
     let commit = CD_Commit(context: viewContext)
     commit.uuid = UUID()
