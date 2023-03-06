@@ -65,6 +65,7 @@ struct HomeView: View {
     .sheet(item: $sheet) {
       $0.presentationDetents([.height(350), .medium, .large])
         .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        .tint(currentBranch.color)
     }
     .sheet(item: $fullSheet) {
       $0.environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
@@ -72,6 +73,7 @@ struct HomeView: View {
     .onAppear {
       UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
     }
+    .tint(currentBranch.color)
     .animation(.default, value: selectedTab)
   }
 

@@ -35,7 +35,8 @@ struct BranchScreen: View {
                         Button {
                             switchToNextBranch()
                         } label: {
-                            Text("Switch")
+//                            Text("Switch")
+                          Image(systemName: "arrow.left.arrow.right")
                         }
                     }
 
@@ -46,8 +47,9 @@ struct BranchScreen: View {
                             Button {
                                 currentBranch = branch
                             } label: {
-                                Label(branch.name ?? "Moment", systemImage: branch == currentBranch ? "checkmark" : "")
+                              Label(branch.name ?? "Moment", systemImage: "checkmark")
                             }
+                            .labelStyle(TitleOnlyLabelStyle())
                         }
 
                         Button {
@@ -69,7 +71,12 @@ struct BranchScreen: View {
     }
     
     private func switchToNextBranch(){
-
+      if let currentIndex = branches.firstIndex(of: currentBranch),
+         branches.index(after: currentIndex) != branches.endIndex  {
+        currentBranch = branches[branches.index(after: currentIndex)]
+      } else {
+        currentBranch = branches.first!
+      }
     }
 }
 

@@ -16,9 +16,7 @@ struct EditCommitView: View {
   
   @State var textEditorHeight: CGFloat = 20
   var isEditMode: Bool { true }
-  
-//  @Binding var currentThumbnail: CD_Thumbnail?
-  
+    
   //MARK: -
   @Environment(\.managedObjectContext) private var viewContext
   @FetchRequest(
@@ -132,7 +130,6 @@ struct EditCommitView: View {
           Text(vm.commit == nil ? "Add" : "Save")
         }
         .padding()
-        .tint(.accentColor)
         .disabled(vm.title == "" && vm.content == "" && vm.images.isEmpty)
       }
     }
