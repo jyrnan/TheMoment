@@ -28,7 +28,8 @@ struct ImagePageTabView: View {
           }
       }
     }
-    .frame(height: 240)
+//    .frame(height: 240)
+    .aspectRatio(4/3, contentMode: .fill)
     .tabViewStyle(.page)
   }
 }

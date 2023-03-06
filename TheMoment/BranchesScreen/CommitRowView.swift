@@ -66,6 +66,11 @@ struct CommitRowView: View {
             if commit.content != nil { contentView }
           }
           .frame(maxWidth: .infinity, alignment: .leading)
+          .padding(commit.images?.count != 0 ? 0 : 8)
+          .background(
+            RoundedRectangle(cornerRadius: 16)
+              .fill(Color(uiColor: .secondarySystemBackground))
+              .opacity(commit.images?.count != 0 ? 0 : 1))
                     
           if commit.images?.count != 0, commit.content != nil {
             imagesThumbView.padding(.leading, 4)

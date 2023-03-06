@@ -35,8 +35,7 @@ struct BranchScreen: View {
                         Button {
                             switchToNextBranch()
                         } label: {
-//                            Text("Switch")
-                          Image(systemName: "arrow.left.arrow.right")
+                          Image(systemName: "arrow.left.arrow.right").font(.body)
                         }
                     }
 
